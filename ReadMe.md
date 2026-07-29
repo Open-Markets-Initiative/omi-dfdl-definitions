@@ -2,9 +2,11 @@
 
 Omi Dfdl definitions provide declarative, cross language parsing of common binary exchange protocols.
 
-[![Dfdl](https://github.com/Open-Markets-Initiative/Directory/blob/main/About/Images/Dfdl.png)](https://daffodil.apache.org/)
-
 For more information on Dfdl: [Dfdl](https://daffodil.apache.org/docs/dfdl/ "Data Format Description Language")
+
+[![Apache Daffodil](https://github.com/Open-Markets-Initiative/Directory/blob/main/About/Images/Daffodil.png)](https://daffodil.apache.org/)
+
+These definitions are built and tested with the DFDL reference implementation: [Apache Daffodil](https://daffodil.apache.org/ "Apache Daffodil")
 ## Usage
 
 Each .dfdl.xsd file is a complete declarative description of one protocol version, expressed as a DFDL annotated XML schema. Compile a schema into a saved parser with the Apache Daffodil reference processor:
