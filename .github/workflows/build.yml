@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install Apache Daffodil
+        run: curl -sL https://archive.apache.org/dist/daffodil/3.7.0/bin/apache-daffodil-3.7.0-bin.tgz -o "$RUNNER_TEMP/daffodil.tgz" && tar -xzf "$RUNNER_TEMP/daffodil.tgz" -C "$RUNNER_TEMP" && echo "DAFFODIL=$RUNNER_TEMP/apache-daffodil-3.7.0-bin/bin/daffodil" >> "$GITHUB_ENV"
+
+      - name: Compile Schemas
+        run: find . -name '*.dfdl.xsd' | while read schema; do echo "compiling $schema"; "$DAFFODIL" save-parser -s "$schema" -r packet "$RUNNER_TEMP/parser.bin" || exit 1; done
+
+      - name: Install Python Test Dependencies
+        run: pip3 install dpkt
+
+      - name: Clone Omi Data
+        run: git clone --depth=1 https://github.com/Open-Markets-Initiative/omi-data-packets.git
+
+      - name: Run Iex IexEquities Tops IexTp v1.5.6 Definition Tests
+        run: python3 .github/tests/test_iexequities_tops_v1_5_6.py
+
+      - name: Run Iex IexEquities Tops IexTp v1.6.4 Definition Tests
+        run: python3 .github/tests/test_iexequities_tops_v1_6_4.py
+
+      - name: Run Iex IexEquities Tops IexTp v1.6.6 Definition Tests
+        run: python3 .github/tests/test_iexequities_tops_v1_6_6.py
+
+      - name: Run Iex IexEquities Deep IexTp v1.0.6 Definition Tests
+        run: python3 .github/tests/test_iexequities_deep_v1_0_6.py
+
+      - name: Run Iex IexEquities Deep IexTp v1.0.8 Definition Tests
+        run: python3 .github/tests/test_iexequities_deep_v1_0_8.py
+
+      - name: Run Iex IexEquities DeepPlus IexTp v1.0.2 Definition Tests
+        run: python3 .github/tests/test_iexequities_deepplus_v1_0_2.py
+
+
