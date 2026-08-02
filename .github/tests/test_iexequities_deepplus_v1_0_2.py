@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "iex/deepplus/IexEquities_DeepPlus_v1_0_2.dfdl.xsd"
+SCHEMA = "iex/iexequities/deepplus/IexEquities_DeepPlus_v1_0_2.dfdl.xsd"
 PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "iexequities_deepplus_v1_0_2.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
