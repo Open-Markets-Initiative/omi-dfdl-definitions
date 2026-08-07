@@ -12,6 +12,10 @@
 | [IexEquities][IexEquities.Exchange] | [Tops][Iex.IexEquities.Tops] | [IexTp][Omi.Encoding.IexTp] | [1.6.6][Iex.IexEquities.Tops.IexTp.v1.6.6.Definition] | 10/19/2021 | 780 | [Active][Omi.Glossary.Status.Active] | [Verified][Omi.Glossary.Testing.Verified] | [url][Iex.IexEquities.Tops.IexTp.v1.6.6.Url] - [pdf][Iex.IexEquities.Tops.IexTp.v1.6.6.Pdf] |
 | [IexEquities][IexEquities.Exchange] | [Tops][Iex.IexEquities.Tops] | [IexTp][Omi.Encoding.IexTp] | [1.6.4][Iex.IexEquities.Tops.IexTp.v1.6.4.Definition] | 2/27/2018 | 780 | [Deprecated][Omi.Glossary.Status.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [url][Iex.IexEquities.Tops.IexTp.v1.6.4.Url] - [pdf][Iex.IexEquities.Tops.IexTp.v1.6.4.Pdf] |
 | [IexEquities][IexEquities.Exchange] | [Tops][Iex.IexEquities.Tops] | [IexTp][Omi.Encoding.IexTp] | [1.5.6][Iex.IexEquities.Tops.IexTp.v1.5.6.Definition] | 9/23/2016 | 773 | [Deprecated][Omi.Glossary.Status.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [url][Iex.IexEquities.Tops.IexTp.v1.5.6.Url] - [pdf][Iex.IexEquities.Tops.IexTp.v1.5.6.Pdf] |
+| [IexEquities][IexEquities.Exchange] | [Deep][Iex.IexEquities.Deep] | [Snap][Omi.Encoding.Snap] | [1.6][Iex.IexEquities.Deep.Snap.v1.6.Definition] | 6/2/2026 | 887 | [Active][Omi.Glossary.Status.Active] | [Unavailable][Omi.Glossary.Testing.Unavailable] | [url][Iex.IexEquities.Deep.Snap.v1.6.Url] - [pdf][Iex.IexEquities.Deep.Snap.v1.6.Pdf] |
+| [IexEquities][IexEquities.Exchange] | [DeepPlus][Iex.IexEquities.DeepPlus] | [Snap][Omi.Encoding.Snap] | [1.0.5][Iex.IexEquities.DeepPlus.Snap.v1.0.5.Definition] | 6/4/2026 | 890 | [Active][Omi.Glossary.Status.Active] | [Unavailable][Omi.Glossary.Testing.Unavailable] | [url][Iex.IexEquities.DeepPlus.Snap.v1.0.5.Url] - [pdf][Iex.IexEquities.DeepPlus.Snap.v1.0.5.Pdf] |
+| [IexEquities][IexEquities.Exchange] | [Tops][Iex.IexEquities.Tops] | [Snap][Omi.Encoding.Snap] | [1.6][Iex.IexEquities.Tops.Snap.v1.6.Definition] | 6/2/2026 | 842 | [Active][Omi.Glossary.Status.Active] | [Unavailable][Omi.Glossary.Testing.Unavailable] | [url][Iex.IexEquities.Tops.Snap.v1.6.Url] - [pdf][Iex.IexEquities.Tops.Snap.v1.6.Pdf] |
+| [IexEquities][IexEquities.Exchange] | [IexTpHeader][Iex.IexEquities.IexTpHeader] | [Udp][Omi.Encoding.Udp] | [1.0][Iex.IexEquities.IexTpHeader.Udp.v1.0.Definition] | 9/20/2015 | 158 | [Header][Omi.Glossary.Status.Header] | [Verified][Omi.Glossary.Testing.Verified] | [url][Iex.IexEquities.IexTpHeader.Udp.v1.0.Url] - [pdf][Iex.IexEquities.IexTpHeader.Udp.v1.0.Pdf] |
 | [IexOptions][IexOptions.Exchange] | [BinaryOrderEntry][Iex.IexOptions.BinaryOrderEntry] | [Sbe][Omi.Encoding.Sbe] | [1.0][Iex.IexOptions.BinaryOrderEntry.Sbe.v1.0.Definition] | 6/1/2026 | 3159 | [Future][Omi.Glossary.Status.Future] | [Untested][Omi.Glossary.Testing.Untested] | [url][Iex.IexOptions.BinaryOrderEntry.Sbe.v1.0.Url] - [xml][Iex.IexOptions.BinaryOrderEntry.Sbe.v1.0.Xml] - [pdf][Iex.IexOptions.BinaryOrderEntry.Sbe.v1.0.Pdf] |
 | [IexOptions][IexOptions.Exchange] | [MarketData][Iex.IexOptions.MarketData] | [Sbe][Omi.Encoding.Sbe] | [1.0][Iex.IexOptions.MarketData.Sbe.v1.0.Definition] | 6/1/2026 | 1362 | [Future][Omi.Glossary.Status.Future] | [Untested][Omi.Glossary.Testing.Untested] | [url][Iex.IexOptions.MarketData.Sbe.v1.0.Url] - [xml][Iex.IexOptions.MarketData.Sbe.v1.0.Xml] - [pdf][Iex.IexOptions.MarketData.Sbe.v1.0.Pdf] |
 
@@ -34,12 +38,15 @@ Iex: [website](https://www.iexexchange.io "Go to Investors Exchange")
 [Omi.Iex.Protocol.Definitions]: https://github.com/Open-Markets-Initiative/Directory/tree/main/Organizations/Iex/Protocols "Iex Protocol Directory"
 [Omi.Iex.Specifications]: https://github.com/Open-Markets-Initiative/Directory/tree/main/Organizations/Iex/Specifications "Iex Specifications Directory"
 [Omi.Encoding.IexTp]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/IexTp.md "IexTp Encoding"
+[Omi.Encoding.Snap]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Snap.md "Snap Encoding"
+[Omi.Encoding.Udp]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Udp.md "Udp Encoding"
 [Omi.Encoding.Sbe]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Sbe.md "Sbe Encoding"
 [IexEquities.Exchange]: https://github.com/Open-Markets-Initiative/Directory/tree/main/Organizations/Iex/Protocols/IexEquities "Iex IexEquities"
 [IexOptions.Exchange]: https://github.com/Open-Markets-Initiative/Directory/tree/main/Organizations/Iex/Protocols/IexOptions "Iex IexOptions"
 [Iex.IexEquities.Tops]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexEquities/Tops.md "Top Of Book"
 [Iex.IexEquities.Deep]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexEquities/Deep.md "Depth Of Book"
 [Iex.IexEquities.DeepPlus]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexEquities/DeepPlus.md "DeepPlus"
+[Iex.IexEquities.IexTpHeader]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexEquities/IexTpHeader.md "IexTp Header"
 [Iex.IexOptions.MarketData]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexOptions/MarketData.md "Market Data"
 [Iex.IexOptions.BinaryOrderEntry]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexOptions/BinaryOrderEntry.md "Binary Order Entry"
 
@@ -52,18 +59,30 @@ Iex: [website](https://www.iexexchange.io "Go to Investors Exchange")
 [Iex.IexEquities.Tops.IexTp.v1.6.6.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/tops/IexEquities_Tops_v1_6_6.dfdl.xsd "Iex IexEquities Tops IexTp v1.6.6 Dfdl Definition"
 [Iex.IexEquities.Tops.IexTp.v1.6.6.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.6.6 Url"
 [Iex.IexEquities.Tops.IexTp.v1.6.6.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.Tops.IexTp.v1.6.6.pdf "Investors Exchange 1.6.6 Pdf"
+[Iex.IexEquities.Tops.Snap.v1.6.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/tops/IexEquities_Tops_v1_6.dfdl.xsd "Iex IexEquities Tops Snap v1.6 Dfdl Definition"
+[Iex.IexEquities.Tops.Snap.v1.6.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.6 Url"
+[Iex.IexEquities.Tops.Snap.v1.6.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.Tops.Snap.v1.6.pdf "Investors Exchange 1.6 Pdf"
 [Iex.IexEquities.Deep.IexTp.v1.0.6.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/deep/IexEquities_Deep_v1_0_6.dfdl.xsd "Iex IexEquities Deep IexTp v1.0.6 Dfdl Definition"
 [Iex.IexEquities.Deep.IexTp.v1.0.6.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.0.6 Url"
 [Iex.IexEquities.Deep.IexTp.v1.0.6.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.Deep.IexTp.v1.0.6.pdf "Investors Exchange 1.0.6 Pdf"
 [Iex.IexEquities.Deep.IexTp.v1.0.8.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/deep/IexEquities_Deep_v1_0_8.dfdl.xsd "Iex IexEquities Deep IexTp v1.0.8 Dfdl Definition"
 [Iex.IexEquities.Deep.IexTp.v1.0.8.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.0.8 Url"
 [Iex.IexEquities.Deep.IexTp.v1.0.8.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.Deep.IexTp.v1.0.8.pdf "Investors Exchange 1.0.8 Pdf"
+[Iex.IexEquities.Deep.Snap.v1.6.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/deep/IexEquities_Deep_v1_6.dfdl.xsd "Iex IexEquities Deep Snap v1.6 Dfdl Definition"
+[Iex.IexEquities.Deep.Snap.v1.6.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.6 Url"
+[Iex.IexEquities.Deep.Snap.v1.6.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.Deep.Snap.v1.6.pdf "Investors Exchange 1.6 Pdf"
 [Iex.IexEquities.DeepPlus.IexTp.v1.0.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/deepplus/IexEquities_DeepPlus_v1_0_1.dfdl.xsd "Iex IexEquities DeepPlus IexTp v1.0.1 Dfdl Definition"
 [Iex.IexEquities.DeepPlus.IexTp.v1.0.1.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.0.1 Url"
 [Iex.IexEquities.DeepPlus.IexTp.v1.0.1.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.DeepPlus.IexTp.v1.0.1.pdf "Investors Exchange 1.0.1 Pdf"
 [Iex.IexEquities.DeepPlus.IexTp.v1.0.2.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/deepplus/IexEquities_DeepPlus_v1_0_2.dfdl.xsd "Iex IexEquities DeepPlus IexTp v1.0.2 Dfdl Definition"
 [Iex.IexEquities.DeepPlus.IexTp.v1.0.2.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.0.2 Url"
 [Iex.IexEquities.DeepPlus.IexTp.v1.0.2.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.DeepPlus.IexTp.v1.0.2.pdf "Investors Exchange 1.0.2 Pdf"
+[Iex.IexEquities.DeepPlus.Snap.v1.0.5.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/deepplus/IexEquities_DeepPlus_v1_0_5.dfdl.xsd "Iex IexEquities DeepPlus Snap v1.0.5 Dfdl Definition"
+[Iex.IexEquities.DeepPlus.Snap.v1.0.5.Url]: https://www.iexexchange.io/resources/trading/documents "Investors Exchange 1.0.5 Url"
+[Iex.IexEquities.DeepPlus.Snap.v1.0.5.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.DeepPlus.Snap.v1.0.5.pdf "Investors Exchange 1.0.5 Pdf"
+[Iex.IexEquities.IexTpHeader.Udp.v1.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexequities/iextpheader/IexEquities_IexTpHeader_v1_0.dfdl.xsd "Iex IexEquities IexTpHeader Udp v1.0 Dfdl Definition"
+[Iex.IexEquities.IexTpHeader.Udp.v1.0.Url]: https://iextrading.com/trading/market-data/ "Investors Exchange 1.0 Url"
+[Iex.IexEquities.IexTpHeader.Udp.v1.0.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexEquities/Iex.IexEquities.IexTp.v1.0.pdf "Investors Exchange 1.0 Pdf"
 [Iex.IexOptions.MarketData.Sbe.v1.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/iex/iexoptions/marketdata/IexOptions_MarketData_v1_0.dfdl.xsd "Iex IexOptions MarketData Sbe v1.0 Dfdl Definition"
 [Iex.IexOptions.MarketData.Sbe.v1.0.Url]: https://www.iexexchange.io/options "Investors Exchange 1.0 Url"
 [Iex.IexOptions.MarketData.Sbe.v1.0.Xml]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Specifications/IexOptions/Iex.IexOptions.MarketData.Sbe.v1.0.xml "Investors Exchange 1.0 Xml"
