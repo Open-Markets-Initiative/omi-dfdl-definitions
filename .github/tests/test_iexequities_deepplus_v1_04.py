@@ -9,12 +9,12 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "iex/iexequities/deepplus/IexEquities_DeepPlus_v1_0_2.dfdl.xsd"
-PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "iexequities_deepplus_v1_0_2.parser")
+SCHEMA = "iex/iexequities/deepplus/IexEquities_DeepPlus_v1_04.dfdl.xsd"
+PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "iexequities_deepplus_v1_04.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
-class IexequitiesDeepplusV102Tests(unittest.TestCase):
+class IexequitiesDeepplusV104Tests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

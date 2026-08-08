@@ -1,6 +1,6 @@
 # Omi DFDL Definitions
 
-Omi Data Format Description Language ([DFDL](https://daffodil.apache.org/docs/dfdl/ "Data Format Description Language")) definitions provide declarative, cross language parsing of common binary exchange protocols.
+Omi Data Format Description Language ([DFDL](https://en.wikipedia.org/wiki/Data_Format_Description_Language "Data Format Description Language")) definitions provide declarative, cross language parsing of common binary exchange protocols.
 
 
 [![Apache Daffodil](https://github.com/Open-Markets-Initiative/Directory/blob/main/About/Images/Daffodil.png)](https://daffodil.apache.org/)
