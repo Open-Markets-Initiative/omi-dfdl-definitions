@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 254 | 1,247,823 |
+| 267 | 1,298,189 |
 
 ## Testing
 
@@ -41,11 +41,11 @@ For a list of Omi Hft projects: [Omi Projects](https://github.com/Open-Markets-I
 For details of Omi rules and regulations: [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory")
 ## Organizations
 
-> [24X][24X.Directory] · [A2X][A2X.Directory] · [Aquis][Aquis.Directory] · [Asx][Asx.Directory] · [Cme][Cme.Directory] · [Coinbase][Coinbase.Directory] · [Eurex][Eurex.Directory] · [Euronext][Euronext.Directory] · [Iex][Iex.Directory] · [Nasdaq][Nasdaq.Directory]
+> [24X][24X.Directory] · [A2X][A2X.Directory] · [Aquis][Aquis.Directory] · [Asx][Asx.Directory] · [B3][B3.Directory] · [Cme][Cme.Directory] · [Coinbase][Coinbase.Directory] · [Eurex][Eurex.Directory] · [Euronext][Euronext.Directory] · [Iex][Iex.Directory] · [Nasdaq][Nasdaq.Directory]
 
 ## Exchanges
 
-> [24XEquities][24XEquities.Exchange] · [AquisEquities][AquisEquities.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NomOptions][NomOptions.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange]
+> [24XEquities][24XEquities.Exchange] · [AquisEquities][AquisEquities.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [B3Derivatives][B3Derivatives.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NomOptions][NomOptions.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange]
 
 ## Platforms
 
@@ -59,10 +59,8 @@ For details of Omi rules and regulations: [Omi Directory](https://github.com/Ope
 
 The same exchange protocols are published as machine readable definitions in other formats:
 
-> [Omi Kaitai Struct Definitions] — cross language binary parsers with the kaitai struct compiler · [Omi P4 Definitions] — P4 programs for software and hardware data planes
-
-[Omi Kaitai Struct Definitions]: https://github.com/Open-Markets-Initiative/omi-kaitai-struct-definitions "Omi Kaitai Struct Definitions"
-[Omi P4 Definitions]: https://github.com/Open-Markets-Initiative/omi-p4-definitions "Omi P4 Definitions"
+- [Kaitai Struct Definitions] — cross language binary parsers with the kaitai struct compiler
+- [P4 Definitions] — P4 programs for software and hardware data planes
 ## Disclaimer
 
 Any similarities between existing people, places and/or protocols is purely incidental.
@@ -108,6 +106,8 @@ Enjoy.
 [Asx.AsxDerivatives.Ntp]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Asx/Protocols/AsxDerivatives/Ntp.md "New Trading Platform"
 [Asx.AsxDerivatives.T24]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Asx/Protocols/AsxDerivatives/T24.md "24 Itch"
 [Asx.AsxSecurities.Trade]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Asx/Protocols/AsxSecurities/Trade.md "Asx Trade"
+[B3.B3Derivatives.BinaryUmdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/B3/Protocols/B3Derivatives/BinaryUmdf.md "Binary Unified Market Data Feed"
+[B3.B3Derivatives.BinaryEntryPoint]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/B3/Protocols/B3Derivatives/BinaryEntryPoint.md "Binary Entry Point"
 [Cme.Globex.Mdp3]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Cme/Protocols/Globex/Mdp3.md "Market Data Platform 3"
 [Cme.Globex.Streamlined]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Cme/Protocols/Globex/Streamlined.md "Streamlined Market Data"
 [Cme.Globex.Settlements]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Cme/Protocols/Globex/Settlements.md "Settlements"
@@ -189,6 +189,7 @@ Enjoy.
 [A2X.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/a2x "A2X Markets"
 [Aquis.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/aquis "Aquis Exchange"
 [Asx.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/asx "Australian Securities Exchange"
+[B3.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/b3 "Brasil, Bolsa, Balcão"
 [Cme.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/cme "CME Group"
 [Coinbase.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/coinbase "Coinbase"
 [Eurex.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/eurex "Eurex Exchange"
@@ -200,6 +201,7 @@ Enjoy.
 [AquisEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/aquis "Aquis Equities"
 [AsxDerivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/asx/asxderivatives "Asx Derivatives"
 [AsxSecurities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/asx/asxsecurities "Asx Securities"
+[B3Derivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/b3 "B3 Derivatives"
 [CoinbaseDerivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/coinbase/coinbasederivatives "Coinbase Derivatives"
 [Deribit.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/coinbase/deribit "Deribit"
 [GemxOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/gemxoptions "Nasdaq GEMX"
@@ -219,3 +221,6 @@ Enjoy.
 [Uqdf.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/uqdf "Nasdaq UTP Quote Data Feed"
 [Utdf.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/utdf "Nasdaq UTP Trade Data Feed"
 [Utp.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/utp "Nasdaq Unlisted Trading Privileges Plan"
+
+[Kaitai Struct Definitions]: https://github.com/Open-Markets-Initiative/omi-kaitai-struct-definitions "Omi Kaitai Struct Definitions"
+[P4 Definitions]: https://github.com/Open-Markets-Initiative/omi-p4-definitions "Omi P4 Definitions"
