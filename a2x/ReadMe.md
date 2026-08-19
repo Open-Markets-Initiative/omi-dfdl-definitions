@@ -7,7 +7,7 @@
 | --- | --- | --- | --- | ---: | ---: | --- | --- | --- |
 | [A2XEquities][A2XEquities] | [Rtmdf][A2X.A2XEquities.Rtmdf] | [Amd][Omi.Encoding.Amd] | [1.3.2][A2X.A2XEquities.Rtmdf.Amd.v1.3.2.Definition] | 9/15/2022 | 768 | [Active][Omi.Glossary.Status.Active] | [Beta][Omi.Glossary.Testing.Beta] | [url][A2X.A2XEquities.Rtmdf.Amd.v1.3.2.Url] - [pdf][A2X.A2XEquities.Rtmdf.Amd.v1.3.2.Pdf] |
 | [A2XEquities][A2XEquities] | [Snapshot][A2X.A2XEquities.Snapshot] | [Amd][Omi.Encoding.Amd] | [1.3.2][A2X.A2XEquities.Snapshot.Amd.v1.3.2.Definition] | 9/15/2022 | 331 | [Active][Omi.Glossary.Status.Active] | [Beta][Omi.Glossary.Testing.Beta] | [url][A2X.A2XEquities.Snapshot.Amd.v1.3.2.Url] - [pdf][A2X.A2XEquities.Snapshot.Amd.v1.3.2.Pdf] |
-| [A2XEquities][A2XEquities] | [UdpHeader][A2X.A2XEquities.UdpHeader] | [Amd][Omi.Encoding.Amd] | [1.0][A2X.A2XEquities.UdpHeader.Amd.v1.0.Definition] | 9/1/2017 | 97 | [Header][Omi.Glossary.Status.Header] | [Beta][Omi.Glossary.Testing.Beta] | [url][A2X.A2XEquities.UdpHeader.Amd.v1.0.Url] |
+| [A2XEquities][A2XEquities] | [UdpHeader][A2X.A2XEquities.UdpHeader] | [Amd][Omi.Encoding.Amd] | [1.][A2X.A2XEquities.UdpHeader.Amd.v1.Definition] | 9/1/2017 | 97 | [Header][Omi.Glossary.Status.Header] | [Beta][Omi.Glossary.Testing.Beta] | [url][A2X.A2XEquities.UdpHeader.Amd.v1.Url] |
 
 
 A2X: [website](https://www.a2x.co.za "Go to A2X Markets")
@@ -40,5 +40,5 @@ A2X: [website](https://www.a2x.co.za "Go to A2X Markets")
 [A2X.A2XEquities.Snapshot.Amd.v1.3.2.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/a2x/snapshot/A2X_A2XEquities_Snapshot_v1_3_2.dfdl.xsd "A2X A2XEquities Snapshot Amd v1.3.2 Dfdl Definition"
 [A2X.A2XEquities.Snapshot.Amd.v1.3.2.Url]: https://www.a2x.co.za/?page_id=531 "A2X Markets 1.3.2 Url"
 [A2X.A2XEquities.Snapshot.Amd.v1.3.2.Pdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/A2X/Specifications/MarketData/A2X.A2XEquities.MarketDataTechnicalSpecification.Amd.v1.3.2.pdf "A2X Markets 1.3.2 Pdf"
-[A2X.A2XEquities.UdpHeader.Amd.v1.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/a2x/udpheader/A2X_A2XEquities_UdpHeader_v1_0.dfdl.xsd "A2X A2XEquities UdpHeader Amd v1.0 Dfdl Definition"
-[A2X.A2XEquities.UdpHeader.Amd.v1.0.Url]: https://www.a2x.co.za/?page_id=734/#a2xtech "A2X Markets 1.0 Url"
+[A2X.A2XEquities.UdpHeader.Amd.v1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/a2x/udpheader/A2X_A2XEquities_UdpHeader_v1.dfdl.xsd "A2X A2XEquities UdpHeader Amd v1 Dfdl Definition"
+[A2X.A2XEquities.UdpHeader.Amd.v1.Url]: https://www.a2x.co.za/?page_id=734/#a2xtech "A2X Markets 1. Url"
