@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 315 | 2,935,185 |
+| 314 | 2,929,792 |
 
 ## Testing
 
@@ -110,7 +110,6 @@ Enjoy.
 [B3.B3Derivatives.BinaryUmdf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/B3/Protocols/B3Derivatives/BinaryUmdf.md "Binary Unified Market Data Feed"
 [B3.B3Derivatives.BinaryEntryPoint]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/B3/Protocols/B3Derivatives/BinaryEntryPoint.md "Binary Entry Point"
 [Bist.BorsaIstanbul.GeniumInet]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Bist/Protocols/BorsaIstanbul/GeniumInet.md "Genium Inet"
-[BlueOceanAts.BlueEquities.Memo]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/BlueOceanAts/Protocols/BlueEquities/Memo.md "Members Orders"
 [BlueOceanAts.BlueEquities.MemoirDepthFeed]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/BlueOceanAts/Protocols/BlueEquities/MemoirDepthFeed.md "Member Order Information Record Depth Feed"
 [BlueOceanAts.BlueEquities.MemoirLastSale]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/BlueOceanAts/Protocols/BlueEquities/MemoirLastSale.md "Member Order Information Record Last Sale"
 [BlueOceanAts.BlueEquities.MemoirTopOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/BlueOceanAts/Protocols/BlueEquities/MemoirTopOfBook.md "Member Order Information Record Top Of Book"
