@@ -21,7 +21,7 @@ jobs:
         run: curl -sL https://archive.apache.org/dist/daffodil/3.7.0/bin/apache-daffodil-3.7.0-bin.tgz -o "$RUNNER_TEMP/daffodil.tgz" && tar -xzf "$RUNNER_TEMP/daffodil.tgz" -C "$RUNNER_TEMP" && echo "DAFFODIL=$RUNNER_TEMP/apache-daffodil-3.7.0-bin/bin/daffodil" >> "$GITHUB_ENV"
 
       - name: Compile Schemas
-        run: find . -name '*.dfdl.xsd' | while read schema; do echo "compiling $schema"; "$DAFFODIL" save-parser -s "$schema" -r packet "$RUNNER_TEMP/parser.bin" || exit 1; done
+        run: find . -name '*.dfdl.xsd' | while read schema; do echo "compiling $schema"; for root in $(grep -oE '^  <xs:element name="[^"]+"' "$schema" | sed -E 's/.*name="([^"]+)".*/\1/'); do echo "  root $root"; "$DAFFODIL" save-parser -s "$schema" -r "$root" "$RUNNER_TEMP/parser.bin" || exit 1; done; done
 
       - name: Install Python Test Dependencies
         run: pip3 install dpkt
