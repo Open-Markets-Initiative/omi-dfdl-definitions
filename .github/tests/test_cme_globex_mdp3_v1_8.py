@@ -21,7 +21,7 @@ class CmeGlobexMdp3V18Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "udpPacket", PARSER], check=True)
 
     def test_mdincrementalrefreshtradesummary(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.8/MdIncrementalRefreshTradeSummary.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.8/MdIncrementalRefreshTradeSummary.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

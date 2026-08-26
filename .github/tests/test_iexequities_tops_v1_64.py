@@ -21,7 +21,7 @@ class IexequitiesTopsV164Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_quoteupdatemessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/Tops.IexTp.v1.6/QuoteUpdateMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Tops.v1.6/QuoteUpdateMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

@@ -21,7 +21,7 @@ class IexequitiesDeepV108Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_heartbeat(self):
-        for payload in payloads.of("omi-data-packets/Iex/Deep.IexTp.v1.0/Heartbeat.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.v1.0/Heartbeat.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class IexequitiesDeepV108Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_pricelevelbuyupdatemessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/Deep.IexTp.v1.0/PriceLevelBuyUpdateMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.v1.0/PriceLevelBuyUpdateMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -37,7 +37,7 @@ class IexequitiesDeepV108Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_pricelevelsellupdatemessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/Deep.IexTp.v1.0/PriceLevelSellUpdateMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.v1.0/PriceLevelSellUpdateMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

@@ -23,7 +23,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "udpPacket", PARSER_UDPPACKET], check=True)
 
     def test_mdincrementalrefreshbooklongqty(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/MdIncrementalRefreshBookLongQty.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/MdIncrementalRefreshBookLongQty.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -31,7 +31,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshtradesummarylongqty(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/MdIncrementalRefreshTradeSummaryLongQty.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/MdIncrementalRefreshTradeSummaryLongQty.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -39,7 +39,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_marketdatarequest(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/MarketDataRequest.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/MarketDataRequest.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -47,7 +47,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_requestack(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/RequestAck.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/RequestAck.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -55,7 +55,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitylistrequest(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/SecurityListRequest.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/SecurityListRequest.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -63,7 +63,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitystatusrequest(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/SecurityStatusRequest.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/SecurityStatusRequest.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -71,7 +71,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitystatus(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/SecurityStatus.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/SecurityStatus.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -79,7 +79,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdinstrumentdefinitionfx(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/MdInstrumentDefinitionFx.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/MdInstrumentDefinitionFx.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -87,7 +87,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_snapshotfullrefreshtcplongqty(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/SnapshotFullRefreshTcpLongQty.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/SnapshotFullRefreshTcpLongQty.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -95,7 +95,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_subscriberheartbeat(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.12/SubscriberHeartbeat.Tcp.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.12/SubscriberHeartbeat.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

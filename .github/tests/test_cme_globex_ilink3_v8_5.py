@@ -21,7 +21,7 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_executionreportstatus(self):
-        for payload in payloads.of("omi-data-packets/Cme/iLink3.Sbe.8.5/ExecutionReportStatus.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.v8.5/ExecutionReportStatus.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_quotecancel(self):
-        for payload in payloads.of("omi-data-packets/Cme/iLink3.Sbe.8.5/QuoteCancel.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.v8.5/QuoteCancel.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -37,7 +37,7 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_quotecancelack(self):
-        for payload in payloads.of("omi-data-packets/Cme/iLink3.Sbe.8.5/QuoteCancelAck.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.v8.5/QuoteCancelAck.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -45,7 +45,7 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_sequence(self):
-        for payload in payloads.of("omi-data-packets/Cme/iLink3.Sbe.8.5/Sequence.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.v8.5/Sequence.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

@@ -21,7 +21,7 @@ class CmeGlobexMdp3V15Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "udpPacket", PARSER], check=True)
 
     def test_mdincrementalrefreshbook(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.5/MdIncrementalRefreshBook.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.5/MdIncrementalRefreshBook.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class CmeGlobexMdp3V15Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshsessionstatistics(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.5/MdIncrementalRefreshSessionStatistics.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.5/MdIncrementalRefreshSessionStatistics.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -37,7 +37,7 @@ class CmeGlobexMdp3V15Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshtradesummary(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.5/MdIncrementalRefreshTradeSummary.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.5/MdIncrementalRefreshTradeSummary.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -45,7 +45,7 @@ class CmeGlobexMdp3V15Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshvolume(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.5/MdIncrementalRefreshVolume.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.5/MdIncrementalRefreshVolume.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -53,7 +53,7 @@ class CmeGlobexMdp3V15Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdinstrumentdefinitionspread(self):
-        for payload in payloads.of("omi-data-packets/Cme/Mdp3.Sbe.v1.5/MdInstrumentDefinitionSpread.pcap"):
+        for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.v1.5/MdInstrumentDefinitionSpread.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

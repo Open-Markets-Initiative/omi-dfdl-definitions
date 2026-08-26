@@ -21,7 +21,7 @@ class B3derivativesBinaryumdfV18Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_securitydefinitionmessage(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryUmdf.v1.8/SecurityDefinitionMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryUmdf.v1.8/SecurityDefinitionMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class B3derivativesBinaryumdfV18Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_sequence(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryUmdf.v1.8/Sequence.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryUmdf.v1.8/Sequence.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

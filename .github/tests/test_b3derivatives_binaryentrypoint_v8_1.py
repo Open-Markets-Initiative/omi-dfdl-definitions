@@ -21,7 +21,7 @@ class B3derivativesBinaryentrypointV81Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_establishmessage(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryEntryPoint.v8.1/EstablishMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.1/EstablishMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class B3derivativesBinaryentrypointV81Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_executionreportnewmessage(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryEntryPoint.v8.1/ExecutionReportNewMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.1/ExecutionReportNewMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -37,7 +37,7 @@ class B3derivativesBinaryentrypointV81Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_executionreporttrademessage(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryEntryPoint.v8.1/ExecutionReportTradeMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.1/ExecutionReportTradeMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -45,7 +45,7 @@ class B3derivativesBinaryentrypointV81Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_negotiatemessage(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryEntryPoint.v8.1/NegotiateMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.1/NegotiateMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -53,7 +53,7 @@ class B3derivativesBinaryentrypointV81Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_simplemodifyordermessage(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryEntryPoint.v8.1/SimpleModifyOrderMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.1/SimpleModifyOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -61,7 +61,7 @@ class B3derivativesBinaryentrypointV81Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_simplenewordermessage(self):
-        for payload in payloads.of("omi-data-packets/B3/BinaryEntryPoint.v8.1/SimpleNewOrderMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.1/SimpleNewOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
