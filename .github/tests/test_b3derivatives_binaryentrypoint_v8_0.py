@@ -21,7 +21,7 @@ class B3derivativesBinaryentrypointV80Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_negotiaterejectmessage(self):
-        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.0/NegotiateRejectMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.Sbe.v8.0/NegotiateRejectMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class B3derivativesBinaryentrypointV80Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_terminatemessage(self):
-        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.v8.0/TerminateMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryEntryPoint.Sbe.v8.0/TerminateMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

@@ -21,7 +21,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_addorder(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/a_AddOrder.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/a_AddOrder.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_tradebreak(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/B_TradeBreak.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/B_TradeBreak.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -37,7 +37,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitydirectory(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/D_SecurityDirectory.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/D_SecurityDirectory.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -45,7 +45,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securityevent(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/E_SecurityEvent.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/E_SecurityEvent.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -53,7 +53,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_tradingstatus(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/H_TradingStatus.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/H_TradingStatus.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -61,7 +61,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_retailliquidityindicator(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/I_RetailLiquidityIndicator.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/I_RetailLiquidityIndicator.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -69,7 +69,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_orderexecuted(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/L_OrderExecuted.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/L_OrderExecuted.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -77,7 +77,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_ordermodify(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/M_OrderModify.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/M_OrderModify.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -85,7 +85,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_operationalhaltstatus(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/O_OperationalHaltStatus.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/O_OperationalHaltStatus.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -93,7 +93,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_shortsalepriceteststatus(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/P_ShortSalePriceTestStatus.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/P_ShortSalePriceTestStatus.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -101,7 +101,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_orderdelete(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/R_OrderDelete.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/R_OrderDelete.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -109,7 +109,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_systemevent(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/S_SystemEvent.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/S_SystemEvent.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -117,7 +117,7 @@ class IexequitiesDeepplusV104Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_trade(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.v1.0.2/T_Trade.pcap"):
+        for payload in payloads.of("omi-data-packets/Iex/IexEquities.DeepPlus.IexTp.v1.0.2/T_Trade.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
