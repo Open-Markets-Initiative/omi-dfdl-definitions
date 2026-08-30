@@ -39,7 +39,8 @@
     </xs:appinfo>
   </xs:annotation>
   <xs:element name="udpPacket" type="tns:udpPacket_t" />
-  <xs:element name="tcpPacket" type="tns:tcpPacket_t" />
+  <xs:element name="clientTcpPacket" type="tns:clientTcpPacket_t" />
+  <xs:element name="serverTcpPacket" type="tns:serverTcpPacket_t" />
   <xs:complexType name="udpPacket_t">
     <xs:sequence>
       <xs:element name="binaryPacketHeader" type="tns:binaryPacketHeader_t" />
@@ -4334,13 +4335,13 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="tcpPacket_t">
+  <xs:complexType name="clientTcpPacket_t">
     <xs:sequence>
-      <xs:element name="technicalHeader" type="tns:technicalHeader_t" />
-      <xs:element name="tcpMessage" type="tns:tcpMessage_t" />
+      <xs:element name="clientTechnicalHeader" type="tns:clientTechnicalHeader_t" />
+      <xs:element name="clientTcpMessage" type="tns:clientTcpMessage_t" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="technicalHeader_t">
+  <xs:complexType name="clientTechnicalHeader_t">
     <xs:sequence>
       <xs:element name="encodingType" type="xs:unsignedShort">
         <xs:annotation>
@@ -4365,7 +4366,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="tcpMessage_t">
+  <xs:complexType name="clientTcpMessage_t">
     <xs:sequence>
       <xs:element name="tcpMessageSize" type="xs:unsignedShort">
         <xs:annotation>
@@ -4375,7 +4376,111 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="messageHeader" type="tns:messageHeader_t" />
-      <xs:element name="payload">
+      <xs:element name="clientPayload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../tcpMessageSize - 10 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/templateId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="negotiate" type="tns:negotiate_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="200" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="terminate" type="tns:terminate_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="203" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="marketDataRequest" type="tns:marketDataRequest_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="205" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="securityListRequest" type="tns:securityListRequest_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="208" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="securityStatusRequest" type="tns:securityStatusRequest_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="209" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="subscriberHeartbeat">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="210" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverTcpPacket_t">
+    <xs:sequence>
+      <xs:element name="serverTechnicalHeader" type="tns:serverTechnicalHeader_t" />
+      <xs:element name="serverTcpMessage" type="tns:serverTcpMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverTechnicalHeader_t">
+    <xs:sequence>
+      <xs:element name="encodingType" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageSequenceNumber" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tcpSendingTime" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverTcpMessage_t">
+    <xs:sequence>
+      <xs:element name="tcpMessageSize" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="serverPayload">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element lengthKind="explicit" length="{ ../tcpMessageSize - 10 }" />
@@ -4510,13 +4615,6 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="negotiate" type="tns:negotiate_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="200" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
             <xs:element name="negotiationReject" type="tns:negotiationReject_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -4538,13 +4636,6 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="marketDataRequest" type="tns:marketDataRequest_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="205" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
             <xs:element name="requestAck" type="tns:requestAck_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -4558,30 +4649,6 @@
                   <dfdl:element choiceBranchKey="207" />
                 </xs:appinfo>
               </xs:annotation>
-            </xs:element>
-            <xs:element name="securityListRequest" type="tns:securityListRequest_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="208" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="securityStatusRequest" type="tns:securityStatusRequest_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="209" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="subscriberHeartbeat">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="210" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence />
-              </xs:complexType>
             </xs:element>
           </xs:choice>
         </xs:complexType>

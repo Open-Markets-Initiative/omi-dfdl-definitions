@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 389 | 3,192,932 |
+| 411 | 3,218,927 |
 
 ## Testing
 
@@ -39,11 +39,11 @@ Production packet captures are required for protocol verification.  If your orga
 Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
 ## Organizations
 
-> [24X][24X.Directory] · [A2X][A2X.Directory] · [Aquis][Aquis.Directory] · [Asx][Asx.Directory] · [B3][B3.Directory] · [Bist][Bist.Directory] · [BlueOceanAts][BlueOceanAts.Directory] · [CixAts][CixAts.Directory] · [Cme][Cme.Directory] · [Coinbase][Coinbase.Directory] · [Eurex][Eurex.Directory] · [Euronext][Euronext.Directory] · [Iex][Iex.Directory] · [Nasdaq][Nasdaq.Directory] · [Nyse][Nyse.Directory]
+> [24X][24X.Directory] · [A2X][A2X.Directory] · [Aquis][Aquis.Directory] · [Asx][Asx.Directory] · [B3][B3.Directory] · [Bist][Bist.Directory] · [BlueOceanAts][BlueOceanAts.Directory] · [CixAts][CixAts.Directory] · [Cme][Cme.Directory] · [Coinbase][Coinbase.Directory] · [Eurex][Eurex.Directory] · [Euronext][Euronext.Directory] · [Iex][Iex.Directory] · [Nasdaq][Nasdaq.Directory] · [Nyse][Nyse.Directory] · [OtcMarkets][OtcMarkets.Directory]
 
 ## Exchanges
 
-> [24XEquities][24XEquities.Exchange] · [AmexEquities][AmexEquities.Exchange] · [AmexOptions][AmexOptions.Exchange] · [AquisEquities][AquisEquities.Exchange] · [ArcaEquities][ArcaEquities.Exchange] · [ArcaOptions][ArcaOptions.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [B3Derivatives][B3Derivatives.Exchange] · [BorsaIstanbul][BorsaIstanbul.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NationalEquities][NationalEquities.Exchange] · [NomOptions][NomOptions.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [NyseEquities][NyseEquities.Exchange] · [NyseOptions][NyseOptions.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange] · [TexasEquities][TexasEquities.Exchange] · [BlueEquities][BlueEquities.Ats]
+> [24XEquities][24XEquities.Exchange] · [AmexEquities][AmexEquities.Exchange] · [AmexOptions][AmexOptions.Exchange] · [AquisEquities][AquisEquities.Exchange] · [ArcaEquities][ArcaEquities.Exchange] · [ArcaOptions][ArcaOptions.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [B3Derivatives][B3Derivatives.Exchange] · [BorsaIstanbul][BorsaIstanbul.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NationalEquities][NationalEquities.Exchange] · [NomOptions][NomOptions.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [NyseEquities][NyseEquities.Exchange] · [NyseOptions][NyseOptions.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange] · [TexasEquities][TexasEquities.Exchange] · [BlueEquities][BlueEquities.Ats] · [LinkAts][LinkAts.Ats] · [LinkNqb][LinkNqb.Ats] · [MoonAts][MoonAts.Ats] · [Overnight][Overnight.Ats]
 
 ## Platforms
 
@@ -95,6 +95,7 @@ Enjoy.
 [Omi.Encoding.PillarStream]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/PillarStream.md "PillarStream Encoding"
 [Omi.Encoding.Xdp]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Xdp.md "Xdp Encoding"
 [Omi.Encoding.Ultra]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Ultra.md "Ultra Encoding"
+[Omi.Encoding.Link]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Link.md "Link Encoding"
 
 [24X.24XEquities.Memo]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/24X/Protocols/24XEquities/Memo.md "Members Orders"
 [24X.24XEquities.MemoirDepthFeed]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/24X/Protocols/24XEquities/MemoirDepthFeed.md "Member Order Information Record Depth Feed"
@@ -249,6 +250,26 @@ Enjoy.
 [Nyse.TexasEquities.ImbalancesFeed]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Nyse/Protocols/TexasEquities/ImbalancesFeed.md "Imbalances Feed"
 [Nyse.TexasEquities.IntegratedFeed]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Nyse/Protocols/TexasEquities/IntegratedFeed.md "Integrated Feed"
 [Nyse.TexasEquities.Trades]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Nyse/Protocols/TexasEquities/Trades.md "Trades"
+[OtcMarkets.LinkAts.Multicast]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/Multicast.md "OTC Markets Multicast"
+[OtcMarkets.LinkAts.QuoteBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/QuoteBook.md ""
+[OtcMarkets.LinkAts.QuoteBookGlobalOtc]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/QuoteBookGlobalOtc.md ""
+[OtcMarkets.LinkAts.QuoteInside]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/QuoteInside.md ""
+[OtcMarkets.LinkAts.QuoteInsideGlobalOtc]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/QuoteInsideGlobalOtc.md ""
+[OtcMarkets.LinkAts.QuoteReferencePrice]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/QuoteReferencePrice.md ""
+[OtcMarkets.LinkAts.Trade]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/Trade.md ""
+[OtcMarkets.LinkAts.ExtendedTrade]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/ExtendedTrade.md ""
+[OtcMarkets.LinkAts.ReferenceData]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/ReferenceData.md ""
+[OtcMarkets.LinkAts.ReferenceDataNoCusip]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/ReferenceDataNoCusip.md ""
+[OtcMarkets.LinkNqb.TopOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkNqb/TopOfBook.md "OTC Top of Book"
+[OtcMarkets.LinkNqb.DepthOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkNqb/DepthOfBook.md "OTC Depth of Book"
+[OtcMarkets.LinkNqb.Retransmission]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkNqb/Retransmission.md "OTC Retransmission"
+[OtcMarkets.MoonAts.TopOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/MoonAts/TopOfBook.md "OTC Top of Book"
+[OtcMarkets.MoonAts.DepthOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/MoonAts/DepthOfBook.md "OTC Depth of Book"
+[OtcMarkets.MoonAts.Retransmission]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/MoonAts/Retransmission.md "OTC Retransmission"
+[OtcMarkets.Overnight.TopOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/Overnight/TopOfBook.md "OTC Top of Book"
+[OtcMarkets.Overnight.DepthOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/Overnight/DepthOfBook.md "OTC Depth of Book"
+[OtcMarkets.Overnight.Retransmission]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/Overnight/Retransmission.md "OTC Retransmission"
+[OtcMarkets.LinkAts.Headers]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/OtcMarkets/Protocols/LinkAts/Headers.md ""
 
 [24X.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/24x "24 National Exchange"
 [A2X.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/a2x "A2X Markets"
@@ -265,6 +286,7 @@ Enjoy.
 [Iex.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/iex "Investors Exchange"
 [Nasdaq.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq "National Association of Securities Dealers Automated Quotations (Nasdaq)"
 [Nyse.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse "New York Stock Exchange"
+[OtcMarkets.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets "OTC Markets Group"
 
 [24XEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/24x "24X Equities"
 [AmexEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/amexequities "Nyse Amex Equities"
@@ -285,6 +307,9 @@ Enjoy.
 [IexEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/iex/iexequities "IEX Equities"
 [IexOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/iex/iexoptions "IEX Options"
 [IseOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/iseoptions "Nasdaq ISE"
+[LinkAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/linkats "OTC Link ATS"
+[LinkNqb.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/linknqb "OTC Link NQB"
+[MoonAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/moonats "MOON ATS"
 [MrxOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/mrxoptions "Nasdaq MRX"
 [NationalEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nationalequities "Nyse National Equities"
 [NomOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/nomoptions "Nasdaq Options Market"
@@ -295,6 +320,7 @@ Enjoy.
 [NyseEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nyseequities "New York Stock Exchange Equities"
 [NyseOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nyseoptions "New York Stock Exchange Options"
 [Optiq.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/euronext "Euronext Optiq"
+[Overnight.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/overnight "OTC Link Overnight OTC"
 [PhlxOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/phlxoptions "Nasdaq PHLX"
 [PsxEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/psxequities "Nasdaq PSX"
 [T7.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/eurex "T7"
