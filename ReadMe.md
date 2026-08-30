@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 411 | 3,218,927 |
+| 442 | 3,344,546 |
 
 ## Testing
 
@@ -39,11 +39,11 @@ Production packet captures are required for protocol verification.  If your orga
 Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
 ## Organizations
 
-> [24X][24X.Directory] · [A2X][A2X.Directory] · [Aquis][Aquis.Directory] · [Asx][Asx.Directory] · [B3][B3.Directory] · [Bist][Bist.Directory] · [BlueOceanAts][BlueOceanAts.Directory] · [CixAts][CixAts.Directory] · [Cme][Cme.Directory] · [Coinbase][Coinbase.Directory] · [Eurex][Eurex.Directory] · [Euronext][Euronext.Directory] · [Iex][Iex.Directory] · [Nasdaq][Nasdaq.Directory] · [Nyse][Nyse.Directory] · [OtcMarkets][OtcMarkets.Directory]
+> [24X][24X.Directory] · [A2X][A2X.Directory] · [Aquis][Aquis.Directory] · [Asx][Asx.Directory] · [B3][B3.Directory] · [Bist][Bist.Directory] · [BlueOceanAts][BlueOceanAts.Directory] · [CixAts][CixAts.Directory] · [Cme][Cme.Directory] · [Coinbase][Coinbase.Directory] · [Eurex][Eurex.Directory] · [Euronext][Euronext.Directory] · [Iex][Iex.Directory] · [Memx][Memx.Directory] · [Nasdaq][Nasdaq.Directory] · [Nyse][Nyse.Directory] · [OtcMarkets][OtcMarkets.Directory]
 
 ## Exchanges
 
-> [24XEquities][24XEquities.Exchange] · [AmexEquities][AmexEquities.Exchange] · [AmexOptions][AmexOptions.Exchange] · [AquisEquities][AquisEquities.Exchange] · [ArcaEquities][ArcaEquities.Exchange] · [ArcaOptions][ArcaOptions.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [B3Derivatives][B3Derivatives.Exchange] · [BorsaIstanbul][BorsaIstanbul.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NationalEquities][NationalEquities.Exchange] · [NomOptions][NomOptions.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [NyseEquities][NyseEquities.Exchange] · [NyseOptions][NyseOptions.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange] · [TexasEquities][TexasEquities.Exchange] · [BlueEquities][BlueEquities.Ats] · [LinkAts][LinkAts.Ats] · [LinkNqb][LinkNqb.Ats] · [MoonAts][MoonAts.Ats] · [Overnight][Overnight.Ats]
+> [24XEquities][24XEquities.Exchange] · [AmexEquities][AmexEquities.Exchange] · [AmexOptions][AmexOptions.Exchange] · [AquisEquities][AquisEquities.Exchange] · [ArcaEquities][ArcaEquities.Exchange] · [ArcaOptions][ArcaOptions.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [B3Derivatives][B3Derivatives.Exchange] · [BorsaIstanbul][BorsaIstanbul.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [MemxEquities][MemxEquities.Exchange] · [MemxOptions][MemxOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NationalEquities][NationalEquities.Exchange] · [NomOptions][NomOptions.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [NyseEquities][NyseEquities.Exchange] · [NyseOptions][NyseOptions.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange] · [TexasEquities][TexasEquities.Exchange] · [BlueEquities][BlueEquities.Ats] · [LinkAts][LinkAts.Ats] · [LinkNqb][LinkNqb.Ats] · [MoonAts][MoonAts.Ats] · [Overnight][Overnight.Ats]
 
 ## Platforms
 
@@ -148,6 +148,15 @@ Enjoy.
 [Iex.IexOptions.MarketData]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexOptions/MarketData.md "Market Data"
 [Iex.IexOptions.BinaryOrderEntry]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexOptions/BinaryOrderEntry.md "Binary Order Entry"
 [Iex.IexOptions.Session]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Iex/Protocols/IexOptions/Session.md "Session"
+[Memx.MemxEquities.Memo]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxEquities/Memo.md "Members Orders"
+[Memx.MemxEquities.MemoirDepthFeed]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxEquities/MemoirDepthFeed.md "Memoir Depth Feed"
+[Memx.MemxEquities.MemoirLastSale]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxEquities/MemoirLastSale.md "Member Order Information Record Last Sale"
+[Memx.MemxEquities.MemoirTopOfBook]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxEquities/MemoirTopOfBook.md "Memoir Top Of Book"
+[Memx.MemxOptions.Memo]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxOptions/Memo.md "Members Orders"
+[Memx.MemxOptions.MemoirDepth]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxOptions/MemoirDepth.md "Member Order Information Record Depth"
+[Memx.MemxOptions.MemoirTop]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxOptions/MemoirTop.md "Member Order Information Record Top"
+[Memx.MemxOptions.RiskControl]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxOptions/RiskControl.md "Risk Control"
+[Memx.MemxEquities.CommonHeader]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Memx/Protocols/MemxEquities/CommonHeader.md "Common Header"
 [Nasdaq.GemxOptions.DepthOfMarket]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Nasdaq/Protocols/GemxOptions/DepthOfMarket.md "Depth Of Market"
 [Nasdaq.GemxOptions.OrderFeed]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Nasdaq/Protocols/GemxOptions/OrderFeed.md "Order Feed"
 [Nasdaq.GemxOptions.TopOfMarket]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Organizations/Nasdaq/Protocols/GemxOptions/TopOfMarket.md "Top Of Market"
@@ -284,6 +293,7 @@ Enjoy.
 [Eurex.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/eurex "Eurex Exchange"
 [Euronext.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/euronext "Euronext"
 [Iex.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/iex "Investors Exchange"
+[Memx.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/memx "The Members Exchange"
 [Nasdaq.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq "National Association of Securities Dealers Automated Quotations (Nasdaq)"
 [Nyse.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse "New York Stock Exchange"
 [OtcMarkets.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets "OTC Markets Group"
@@ -309,6 +319,8 @@ Enjoy.
 [IseOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/iseoptions "Nasdaq ISE"
 [LinkAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/linkats "OTC Link ATS"
 [LinkNqb.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/linknqb "OTC Link NQB"
+[MemxEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/memx/memxequities "Memx Equities"
+[MemxOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/memx/memxoptions "Memx Options"
 [MoonAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/moonats "MOON ATS"
 [MrxOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/mrxoptions "Nasdaq MRX"
 [NationalEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nationalequities "Nyse National Equities"
