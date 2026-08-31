@@ -35,17 +35,17 @@
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="packet">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="message" type="tns:message_t" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:complexType name="message_t">
+  <xs:element name="clientPacket" type="tns:clientPacket_t" />
+  <xs:element name="serverPacket" type="tns:serverPacket_t" />
+  <xs:complexType name="clientPacket_t">
+    <xs:sequence>
+      <xs:element name="clientMessage" type="tns:clientMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clientMessage_t">
     <xs:sequence>
       <xs:element name="messageHeader" type="tns:messageHeader_t" />
-      <xs:element name="payload">
+      <xs:element name="clientPayload">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element lengthKind="explicit" length="{ ../messageHeader/bodyLen - 6 }" />
@@ -58,31 +58,10 @@
                 <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/templateId) }" />
               </xs:appinfo>
             </xs:annotation>
-            <xs:element name="deleteOrderBroadcast" type="tns:deleteOrderBroadcast_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10902" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="forcedLogoutNotification" type="tns:forcedLogoutNotification_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10012" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
             <xs:element name="heartbeat" type="tns:heartbeat_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="10011" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="heartbeatNotification" type="tns:heartbeatNotification_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10023" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -93,59 +72,10 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="logonResponse" type="tns:logonResponse_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10001" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
             <xs:element name="logoutRequest" type="tns:logoutRequest_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="10002" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="logoutResponse" type="tns:logoutResponse_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10003" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="orderExecReportBroadcast" type="tns:orderExecReportBroadcast_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10901" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="partitionListNotification" type="tns:partitionListNotification_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10037" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="reject" type="tns:reject_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10010" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="sessionListNotification" type="tns:sessionListNotification_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10036" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="sessionStatusBroadcast" type="tns:sessionStatusBroadcast_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10903" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -238,6 +168,190 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="heartbeat_t">
+    <xs:sequence>
+      <xs:element name="pad2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="logonRequest_t">
+    <xs:sequence>
+      <xs:element name="pad2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="requestHeaderComp" type="tns:requestHeaderComp_t" />
+      <xs:element name="heartBtInt" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0xFFFFFFFF" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="partyIdSessionId" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0xFFFFFFFF" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="defaultCstmApplVerId" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="30" textStringPadCharacter="%NUL;" textTrimKind="padChar" textStringJustification="left" nilKind="literalValue" nilValue="%ES;" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="password" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" textStringPadCharacter="%NUL;" textTrimKind="padChar" textStringJustification="left" nilKind="literalValue" nilValue="%ES;" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="pad2v2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="requestHeaderComp_t">
+    <xs:sequence>
+      <xs:element name="msgSeqNum" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0xFFFFFFFF" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="pad4" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="logoutRequest_t">
+    <xs:sequence>
+      <xs:element name="pad2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="requestHeaderComp" type="tns:requestHeaderComp_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPacket_t">
+    <xs:sequence>
+      <xs:element name="serverMessage" type="tns:serverMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="serverPayload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../messageHeader/bodyLen - 6 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/templateId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="deleteOrderBroadcast" type="tns:deleteOrderBroadcast_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10902" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="forcedLogoutNotification" type="tns:forcedLogoutNotification_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10012" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="heartbeatNotification" type="tns:heartbeatNotification_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10023" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="logonResponse" type="tns:logonResponse_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10001" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="logoutResponse" type="tns:logoutResponse_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10003" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderExecReportBroadcast" type="tns:orderExecReportBroadcast_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10901" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="partitionListNotification" type="tns:partitionListNotification_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10037" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="reject" type="tns:reject_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10010" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sessionListNotification" type="tns:sessionListNotification_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10036" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sessionStatusBroadcast" type="tns:sessionStatusBroadcast_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10903" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -553,17 +667,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="heartbeat_t">
-    <xs:sequence>
-      <xs:element name="pad2" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="heartbeatNotification_t">
     <xs:sequence>
       <xs:element name="pad2" type="xs:hexBinary">
@@ -574,71 +677,6 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="notifHeaderComp" type="tns:notifHeaderComp_t" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="logonRequest_t">
-    <xs:sequence>
-      <xs:element name="pad2" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="requestHeaderComp" type="tns:requestHeaderComp_t" />
-      <xs:element name="heartBtInt" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0xFFFFFFFF" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="partyIdSessionId" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0xFFFFFFFF" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="defaultCstmApplVerId" nillable="true" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="30" textStringPadCharacter="%NUL;" textTrimKind="padChar" textStringJustification="left" nilKind="literalValue" nilValue="%ES;" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="password" nillable="true" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" textStringPadCharacter="%NUL;" textTrimKind="padChar" textStringJustification="left" nilKind="literalValue" nilValue="%ES;" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="pad2v2" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="requestHeaderComp_t">
-    <xs:sequence>
-      <xs:element name="msgSeqNum" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0xFFFFFFFF" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="pad4" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="logonResponse_t">
@@ -805,18 +843,6 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="logoutRequest_t">
-    <xs:sequence>
-      <xs:element name="pad2" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="requestHeaderComp" type="tns:requestHeaderComp_t" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="logoutResponse_t">
