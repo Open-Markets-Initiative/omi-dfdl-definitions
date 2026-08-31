@@ -22,6 +22,8 @@ class EurexT7XtiV100Tests(unittest.TestCase):
 
     def test_orderexecresponse(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Xti.Fbe.v10.0/OrderExecResponse.pcap"):
+            if payloads.partial(payload, 0, 4, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

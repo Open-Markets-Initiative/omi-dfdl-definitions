@@ -28,7 +28,7 @@ class B3derivativesBinaryumdfV18Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_sequencemessage(self):
+    def test_sequence(self):
         for payload in payloads.of("omi-data-packets/B3/B3Derivatives.BinaryUmdf.Sbe.v1.8/Sequence.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
