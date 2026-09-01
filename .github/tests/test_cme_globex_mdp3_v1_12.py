@@ -10,7 +10,8 @@ sys.path.insert(0, ".github/tests")
 import payloads
 
 SCHEMA = "cme/mdp3/Cme_Globex_Mdp3_v1_12.dfdl.xsd"
-PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_mdp3_v1_12.parser")
+PARSER_CLIENTTCPPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_mdp3_v1_12_clienttcppacket.parser")
+PARSER_SERVERTCPPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_mdp3_v1_12_servertcppacket.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
@@ -18,14 +19,15 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "udpPacket", PARSER], check=True)
+        subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "clientTcpPacket", PARSER_CLIENTTCPPACKET], check=True)
+        subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "serverTcpPacket", PARSER_SERVERTCPPACKET], check=True)
 
     def test_marketdatarequesttcp(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MarketDataRequest.Tcp.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshbooklongqty(self):
@@ -33,7 +35,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshtradesummarylongqty(self):
@@ -41,7 +43,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdinstrumentdefinitionfxtcp(self):
@@ -49,7 +51,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_requestacktcp(self):
@@ -57,7 +59,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitylistrequesttcp(self):
@@ -65,7 +67,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitystatustcp(self):
@@ -73,7 +75,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitystatusrequesttcp(self):
@@ -81,7 +83,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_snapshotfullrefreshtcplongqtytcp(self):
@@ -89,7 +91,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_subscriberheartbeattcp(self):
@@ -97,7 +99,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
 

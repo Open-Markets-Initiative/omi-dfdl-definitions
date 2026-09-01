@@ -59,7 +59,7 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERPACKET, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
 
