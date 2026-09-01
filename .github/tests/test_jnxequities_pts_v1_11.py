@@ -72,6 +72,46 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
+    def test_cancelordermessage(self):
+        for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.12/CancelOrderMessage.pcap"):
+            if payloads.partial(payload, 0, 2, "big", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_ordercanceledmessage(self):
+        for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.12/OrderCanceledMessage.pcap"):
+            if payloads.partial(payload, 0, 2, "big", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERPACKET, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_orderexecutedmessage(self):
+        for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.12/OrderExecutedMessage.pcap"):
+            if payloads.partial(payload, 0, 2, "big", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERPACKET, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_orderrejectedmessage(self):
+        for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.12/OrderRejectedMessage.pcap"):
+            if payloads.partial(payload, 0, 2, "big", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERPACKET, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
 
 if __name__ == "__main__":
     unittest.main()
