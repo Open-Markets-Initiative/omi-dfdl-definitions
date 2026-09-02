@@ -51,7 +51,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_requestacktcp(self):
@@ -59,7 +59,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitylistrequesttcp(self):
@@ -75,7 +75,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitystatusrequesttcp(self):
@@ -91,7 +91,7 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_subscriberheartbeattcp(self):
