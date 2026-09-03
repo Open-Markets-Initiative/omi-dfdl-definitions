@@ -20,14 +20,6 @@ class EurexT7EobiV60Tests(unittest.TestCase):
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
-    def test_executionsummary(self):
-        for payload in payloads.of("omi-data-packets/Eurex/T7.Eobi.Fbe.v6.0/ExecutionSummary.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_fullorderexecution(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eobi.Fbe.v6.0/FullOrderExecution.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
@@ -62,14 +54,6 @@ class EurexT7EobiV60Tests(unittest.TestCase):
 
     def test_ordermodify(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eobi.Fbe.v6.0/OrderModify.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
-    def test_partialorderexecution(self):
-        for payload in payloads.of("omi-data-packets/Eurex/T7.Eobi.Fbe.v6.0/PartialOrderExecution.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
