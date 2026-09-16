@@ -1,0 +1,2412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Dfdl schema definition for: Jpx OseDerivatives GeniumInet v5.0
+
+  Protocol:
+    Organization: Japan Exchange Group
+    Protocol: Genium Inet
+    Encoding: Ouch
+    Version: 5.0
+    Date: 9/16/2020
+    Specification: OUCH_ProtSpec_OSE_va2656.pdf
+
+  Script:
+    Generator: 1.0.0.0
+    License: Public/GPLv3
+    Authors: Omi Developers
+
+  Copyright (c) 2026 Scaled Sources LLC.  https://www.scaledsources.com
+
+  This dfdl schema is contributed to The Open Markets Initiative under
+  the license noted above.
+
+  The protocol compiler technologies used to produce this file
+  are the subject of patents owned by Scaled Sources LLC.  Those patent
+  rights are retained and are not transferred by this contribution:
+    https://patents.google.com/patent/US20240129382A1/en
+    https://patents.google.com/patent/US20240419416A1/en
+
+  Open Markets Initiative website:
+    https://openmarketsinitiative.com
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:jpx:osederivatives:geniuminet:v5:0" targetNamespace="urn:omi:jpx:osederivatives:geniuminet:v5:0">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format byteOrder="bigEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="clientPacket" type="tns:clientPacket_t" />
+  <xs:element name="serverPacket" type="tns:serverPacket_t" />
+  <xs:complexType name="clientPacket_t">
+    <xs:sequence>
+      <xs:element name="clientSoupBinTcpPacket" type="tns:clientSoupBinTcpPacket_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clientSoupBinTcpPacket_t">
+    <xs:sequence>
+      <xs:element name="clientPacketHeader" type="tns:clientPacketHeader_t" />
+      <xs:element name="clientPayload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../clientPacketHeader/packetLength + 2 - 3 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../clientPacketHeader/clientPacketType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="debugPacket" type="tns:debugPacket_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="+" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="loginRequestPacket" type="tns:loginRequestPacket_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="L" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="unsequencedDataPacket" type="tns:unsequencedDataPacket_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="U" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="clientHeartbeat">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="R" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="logoutRequest">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="O" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clientPacketHeader_t">
+    <xs:sequence>
+      <xs:element name="packetLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="clientPacketType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="+">
+              <xs:annotation>
+                <xs:documentation>Debug Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="L">
+              <xs:annotation>
+                <xs:documentation>Login Request Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Unsequenced Data Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="R">
+              <xs:annotation>
+                <xs:documentation>Client Heartbeat Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Logout Request Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="debugPacket_t">
+    <xs:sequence>
+      <xs:element name="text" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginRequestPacket_t">
+    <xs:sequence>
+      <xs:element name="username" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="password" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="requestedSession" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="requestedSequenceNumber" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="20" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="unsequencedDataPacket_t">
+    <xs:sequence>
+      <xs:element name="unsequencedMessageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Enter Order</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+              <xs:annotation>
+                <xs:documentation>Enter Mm Order</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Replace Order</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Cancel Order</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Y">
+              <xs:annotation>
+                <xs:documentation>Cancel By Order Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M">
+              <xs:annotation>
+                <xs:documentation>Mass Cancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="unsequencedMessage">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../../clientPacketHeader/packetLength - 2 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../unsequencedMessageType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="enterOrder" type="tns:enterOrder_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="O" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="enterMmOrder" type="tns:enterMmOrder_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="P" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="replaceOrder" type="tns:replaceOrder_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="U" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="cancelOrder" type="tns:cancelOrder_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="X" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="cancelByOrderId" type="tns:cancelByOrderId_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="Y" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="massCancel" type="tns:massCancel_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="M" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enterOrder_t">
+    <xs:sequence>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderBookId" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="side">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Buy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Sell</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="quantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="price" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timeInForce">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Day</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Immediate Or Cancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Fill Or Kill</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="openClose">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>No Change</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Close Net</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Mandatory Close</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Default</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="clientAccount" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customerInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="15" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="exchangeInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enterMmOrder_t">
+    <xs:sequence>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderBookId" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="side">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Buy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Sell</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="quantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="price" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="clientAccount" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="exchangeInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="replaceOrder_t">
+    <xs:sequence>
+      <xs:element name="existingOrderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="replacementOrderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="quantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="price" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="openClose">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>No Change</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Close Net</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Mandatory Close</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Default</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="clientAccount" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customerInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="15" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="exchangeInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelOrder_t">
+    <xs:sequence>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelByOrderId_t">
+    <xs:sequence>
+      <xs:element name="orderBookId" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="side">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Buy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Sell</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="orderId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="massCancel_t">
+    <xs:sequence>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="underlyingId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="scope">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Participant</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="clientAccount" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPacket_t">
+    <xs:sequence>
+      <xs:element name="serverSoupBinTcpPacket" type="tns:serverSoupBinTcpPacket_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverSoupBinTcpPacket_t">
+    <xs:sequence>
+      <xs:element name="serverPacketHeader" type="tns:serverPacketHeader_t" />
+      <xs:element name="serverPayload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../serverPacketHeader/packetLength + 2 - 3 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../serverPacketHeader/serverPacketType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="debugPacket" type="tns:debugPacket_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="+" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="loginAcceptedPacket" type="tns:loginAcceptedPacket_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="A" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="loginRejectedPacket" type="tns:loginRejectedPacket_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="J" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sequencedDataPacket" type="tns:sequencedDataPacket_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="S" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="serverHeartbeat">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="H" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="endOfSession">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="Z" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPacketHeader_t">
+    <xs:sequence>
+      <xs:element name="packetLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="serverPacketType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="+">
+              <xs:annotation>
+                <xs:documentation>Debug Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Login Accepted Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="J">
+              <xs:annotation>
+                <xs:documentation>Login Rejected Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Sequenced Data Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Server Heartbeat Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Z">
+              <xs:annotation>
+                <xs:documentation>End Of Session Packet</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginAcceptedPacket_t">
+    <xs:sequence>
+      <xs:element name="session" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sequenceNumber" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="20" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginRejectedPacket_t">
+    <xs:sequence>
+      <xs:element name="rejectReasonCode" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sequencedDataPacket_t">
+    <xs:sequence>
+      <xs:element name="sequencedMessageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Order Accepted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M">
+              <xs:annotation>
+                <xs:documentation>Mass Cancel Accepted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="J">
+              <xs:annotation>
+                <xs:documentation>Order Rejected</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Order Replaced</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Order Canceled</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="E">
+              <xs:annotation>
+                <xs:documentation>Order Executed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="sequencedMessage">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../../serverPacketHeader/packetLength - 2 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../sequencedMessageType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="orderAccepted" type="tns:orderAccepted_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="A" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="massCancelAccepted" type="tns:massCancelAccepted_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="M" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderRejected" type="tns:orderRejected_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="J" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderReplaced" type="tns:orderReplaced_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="U" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderCanceled" type="tns:orderCanceled_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="C" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderExecuted" type="tns:orderExecuted_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="E" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="orderAccepted_t">
+    <xs:sequence>
+      <xs:element name="timestampNanoseconds" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderBookId" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="side">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Buy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Sell</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="orderId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="quantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="price" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timeInForce">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Day</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Immediate Or Cancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Fill Or Kill</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="openClose">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>No Change</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Close Net</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Mandatory Close</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Default</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="clientAccount" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderState">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>On Book</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Not On Book</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="customerInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="15" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="exchangeInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="massCancelAccepted_t">
+    <xs:sequence>
+      <xs:element name="timestampNanoseconds" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="status" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="orderRejected_t">
+    <xs:sequence>
+      <xs:element name="timestampNanoseconds" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rejectCode">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:enumeration value="-800014">
+              <xs:annotation>
+                <xs:documentation>De Can Not Cancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800002">
+              <xs:annotation>
+                <xs:documentation>De Duplicate Token</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800016">
+              <xs:annotation>
+                <xs:documentation>De Invalid Mass Cancel Scope</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800006">
+              <xs:annotation>
+                <xs:documentation>De Invalid Orderbook</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800012">
+              <xs:annotation>
+                <xs:documentation>De Invalid Order Number</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800008">
+              <xs:annotation>
+                <xs:documentation>De Invalid Side</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800010">
+              <xs:annotation>
+                <xs:documentation>De Invalid Tif</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800018">
+              <xs:annotation>
+                <xs:documentation>De Invalid Underlying</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800015">
+              <xs:annotation>
+                <xs:documentation>De Throttling</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-800004">
+              <xs:annotation>
+                <xs:documentation>De Unknown Token</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110210">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Aex Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110244">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Asc Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110262">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cac Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110235">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cbs Not Ready</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110196">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cbx Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110204">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ccr Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110186">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cib Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110019">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cli Notfou</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110118">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cog Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110242">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cpa Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110194">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Crf Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110202">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cro Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110274">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Crp Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110165">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Crsclose</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110212">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Csa Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110282">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cse Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110081">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cst Susp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110218">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cup Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110264">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Cur Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110136">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Des Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110146">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Dgr Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110148">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Dhb Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110268">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Dio Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110232">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ecb Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110126">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Edg Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110222">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Edl Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110138">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Eid Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110142">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Exc Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110120">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Fml Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110132">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Fov Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110284">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Hse Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110061">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ill Commodity</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110220">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ing Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110023">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Int Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110167">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Invopenclose</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110171">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Invuser</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110157">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Inv Block</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110163">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Inv Open Close Req</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110161">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Inv Premium</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110159">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Inv Quantity</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110206">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ixv Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110011">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Liu Notfou</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110013">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ltt Notfou</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110169">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Match Validity</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110201">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Max Mem Quantity</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110173">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Max Quantity</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110002">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Mem Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110175">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Min Of Sil</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110278">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Mpm Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110276">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Mpr Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110116">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Msu Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110247">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Not Traded</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110193">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc No Hedge Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110190">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ntd Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110236">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Oat Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110122">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Obk Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110114">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Obl Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110115">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Obl Notfou</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110255">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Only In Eq Cbo</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110266">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Opp Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110130">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Pdp Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110252">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Pid Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110216">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Pod Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110152">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Prl Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110270">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Rpt Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110272">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Rtm Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110214">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Sec Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110155">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Series Stopped</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110188">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Sid Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110128">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Spg Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110224">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Spl Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110230">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Sss Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110150">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Sst Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110257">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Trc Ins Notfound</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110259">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Trc Sst Notfound</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110261">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Trc Ust Notfound</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110134">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Tse Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110124">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Tsr Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110077">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Usr Susp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110140">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Ust Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110208">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Vbs Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110144">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Vds Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110226">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Vsp Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-110198">
+              <xs:annotation>
+                <xs:documentation>Gen Cdc Wkp Full</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197004">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Dvpcancellednocancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197000">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Dvpcompletednocancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197002">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Dvprecallednocancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197014">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Fixedincomepricetype</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197012">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Fixedincomeproduct</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197008">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Illegalargument</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197022">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Interror</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197006">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Invfixedincometype</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197026">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Invinsid</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197010">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Invpremiumunit</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197016">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Invseries</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197020">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Nottmseries</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197018">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Nottmtemplate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-197024">
+              <xs:annotation>
+                <xs:documentation>Gen Shr Seriesmismatch</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140001">
+              <xs:annotation>
+                <xs:documentation>Oc Brx Not All</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140006">
+              <xs:annotation>
+                <xs:documentation>Oc Error</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140008">
+              <xs:annotation>
+                <xs:documentation>Oc Fatal</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140010">
+              <xs:annotation>
+                <xs:documentation>Oc Invargs</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140012">
+              <xs:annotation>
+                <xs:documentation>Oc Invchn Type</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140074">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Notsamclu</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140076">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Notsamnod</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140070">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Not Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140078">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Nrsegsdif</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140080">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Outst Evtsdwn</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140082">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Reqabort</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140084">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Reqcallun</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140085">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Shutcall</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140087">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Shutdown</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140092">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Toomansha</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140094">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Truncate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-140098">
+              <xs:annotation>
+                <xs:documentation>Oc Tx Uppleslow</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510192">
+              <xs:annotation>
+                <xs:documentation>Info Abortnomatch</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510190">
+              <xs:annotation>
+                <xs:documentation>Info Abortstateready</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510228">
+              <xs:annotation>
+                <xs:documentation>Info Abortstateundo</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510080">
+              <xs:annotation>
+                <xs:documentation>Info Badseg</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510270">
+              <xs:annotation>
+                <xs:documentation>Info Bdcsem</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510268">
+              <xs:annotation>
+                <xs:documentation>Info Bdcsyn</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510224">
+              <xs:annotation>
+                <xs:documentation>Info Calcrulenotaplund</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510206">
+              <xs:annotation>
+                <xs:documentation>Info Colfailnosource</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510194">
+              <xs:annotation>
+                <xs:documentation>Info Datalckbysignal</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510214">
+              <xs:annotation>
+                <xs:documentation>Info Dirtyfuture</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510218">
+              <xs:annotation>
+                <xs:documentation>Info Dirtymoney</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510216">
+              <xs:annotation>
+                <xs:documentation>Info Dirtywi</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510348">
+              <xs:annotation>
+                <xs:documentation>Info Emergsplocked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510272">
+              <xs:annotation>
+                <xs:documentation>Info Errorcode</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510186">
+              <xs:annotation>
+                <xs:documentation>Info Funcnotsup</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510284">
+              <xs:annotation>
+                <xs:documentation>Info Hisdatenotalwd</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510308">
+              <xs:annotation>
+                <xs:documentation>Info Indexcalcfail</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510312">
+              <xs:annotation>
+                <xs:documentation>Info Indexindiceslogfail</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510310">
+              <xs:annotation>
+                <xs:documentation>Info Indexjournalfail</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510300">
+              <xs:annotation>
+                <xs:documentation>Info Indexvalidfail</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510220">
+              <xs:annotation>
+                <xs:documentation>Info Indicativepricetype</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510280">
+              <xs:annotation>
+                <xs:documentation>Info Insnotallowed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510332">
+              <xs:annotation>
+                <xs:documentation>Info Spgenericerror</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510326">
+              <xs:annotation>
+                <xs:documentation>Info Spinvalgo</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510328">
+              <xs:annotation>
+                <xs:documentation>Info Spinvalgoforprod</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510346">
+              <xs:annotation>
+                <xs:documentation>Info Spinvalgoparam</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510330">
+              <xs:annotation>
+                <xs:documentation>Info Spinvaslocked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510340">
+              <xs:annotation>
+                <xs:documentation>Info Spinvclearingdate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510322">
+              <xs:annotation>
+                <xs:documentation>Info Spinvforalg</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510320">
+              <xs:annotation>
+                <xs:documentation>Info Spinvfortheoalg</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510334">
+              <xs:annotation>
+                <xs:documentation>Info Spinvmanuallyflag</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510350">
+              <xs:annotation>
+                <xs:documentation>Info Spinvsource</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510352">
+              <xs:annotation>
+                <xs:documentation>Info Spmixderupp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510336">
+              <xs:annotation>
+                <xs:documentation>Info Spmixfutopt</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510338">
+              <xs:annotation>
+                <xs:documentation>Info Spnotallopt</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510354">
+              <xs:annotation>
+                <xs:documentation>Info Spnoupperlp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510344">
+              <xs:annotation>
+                <xs:documentation>Info Spoptexpandmaxlimit</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510342">
+              <xs:annotation>
+                <xs:documentation>Info Spruleoutofrange</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510358">
+              <xs:annotation>
+                <xs:documentation>Info Spsavecalcinprog</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510360">
+              <xs:annotation>
+                <xs:documentation>Info Spsavelck</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510362">
+              <xs:annotation>
+                <xs:documentation>Info Spsavenewcday</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510324">
+              <xs:annotation>
+                <xs:documentation>Info Sptomanymatches</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510317">
+              <xs:annotation>
+                <xs:documentation>Info Strtruncated</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510234">
+              <xs:annotation>
+                <xs:documentation>Info Subitemdropped</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510079">
+              <xs:annotation>
+                <xs:documentation>Info Todaynotavail</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510370">
+              <xs:annotation>
+                <xs:documentation>Info Txdupitem</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510144">
+              <xs:annotation>
+                <xs:documentation>Info Unknownoper</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-510368">
+              <xs:annotation>
+                <xs:documentation>Info Wrongchildstate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="orderReplaced_t">
+    <xs:sequence>
+      <xs:element name="timestampNanoseconds" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="replacementOrderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="previousOrderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderBookId" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="side">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Buy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Sell</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="orderId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="quantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="price" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timeInForce">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Day</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Immediate Or Cancel</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Fill Or Kill</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="openClose">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>No Change</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Close Net</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Mandatory Close</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Default</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="clientAccount" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderState">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>On Book</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Not On Book</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="customerInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="15" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="exchangeInfo" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="orderCanceled_t">
+    <xs:sequence>
+      <xs:element name="timestampNanoseconds" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderBookId" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="side">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Buy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Sell</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="orderId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="cancelReason">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Canceled By User</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Order Inactivated</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Canceled By System</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Canceled By Proxy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Canceled By System Limit Change</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="19">
+              <xs:annotation>
+                <xs:documentation>Deleted By Time Validity Expiration</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+              <xs:annotation>
+                <xs:documentation>Canceled Due To Iss</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="21">
+              <xs:annotation>
+                <xs:documentation>Inactivated Due To Iss</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="34">
+              <xs:annotation>
+                <xs:documentation>Canceled After Auction</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="41">
+              <xs:annotation>
+                <xs:documentation>Canceled By System Delta Protection</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="42">
+              <xs:annotation>
+                <xs:documentation>Canceled By System Quantity Protection</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="43">
+              <xs:annotation>
+                <xs:documentation>Self Trade Prevention</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="orderExecuted_t">
+    <xs:sequence>
+      <xs:element name="timestampNanoseconds" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderBookId" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradedQuantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradePrice" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="matchId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="comboGroupId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dealSource">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>System Matched</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Combination Matched</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+              <xs:annotation>
+                <xs:documentation>Auction End Deal</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
