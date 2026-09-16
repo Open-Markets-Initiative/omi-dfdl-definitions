@@ -9,91 +9,91 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "iex/iexequities/deep/IexEquities_Deep_v1_06.dfdl.xsd"
-PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "iexequities_deep_v1_06.parser")
+SCHEMA = "nyse/arcaequities/integratedfeed/ArcaEquities_IntegratedFeed_v2_5_g.dfdl.xsd"
+PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "arcaequities_integratedfeed_v2_5_g.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
-class IexequitiesDeepV106Tests(unittest.TestCase):
+class ArcaequitiesIntegratedfeedV25GTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
-    def test_auctioninformationmessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/AuctionInformationMessage.pcap"):
+    def test_addordermessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/AddOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_heartbeat(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/Heartbeat.pcap"):
+    def test_crosstrademessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/CrossTradeMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_officialpricemessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/OfficialPriceMessage.pcap"):
+    def test_deleteordermessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/DeleteOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_pricelevelbuyupdatemessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/PriceLevelBuyUpdateMessage.pcap"):
+    def test_modifyordermessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/ModifyOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_pricelevelsellupdatemessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/PriceLevelSellUpdateMessage.pcap"):
+    def test_nondisplayedtrademessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/NonDisplayedTradeMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_securityeventmessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/SecurityEventMessage.pcap"):
+    def test_orderexecutionmessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/OrderExecutionMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_shortsalepriceteststatusmessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/ShortSalePriceTestStatusMessage.pcap"):
+    def test_replaceordermessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/ReplaceOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_systemeventmessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/SystemEventMessage.pcap"):
+    def test_retailpriceimprovementmessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/RetailPriceImprovementMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_tradereportmessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/TradeReportMessage.pcap"):
+    def test_securitystatusmessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/SecurityStatusMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_tradingstatusmessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Deep.IexTp.v1.06/TradingStatusMessage.pcap"):
+    def test_sourcetimereferencemessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.IntegratedFeed.Pillar.v2.5.g/SourceTimeReferenceMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

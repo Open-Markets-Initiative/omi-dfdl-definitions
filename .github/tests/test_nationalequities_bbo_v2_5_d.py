@@ -9,27 +9,35 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "iex/iexequities/tops/IexEquities_Tops_v1_56.dfdl.xsd"
-PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "iexequities_tops_v1_56.parser")
+SCHEMA = "nyse/nationalequities/bbo/NationalEquities_Bbo_v2_5_d.dfdl.xsd"
+PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "nationalequities_bbo_v2_5_d.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
-class IexequitiesTopsV156Tests(unittest.TestCase):
+class NationalequitiesBboV25DTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
-    def test_quoteupdatemessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Tops.IexTp.v1.56/QuoteUpdateMessage.pcap"):
+    def test_quotemessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/NationalEquities.Bbo.Pillar.v2.5.d/QuoteMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_tradereportmessage(self):
-        for payload in payloads.of("omi-data-packets/Iex/IexEquities.Tops.IexTp.v1.56/TradeReportMessage.pcap"):
+    def test_securitystatusmessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/NationalEquities.Bbo.Pillar.v2.5.d/SecurityStatusMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_sourcetimereferencemessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/NationalEquities.Bbo.Pillar.v2.5.d/SourceTimeReferenceMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
