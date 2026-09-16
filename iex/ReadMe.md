@@ -24,6 +24,12 @@
 Iex: [website](https://www.iex.io "Go to Investors Exchange")
 
 
+## Open Markets Initiative
+
+[![Omi](https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/About/Images/Logo.png)](https://github.com/Open-Markets-Initiative/Directory)  The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
+
+Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
+
 [Omi.Glossary.Status]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Protocol Deployment Status"
 [Omi.Glossary.Status.Active]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Deployment Status: Protocol is in active production"
 [Omi.Glossary.Status.Deprecated]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Deployment Status: Protocol is no longer in active use"
