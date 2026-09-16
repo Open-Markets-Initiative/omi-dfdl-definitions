@@ -79,14 +79,8 @@
 | [TexasEquities][TexasEquities.Exchange] | [Bqt][Nyse.TexasEquities.Bqt] | [Xdp][Omi.Encoding.Xdp] | [2.4.a][Nyse.TexasEquities.Bqt.Xdp.v2.4.a.Definition] | 3/5/2026 | 3818 | [Active][Omi.Glossary.Status.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Nyse.TexasEquities.Bqt.Xdp.v2.4.a.Url] - [pdf][Nyse.TexasEquities.Bqt.Xdp.v2.4.a.Pdf] |
 
 
-Nyse: [website](https://www.nyse.com "Go to New York Stock Exchange")
+<p align="center"><a href="https://www.nyse.com" title="New York Stock Exchange Website"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Website.png" alt="Website" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/company/nyse" title="New York Stock Exchange on LinkedIn"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/LinkedIn.png" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://en.wikipedia.org/wiki/New_York_Stock_Exchange" title="New York Stock Exchange on Wikipedia"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Wikipedia.png" alt="Wikipedia" width="32" height="32"></a></p>
 
-
-## Open Markets Initiative
-
-[![Omi](https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/About/Images/Logo.png)](https://github.com/Open-Markets-Initiative/Directory)  The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
-
-Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
 
 [Omi.Glossary.Status]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Protocol Deployment Status"
 [Omi.Glossary.Status.Active]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Deployment Status: Protocol is in active production"

@@ -20,14 +20,8 @@
 | [B3Derivatives][B3Derivatives.Exchange] | [BinaryUmdf][B3.B3Derivatives.BinaryUmdf] | [Sbe][Omi.Encoding.Sbe] | [1.6][B3.B3Derivatives.BinaryUmdf.Sbe.v1.6.Definition] | 6/13/2023 | 4674 | [Deprecated][Omi.Glossary.Status.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [pdf][B3.B3Derivatives.BinaryUmdf.Sbe.v1.6.Pdf] - [xml][B3.B3Derivatives.BinaryUmdf.Sbe.v1.6.Xml] |
 
 
-B3: [website](https://www.b3.com.br/en_us "Go to Brasil, Bolsa, Balcão")
+<p align="center"><a href="https://www.b3.com.br/en_us" title="Brasil, Bolsa, Balc&#227;o Website"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Website.png" alt="Website" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/company/b3_oficial" title="Brasil, Bolsa, Balc&#227;o on LinkedIn"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/LinkedIn.png" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://en.wikipedia.org/wiki/B3_(stock_exchange)" title="Brasil, Bolsa, Balc&#227;o on Wikipedia"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Wikipedia.png" alt="Wikipedia" width="32" height="32"></a></p>
 
-
-## Open Markets Initiative
-
-[![Omi](https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/About/Images/Logo.png)](https://github.com/Open-Markets-Initiative/Directory)  The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
-
-Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
 
 [Omi.Glossary.Status]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Protocol Deployment Status"
 [Omi.Glossary.Status.Active]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Deployment Status: Protocol is in active production"

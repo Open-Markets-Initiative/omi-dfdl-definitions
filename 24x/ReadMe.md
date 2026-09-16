@@ -11,14 +11,8 @@
 | [24XEquities][24XEquities.Exchange] | [MemoirTopOfBook][24X.24XEquities.MemoirTopOfBook] | [Sbe][Omi.Encoding.Sbe] | [1.3][24X.24XEquities.MemoirTopOfBook.Sbe.v1.3.Definition] | 9/1/2025 | 754 | [Active][Omi.Glossary.Status.Active] | [Beta][Omi.Glossary.Testing.Beta] | [url][24X.24XEquities.MemoirTopOfBook.Sbe.v1.3.Url] - [pdf][24X.24XEquities.MemoirTopOfBook.Sbe.v1.3.Pdf] - [xml][24X.24XEquities.MemoirTopOfBook.Sbe.v1.3.Xml] |
 
 
-24X: [website](https://24exchange.com "Go to 24 National Exchange")
+<p align="center"><a href="https://24exchange.com" title="24 National Exchange Website"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Website.png" alt="Website" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/company/24-exchange" title="24 National Exchange on LinkedIn"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/LinkedIn.png" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://en.wikipedia.org/wiki/24X_National_Exchange" title="24 National Exchange on Wikipedia"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Wikipedia.png" alt="Wikipedia" width="32" height="32"></a></p>
 
-
-## Open Markets Initiative
-
-[![Omi](https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/About/Images/Logo.png)](https://github.com/Open-Markets-Initiative/Directory)  The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
-
-Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
 
 [Omi.Glossary.Status]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Protocol Deployment Status"
 [Omi.Glossary.Status.Active]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Deployment Status: Protocol is in active production"

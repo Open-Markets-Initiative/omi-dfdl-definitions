@@ -14,14 +14,8 @@
 | [BivaEquities][BivaEquities.Exchange] | [OrderEntry][Biva.BivaEquities.OrderEntry] | [Ouch][Omi.Encoding.Ouch] | [1.05][Biva.BivaEquities.OrderEntry.Ouch.v1.05.Definition] | 1/1/2016 | 1323 | [Active][Omi.Glossary.Status.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Biva.BivaEquities.OrderEntry.Ouch.v1.05.Url] - [pdf][Biva.BivaEquities.OrderEntry.Ouch.v1.05.Pdf] |
 
 
-Biva: [website](https://www.biva.mx "Go to Bolsa Institucional de Valores")
+<p align="center"><a href="https://www.biva.mx" title="Bolsa Institucional de Valores Website"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Website.png" alt="Website" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/company/biva-mx" title="Bolsa Institucional de Valores on LinkedIn"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/LinkedIn.png" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://en.wikipedia.org/wiki/Bolsa_Institucional_de_Valores" title="Bolsa Institucional de Valores on Wikipedia"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Wikipedia.png" alt="Wikipedia" width="32" height="32"></a></p>
 
-
-## Open Markets Initiative
-
-[![Omi](https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/About/Images/Logo.png)](https://github.com/Open-Markets-Initiative/Directory)  The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
-
-Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
 
 [Omi.Glossary.Status]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Protocol Deployment Status"
 [Omi.Glossary.Status.Active]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Deployment Status: Protocol is in active production"

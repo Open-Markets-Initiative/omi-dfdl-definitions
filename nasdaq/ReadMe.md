@@ -82,14 +82,8 @@
 | [Utp][Utp.Consolidator] | [Snapshot][Nasdaq.Utp.Snapshot] | [Utp][Omi.Encoding.Utp] | [3.0][Nasdaq.Utp.Snapshot.Utp.v3.0.Definition] | 6/1/2026 | 5734 | [Active][Omi.Glossary.Status.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Nasdaq.Utp.Snapshot.Utp.v3.0.Url] - [pdf][Nasdaq.Utp.Snapshot.Utp.v3.0.Pdf] |
 
 
-Nasdaq: [website](https://www.nasdaq.com "Go to National Association of Securities Dealers Automated Quotations (Nasdaq)")
+<p align="center"><a href="https://www.nasdaq.com" title="National Association of Securities Dealers Automated Quotations (Nasdaq) Website"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Website.png" alt="Website" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/company/nasdaq" title="National Association of Securities Dealers Automated Quotations (Nasdaq) on LinkedIn"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/LinkedIn.png" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://en.wikipedia.org/wiki/Nasdaq" title="National Association of Securities Dealers Automated Quotations (Nasdaq) on Wikipedia"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Wikipedia.png" alt="Wikipedia" width="32" height="32"></a></p>
 
-
-## Open Markets Initiative
-
-[![Omi](https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/About/Images/Logo.png)](https://github.com/Open-Markets-Initiative/Directory)  The Open Markets Initiative (Omi) is a group of technologists dedicated to enhancing the stability of electronic financial markets using modern development methods.
-
-Other generated code can be found at [Omi Projects](https://github.com/Open-Markets-Initiative/Directory/tree/main/Projects "Open Markets Initiative Projects"); for Omi rules and regulations, see [Omi Directory](https://github.com/Open-Markets-Initiative/Directory "Open Markets Initiative Directory").
 
 [Omi.Glossary.Status]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Protocol Deployment Status"
 [Omi.Glossary.Status.Active]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Status.md "Deployment Status: Protocol is in active production"
