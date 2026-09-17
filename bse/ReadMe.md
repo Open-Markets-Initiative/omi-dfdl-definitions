@@ -32,10 +32,10 @@
 [Bse.BseIndia.Eobi]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Bse/Protocols/BseIndia/Eobi.md "Enhanced Order Book Interface"
 [Bse.BseIndia.Eti]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Bse/Protocols/BseIndia/Eti.md "Enhanced Trading Interface"
 
-[Bse.BseIndia.Eobi.Fbe.v1.4.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/bse/eobi/BseIndia_Eobi_v1_4.dfdl.xsd "Bse BseIndia Eobi Fbe v1.4 Dfdl Definition"
+[Bse.BseIndia.Eobi.Fbe.v1.4.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/bse/bseindia/eobi/BseIndia_Eobi_v1_4.dfdl.xsd "Bse BseIndia Eobi Fbe v1.4 Dfdl Definition"
 [Bse.BseIndia.Eobi.Fbe.v1.4.Url]: https://www.bseindia.com/nta "BSE Limited 1.4 Url"
 [Bse.BseIndia.Eobi.Fbe.v1.4.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Bse/Specifications/Eobi/Bse.BseIndia.Eobi.Fbe.v1.4.pdf "BSE Limited 1.4 Pdf"
-[Bse.BseIndia.Eti.Fbe.v1.6.14.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/bse/eti/BseIndia_Eti_v1_6_14.dfdl.xsd "Bse BseIndia Eti Fbe v1.6.14 Dfdl Definition"
+[Bse.BseIndia.Eti.Fbe.v1.6.14.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/bse/bseindia/eti/BseIndia_Eti_v1_6_14.dfdl.xsd "Bse BseIndia Eti Fbe v1.6.14 Dfdl Definition"
 [Bse.BseIndia.Eti.Fbe.v1.6.14.Url]: https://www.bseindia.com/nta "BSE Limited 1.6.14 Url"
 [Bse.BseIndia.Eti.Fbe.v1.6.14.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Bse/Specifications/Eti/Bse.BseIndia.Eti.Fbe.v1.6.14.pdf "BSE Limited 1.6.14 Pdf"
 [Bse.BseIndia.Eti.Fbe.v1.6.14.Xml]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Bse/Specifications/Eti/Bse.BseIndia.Eti.Fbe.v1.6.14.xml "BSE Limited 1.6.14 Xml"

@@ -9,12 +9,12 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "jpx/osederivatives/geniuminet/Jpx_OseDerivatives_GeniumInet_v5_0_6.dfdl.xsd"
-PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "jpx_osederivatives_geniuminet_v5_0_6.parser")
+SCHEMA = "jpx/osederivatives/geniuminet/OseDerivatives_GeniumInet_v5_0_6.dfdl.xsd"
+PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "osederivatives_geniuminet_v5_0_6.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
-class JpxOsederivativesGeniuminetV506Tests(unittest.TestCase):
+class OsederivativesGeniuminetV506Tests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

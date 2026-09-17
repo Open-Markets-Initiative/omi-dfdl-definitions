@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "eurex/eti/Eurex_T7_Eti_v6_1.dfdl.xsd"
+SCHEMA = "eurex/t7/eti/Eurex_T7_Eti_v6_1.dfdl.xsd"
 PARSER_CLIENTPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "eurex_t7_eti_v6_1_clientpacket.parser")
 PARSER_SERVERPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "eurex_t7_eti_v6_1_serverpacket.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")

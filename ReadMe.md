@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 537 | 3,626,174 |
+| 537 | 3,625,540 |
 
 ## Testing
 
@@ -43,7 +43,7 @@ Other generated code can be found at [Omi Projects](https://github.com/Open-Mark
 
 ## Exchanges
 
-> [24XEquities][24XEquities.Exchange] · [AmexEquities][AmexEquities.Exchange] · [AmexOptions][AmexOptions.Exchange] · [AquisEquities][AquisEquities.Exchange] · [ArcaEquities][ArcaEquities.Exchange] · [ArcaOptions][ArcaOptions.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [B3Derivatives][B3Derivatives.Exchange] · [BivaEquities][BivaEquities.Exchange] · [BorsaIstanbul][BorsaIstanbul.Exchange] · [BseIndia][BseIndia.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IceFutures][IceFutures.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [JnxBonds][JnxBonds.Exchange] · [JnxEquities][JnxEquities.Exchange] · [MemxEquities][MemxEquities.Exchange] · [MemxOptions][MemxOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NationalEquities][NationalEquities.Exchange] · [NomOptions][NomOptions.Exchange] · [NordicEquities][NordicEquities.Exchange] · [NseCd][NseCd.Exchange] · [NseCm][NseCm.Exchange] · [NseCom][NseCom.Exchange] · [NseFo][NseFo.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [NyseEquities][NyseEquities.Exchange] · [NyseOptions][NyseOptions.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange] · [TexasEquities][TexasEquities.Exchange] · [BlueEquities][BlueEquities.Ats] · [LinkAts][LinkAts.Ats] · [LinkNqb][LinkNqb.Ats] · [MoonAts][MoonAts.Ats] · [Overnight][Overnight.Ats]
+> [24XEquities][24XEquities.Exchange] · [A2XEquities][A2XEquities.Exchange] · [AmexEquities][AmexEquities.Exchange] · [AmexOptions][AmexOptions.Exchange] · [AquisEquities][AquisEquities.Exchange] · [ArcaEquities][ArcaEquities.Exchange] · [ArcaOptions][ArcaOptions.Exchange] · [AsxDerivatives][AsxDerivatives.Exchange] · [AsxSecurities][AsxSecurities.Exchange] · [B3Derivatives][B3Derivatives.Exchange] · [BivaEquities][BivaEquities.Exchange] · [BorsaIstanbul][BorsaIstanbul.Exchange] · [BseIndia][BseIndia.Exchange] · [CoinbaseDerivatives][CoinbaseDerivatives.Exchange] · [Deribit][Deribit.Exchange] · [FseEquities][FseEquities.Exchange] · [GemxOptions][GemxOptions.Exchange] · [IceFutures][IceFutures.Exchange] · [IexEquities][IexEquities.Exchange] · [IexOptions][IexOptions.Exchange] · [IseOptions][IseOptions.Exchange] · [JnxBonds][JnxBonds.Exchange] · [JnxEquities][JnxEquities.Exchange] · [MemxEquities][MemxEquities.Exchange] · [MemxOptions][MemxOptions.Exchange] · [MrxOptions][MrxOptions.Exchange] · [NationalEquities][NationalEquities.Exchange] · [NomOptions][NomOptions.Exchange] · [NordicEquities][NordicEquities.Exchange] · [NseCd][NseCd.Exchange] · [NseCm][NseCm.Exchange] · [NseCom][NseCom.Exchange] · [NseEquities][NseEquities.Exchange] · [NseFo][NseFo.Exchange] · [NsmEquities][NsmEquities.Exchange] · [NtxEquities][NtxEquities.Exchange] · [NtxOptions][NtxOptions.Exchange] · [NyseEquities][NyseEquities.Exchange] · [NyseOptions][NyseOptions.Exchange] · [OseDerivatives][OseDerivatives.Exchange] · [PhlxOptions][PhlxOptions.Exchange] · [PsxEquities][PsxEquities.Exchange] · [SseEquities][SseEquities.Exchange] · [TexasEquities][TexasEquities.Exchange] · [TseEquities][TseEquities.Exchange] · [BlueEquities][BlueEquities.Ats] · [LinkAts][LinkAts.Ats] · [LinkNqb][LinkNqb.Ats] · [MoonAts][MoonAts.Ats] · [Overnight][Overnight.Ats]
 
 ## Platforms
 
@@ -346,25 +346,27 @@ Enjoy.
 [Nyse.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse "New York Stock Exchange"
 [OtcMarkets.Directory]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets "OTC Markets Group"
 
-[24XEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/24x "24X Equities"
+[24XEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/24x/24xequities "24X Equities"
+[A2XEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/a2x/a2xequities "A2X Equities"
 [AmexEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/amexequities "Nyse Amex Equities"
 [AmexOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/amexoptions "Nyse Amex Options"
-[AquisEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/aquis "Aquis Equities"
+[AquisEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/aquis/aquisequities "Aquis Equities"
 [ArcaEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/arcaequities "Nyse Arca Equities"
 [ArcaOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/arcaoptions "Nyse Arca Options"
 [AsxDerivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/asx/asxderivatives "Asx Derivatives"
 [AsxSecurities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/asx/asxsecurities "Asx Securities"
-[B3Derivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/b3 "B3 Derivatives"
-[BivaEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/biva "Biva Equities"
-[BlueEquities.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/blueoceanats/blueequities "Blue Equities"
-[BorsaIstanbul.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/bist "Borsa Istanbul"
-[BseIndia.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/bse "BSE India"
+[B3Derivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/b3/b3derivatives "B3 Derivatives"
+[BivaEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/biva/bivaequities "Biva Equities"
+[BlueEquities.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/blueoceanats "Blue Equities"
+[BorsaIstanbul.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/bist/borsaistanbul "Borsa Istanbul"
+[BseIndia.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/bse/bseindia "BSE India"
 [CixAspen.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/cixats "CIX Aspen"
 [CoinbaseDerivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/coinbase/coinbasederivatives "Coinbase Derivatives"
 [Deribit.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/coinbase/deribit "Deribit"
+[FseEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/jpx/fseequities "Fukuoka Stock Exchange Equities"
 [GemxOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/gemxoptions "Nasdaq GEMX"
-[Globex.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/cme "CME Globex"
-[IceFutures.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/ice "Intercontinental Exchange Futures"
+[Globex.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/cme/globex "CME Globex"
+[IceFutures.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/ice/icefutures "Intercontinental Exchange Futures"
 [IexEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/iex/iexequities "IEX Equities"
 [IexOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/iex/iexoptions "IEX Options"
 [IseOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/iseoptions "Nasdaq ISE"
@@ -382,6 +384,7 @@ Enjoy.
 [NseCd.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nse/nsecd "NSE Currency Derivatives"
 [NseCm.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nse/nsecm "NSE Capital Market"
 [NseCom.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nse/nsecom "NSE Commodity Derivatives"
+[NseEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/jpx/nseequities "Nagoya Stock Exchange Equities"
 [NseFo.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nse/nsefo "NSE Futures & Options"
 [NsmEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/nsmequities "Nasdaq Stock Market"
 [NtxEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/ntxequities "Nasdaq Texas"
@@ -389,12 +392,15 @@ Enjoy.
 [NyseConsolidated.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nyseconsolidated "NYSE Consolidated"
 [NyseEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nyseequities "New York Stock Exchange Equities"
 [NyseOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nyseoptions "New York Stock Exchange Options"
-[Optiq.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/euronext "Euronext Optiq"
+[Optiq.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/euronext/optiq "Euronext Optiq"
+[OseDerivatives.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/jpx/osederivatives "Osaka Securities Exchange"
 [Overnight.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/overnight "OTC Link Overnight OTC"
 [PhlxOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/phlxoptions "Nasdaq PHLX"
 [PsxEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/psxequities "Nasdaq PSX"
-[T7.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/eurex "T7"
+[SseEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/jpx/sseequities "Sapporo Securities Exchange Equities"
+[T7.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/eurex/t7 "T7"
 [TexasEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/texasequities "Nyse Texas Equities"
+[TseEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/jpx/tseequities "Tokyo Stock Exchange Equities"
 [Uqdf.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/uqdf "Nasdaq UTP Quote Data Feed"
 [Utdf.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/utdf "Nasdaq UTP Trade Data Feed"
 [Utp.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nasdaq/utp "Nasdaq Unlisted Trading Privileges Plan"

@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "cme/mdp3/Cme_Globex_Mdp3_v1_12.dfdl.xsd"
+SCHEMA = "cme/globex/mdp3/Cme_Globex_Mdp3_v1_12.dfdl.xsd"
 PARSER_CLIENTTCPPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_mdp3_v1_12_clienttcppacket.parser")
 PARSER_SERVERTCPPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_mdp3_v1_12_servertcppacket.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")

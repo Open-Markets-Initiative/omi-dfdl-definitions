@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "blueoceanats/blueequities/memoirdepthfeed/BlueEquities_MemoirDepthFeed_v1_3.dfdl.xsd"
+SCHEMA = "blueoceanats/memoirdepthfeed/BlueEquities_MemoirDepthFeed_v1_3.dfdl.xsd"
 PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "blueequities_memoirdepthfeed_v1_3.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 

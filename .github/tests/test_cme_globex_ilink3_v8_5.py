@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "cme/ilink3/Cme_Globex_iLink3_v8_5.dfdl.xsd"
+SCHEMA = "cme/globex/ilink3/Cme_Globex_iLink3_v8_5.dfdl.xsd"
 PARSER_CLIENTPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_ilink3_v8_5_clientpacket.parser")
 PARSER_SERVERPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_ilink3_v8_5_serverpacket.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")

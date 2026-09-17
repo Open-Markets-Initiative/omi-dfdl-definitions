@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "ice/mdf/IceFutures_Mdf_v1_1_24.dfdl.xsd"
+SCHEMA = "ice/icefutures/mdf/IceFutures_Mdf_v1_1_24.dfdl.xsd"
 PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "icefutures_mdf_v1_1_24.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 

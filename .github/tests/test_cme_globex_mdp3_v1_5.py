@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "cme/mdp3/Cme_Globex_Mdp3_v1_5.dfdl.xsd"
+SCHEMA = "cme/globex/mdp3/Cme_Globex_Mdp3_v1_5.dfdl.xsd"
 PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cme_globex_mdp3_v1_5.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 

@@ -9,7 +9,7 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "b3/binaryumdf/B3Derivatives_BinaryUmdf_v1_8.dfdl.xsd"
+SCHEMA = "b3/b3derivatives/binaryumdf/B3Derivatives_BinaryUmdf_v1_8.dfdl.xsd"
 PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "b3derivatives_binaryumdf_v1_8.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
