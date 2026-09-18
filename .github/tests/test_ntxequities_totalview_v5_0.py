@@ -20,8 +20,32 @@ class NtxequitiesTotalviewV50Tests(unittest.TestCase):
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
+    def test_addordermpidattributionmessage(self):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/AddOrderMpidAttributionMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
     def test_addordernompidattributionmessage(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/AddOrderNoMpidAttributionMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_noncrosstrademessage(self):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/NonCrossTradeMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_ordercancelmessage(self):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/OrderCancelMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -36,6 +60,22 @@ class NtxequitiesTotalviewV50Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
+    def test_orderexecutedmessage(self):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/OrderExecutedMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_orderexecutedwithpricemessage(self):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/OrderExecutedWithPriceMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
     def test_orderreplacemessage(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/OrderReplaceMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
@@ -44,48 +84,8 @@ class NtxequitiesTotalviewV50Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_addordermpidattributionmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/AddOrderMpidAttributionMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
-    def test_noncrosstrademessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/NonCrossTradeMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
-    def test_ordercancelmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/OrderCancelMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
-    def test_orderexecutedmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/OrderExecutedMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
-    def test_orderexecutedwithpricemessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/OrderExecutedWithPriceMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_regshoshortsalepricetestrestrictedindicatormessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/RegShoShortSalePriceTestRestrictedIndicatorMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/RegShoShortSalePriceTestRestrictedIndicatorMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -93,7 +93,7 @@ class NtxequitiesTotalviewV50Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_retailinterestmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/RetailInterestMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/RetailInterestMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -101,7 +101,7 @@ class NtxequitiesTotalviewV50Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_stocktradingactionmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/StockTradingActionMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/StockTradingActionMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -109,7 +109,7 @@ class NtxequitiesTotalviewV50Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_systemeventmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0.20230822/SystemEventMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NtxEquities.TotalView.Itch.v5.0/SystemEventMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
