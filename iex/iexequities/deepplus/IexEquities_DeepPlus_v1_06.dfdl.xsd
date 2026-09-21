@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Dfdl schema definition for: Iex IexEquities DeepPlus v1.04
+  Dfdl schema definition for: Iex IexEquities DeepPlus v1.06
 
   Protocol:
     Organization: Investors Exchange
     Protocol: DeepPlus
-    Encoding: Investors Exchange Transport Protocol
-    Version: 1.04
-    Date: 6/4/2026
-    Specification: IEX DEEP+ Specification (v1.04).pdf
+    Encoding: Investors Exchange Snapshot Protocol
+    Version: 1.06
+    Date: 8/21/2026
+    Specification: IEX DEEP+ SNAP Specification.pdf
 
   Script:
     Generator: 1.0.0.0
@@ -29,7 +29,7 @@
   Open Markets Initiative website:
     https://openmarketsinitiative.com
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:iexequities:deepplus:v1:04" targetNamespace="urn:omi:iexequities:deepplus:v1:04">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:iexequities:deepplus:v1:06" targetNamespace="urn:omi:iexequities:deepplus:v1:06">
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
@@ -38,37 +38,125 @@
   <xs:element name="packet">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="iextpHeader" type="tns:iextpHeader_t" />
-        <xs:element name="messages" type="tns:message_t" maxOccurs="unbounded">
+        <xs:element name="message" type="tns:message_t" maxOccurs="unbounded">
           <xs:annotation>
             <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:element occursCountKind="expression" occursCount="{ ../iextpHeader/messageCount }" />
+              <dfdl:element occursCountKind="implicit" />
             </xs:appinfo>
           </xs:annotation>
         </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:complexType name="iextpHeader_t">
+  <xs:complexType name="message_t">
     <xs:sequence>
-      <xs:element name="version" type="xs:unsignedByte">
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="messageData">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+            <dfdl:element lengthKind="explicit" length="{ ../messageHeader/messageLength + 2 - 3 }" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/messageType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="snapshotRequestMessage" type="tns:snapshotRequestMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="r" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="errorResponseMessage" type="tns:errorResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="e" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="snapshotStartMessage" type="tns:snapshotStartMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="s" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="snapshotDataMessage" type="tns:snapshotDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="d" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="snapshotEndMessage" type="tns:snapshotEndMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="x" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
       </xs:element>
-      <xs:element name="reserved" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="messageProtocolId" type="xs:unsignedShort">
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageHeader_t">
+    <xs:sequence>
+      <xs:element name="messageLength" type="xs:unsignedShort">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="r">
+              <xs:annotation>
+                <xs:documentation>Snapshot Request Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="e">
+              <xs:annotation>
+                <xs:documentation>Error Response Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="s">
+              <xs:annotation>
+                <xs:documentation>Snapshot Start Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="d">
+              <xs:annotation>
+                <xs:documentation>Snapshot Data Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="x">
+              <xs:annotation>
+                <xs:documentation>Snapshot End Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="snapshotRequestMessage_t">
+    <xs:sequence>
+      <xs:element name="authenticationToken" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="40" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -86,35 +174,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="payloadLength" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="messageCount" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="streamOffset" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="firstMessageSequenceNumber" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sendTime" type="xs:unsignedLong">
+      <xs:element name="minimumSequenceNumber" type="xs:unsignedLong">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
@@ -123,20 +183,177 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="message_t">
+  <xs:complexType name="errorResponseMessage_t">
     <xs:sequence>
-      <xs:element name="messageHeader" type="tns:messageHeader_t" />
-      <xs:element name="messageData">
+      <xs:element name="rejectReasonCode">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element lengthKind="explicit" length="{ ../messageHeader/messageLength + 2 - 3 }" />
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Authentication Failure</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Incorrect Channel Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="E">
+              <xs:annotation>
+                <xs:documentation>Snapshot Request Already Active</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>Quota Exceeded</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="R">
+              <xs:annotation>
+                <xs:documentation>Snapshot Not Yet Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Incorrect Session Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Unknown Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="snapshotStartMessage_t">
+    <xs:sequence>
+      <xs:element name="snapshotLength" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="snapshotDataMessage_t">
+    <xs:sequence>
+      <xs:element name="iexTpHeader" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="iexTpMessageBlockLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="iexTpMessageLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="iexTpMessageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>System Event Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="D">
+              <xs:annotation>
+                <xs:documentation>Security Directory Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Trading Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Retail Liquidity Indicator Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Operational Halt Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+              <xs:annotation>
+                <xs:documentation>Short Sale Price Test Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="E">
+              <xs:annotation>
+                <xs:documentation>Security Event Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="a">
+              <xs:annotation>
+                <xs:documentation>Add Order Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M">
+              <xs:annotation>
+                <xs:documentation>Order Modify Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="R">
+              <xs:annotation>
+                <xs:documentation>Order Delete Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="L">
+              <xs:annotation>
+                <xs:documentation>Order Executed Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Trade Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Trade Break Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Clear Book Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="iexTpMessageData">
         <xs:complexType>
           <xs:choice>
             <xs:annotation>
               <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/messageType) }" />
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../iexTpMessageType) }" />
               </xs:appinfo>
             </xs:annotation>
             <xs:element name="systemEventMessage" type="tns:systemEventMessage_t">
@@ -239,98 +456,6 @@
             </xs:element>
           </xs:choice>
         </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="messageHeader_t">
-    <xs:sequence>
-      <xs:element name="messageLength" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="messageType">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="S">
-              <xs:annotation>
-                <xs:documentation>System Event Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="D">
-              <xs:annotation>
-                <xs:documentation>Security Directory Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="H">
-              <xs:annotation>
-                <xs:documentation>Trading Status Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="I">
-              <xs:annotation>
-                <xs:documentation>Retail Liquidity Indicator Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="O">
-              <xs:annotation>
-                <xs:documentation>Operational Halt Status Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="P">
-              <xs:annotation>
-                <xs:documentation>Short Sale Price Test Status Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="E">
-              <xs:annotation>
-                <xs:documentation>Security Event Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="a">
-              <xs:annotation>
-                <xs:documentation>Add Order Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="M">
-              <xs:annotation>
-                <xs:documentation>Order Modify Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R">
-              <xs:annotation>
-                <xs:documentation>Order Delete Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="L">
-              <xs:annotation>
-                <xs:documentation>Order Executed Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T">
-              <xs:annotation>
-                <xs:documentation>Trade Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="B">
-              <xs:annotation>
-                <xs:documentation>Trade Break Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C">
-              <xs:annotation>
-                <xs:documentation>Clear Book Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -1078,6 +1203,17 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="snapshotEndMessage_t">
+    <xs:sequence>
+      <xs:element name="snapshotSequenceNumber" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
