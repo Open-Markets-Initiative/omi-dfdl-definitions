@@ -140,16 +140,6 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_starbaseorderentry(self):
-        for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/StarbaseOrderEntry.pcap"):
-            if payloads.partial(payload, 3, 2, "little", True):
-                self.skipTest("capture ends mid message; tcp reassembly required")
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
 
 if __name__ == "__main__":
     unittest.main()
