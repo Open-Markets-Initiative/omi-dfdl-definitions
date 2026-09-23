@@ -67,3 +67,25 @@ def partial(payload, offset, size, endian, inclusive):
         position += length
 
     return position != len(payload)
+
+
+def messages(payload, offset, size, endian, inclusive):
+    """The whole messages a length framed payload holds, in order.
+
+    One tcp segment can carry several messages back to back. A parser describes one message, and
+    data past the one it describes is left over, so the messages are parsed one at a time.
+    """
+    result = []
+    position = 0
+
+    while position + offset + size <= len(payload):
+        declared = int.from_bytes(payload[position + offset:position + offset + size], endian)
+        length = declared if inclusive else declared + offset + size
+
+        if length <= 0 or position + length > len(payload):
+            break
+
+        result.append(payload[position:position + length])
+        position += length
+
+    return result

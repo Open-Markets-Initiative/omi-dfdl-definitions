@@ -26,31 +26,34 @@ class EurexT7EtiV61Tests(unittest.TestCase):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eti.Fbe.v6.1/Heartbeat.pcap"):
             if payloads.partial(payload, 0, 4, "little", True):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            for message in payloads.messages(payload, 0, 4, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_retransmitmemessagerequest(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eti.Fbe.v6.1/RetransmitMeMessageRequest.pcap"):
             if payloads.partial(payload, 0, 4, "little", True):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            for message in payloads.messages(payload, 0, 4, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_userloginresponse(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eti.Fbe.v6.1/UserLoginResponse.pcap"):
             if payloads.partial(payload, 0, 4, "little", True):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            for message in payloads.messages(payload, 0, 4, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
 
 if __name__ == "__main__":
