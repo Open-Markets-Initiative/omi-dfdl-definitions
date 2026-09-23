@@ -18,7 +18,7 @@ class JnxequitiesPtsV17Tests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "moldUdp64Packet", PARSER], check=True)
+        subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_orderaddedwithoutattributesmessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Itch.v1.7/OrderAddedWithoutAttributesMessage.pcap"):
