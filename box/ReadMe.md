@@ -5,6 +5,7 @@
 
 | Division | [Protocol][Omi.Box.Protocol.Definitions] | [Encoding][Omi.Encoding.Definitions] | Version | Date | Size | [Deployment][Omi.Glossary.Deployment] | [Testing][Omi.Glossary.Testing] | [Documentation][Omi.Box.Specifications] |
 | --- | --- | --- | --- | ---: | ---: | --- | --- | --- |
+| [BoxOptions][BoxOptions.Exchange] | [OrderEntry][Box.BoxOptions.OrderEntry] | [Sail][Omi.Encoding.Sail] | [2.25][Box.BoxOptions.OrderEntry.Sail.v2.25.Definition] | 1/20/2025 | 10314 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Box.BoxOptions.OrderEntry.Sail.v2.25.Pdf] |
 | [BoxOptions][BoxOptions.Exchange] | [SolaMulticast][Box.BoxOptions.SolaMulticast] | [Hsvf][Omi.Encoding.Hsvf] | [1.5][Box.BoxOptions.SolaMulticast.Hsvf.v1.5.Definition] | 3/15/2021 | 4087 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [pdf][Box.BoxOptions.SolaMulticast.Hsvf.v1.5.Pdf] |
 | [BoxOptions][BoxOptions.Exchange] | [SolaMulticast][Box.BoxOptions.SolaMulticast] | [Hsvf][Omi.Encoding.Hsvf] | [1.8][Box.BoxOptions.SolaMulticast.Hsvf.v1.8.Definition] | 10/17/2023 | 4121 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [url][Box.BoxOptions.SolaMulticast.Hsvf.v1.8.Url] - [pdf][Box.BoxOptions.SolaMulticast.Hsvf.v1.8.Pdf] |
 | [BoxOptions][BoxOptions.Exchange] | [SolaMulticast][Box.BoxOptions.SolaMulticast] | [Hsvf][Omi.Encoding.Hsvf] | [1.9][Box.BoxOptions.SolaMulticast.Hsvf.v1.9.Definition] | 2/15/2024 | 4135 | [Active][Omi.Glossary.Deployment.Active] | [Verified][Omi.Glossary.Testing.Verified] | [url][Box.BoxOptions.SolaMulticast.Hsvf.v1.9.Url] - [pdf][Box.BoxOptions.SolaMulticast.Hsvf.v1.9.Pdf] |
@@ -30,11 +31,15 @@
 [Omi.Encoding.Definitions]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Protocols/ReadMe.md "Encoding Directory"
 [Omi.Box.Protocol.Definitions]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Box/Protocols "Box Protocol Directory"
 [Omi.Box.Specifications]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Box/Specifications "Box Specifications Directory"
+[Omi.Encoding.Sail]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Sail.md "Sail Encoding"
 [Omi.Encoding.Hsvf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Hsvf.md "Hsvf Encoding"
 [BoxOptions.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Box/Protocols/BoxOptions "Box BoxOptions"
+[Box.BoxOptions.OrderEntry]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Box/Protocols/BoxOptions/OrderEntry.md "Order Entry"
 [Box.BoxOptions.SolaMulticast]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Box/Protocols/BoxOptions/SolaMulticast.md "Sola Multicast"
 [Box.BoxOptions.SolaUnicast]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Box/Protocols/BoxOptions/SolaUnicast.md "Sola Unicast"
 
+[Box.BoxOptions.OrderEntry.Sail.v2.25.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/box/boxoptions/orderentry/BoxOptions_OrderEntry_v2_25.dfdl.xsd "Box BoxOptions OrderEntry Sail v2.25 Dfdl Definition"
+[Box.BoxOptions.OrderEntry.Sail.v2.25.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Box/Specifications/BoxOptions/Box.BoxOptions.OrderEntry.Sail.v2.25.pdf "Box Options Market 2.25 Pdf"
 [Box.BoxOptions.SolaMulticast.Hsvf.v1.5.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/box/boxoptions/solamulticast/BoxOptions_SolaMulticast_v1_5.dfdl.xsd "Box BoxOptions SolaMulticast Hsvf v1.5 Dfdl Definition"
 [Box.BoxOptions.SolaMulticast.Hsvf.v1.5.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Box/Specifications/Box.Options.Sola.Multicast.Hsvf.v1.5.pdf "Box Options Market 1.5 Pdf"
 [Box.BoxOptions.SolaMulticast.Hsvf.v1.8.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/box/boxoptions/solamulticast/BoxOptions_SolaMulticast_v1_8.dfdl.xsd "Box BoxOptions SolaMulticast Hsvf v1.8 Dfdl Definition"
