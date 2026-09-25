@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Dfdl schema definition for: Nasdaq NsmEquities NoiView v3.0.2026
+  Dfdl schema definition for: Nasdaq NsmEquities NoiView v3.0.2022
 
   Protocol:
     Organization: National Association of Securities Dealers Automated Quotations (Nasdaq)
     Protocol: Net Order Imbalance View
     Encoding: Itch
-    Version: 3.0.2026
-    Date: 1/12/2026
+    Version: 3.0.2022
+    Date: 07/14/2022
     Specification: NOIViewSpecification.pdf
 
   Script:
@@ -29,7 +29,7 @@
   Open Markets Initiative website:
     https://openmarketsinitiative.com
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:nsmequities:noiview:v3:0:2026" targetNamespace="urn:omi:nsmequities:noiview:v3:0:2026">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:nsmequities:noiview:v3:0:2022" targetNamespace="urn:omi:nsmequities:noiview:v3:0:2022">
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="bigEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
@@ -90,7 +90,7 @@
                 <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/messageType) }" />
               </xs:appinfo>
             </xs:annotation>
-            <xs:element name="systemEvent" type="tns:systemEvent_t">
+            <xs:element name="systemEventMessage" type="tns:systemEventMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="S" />
@@ -111,14 +111,14 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="regShoShortSalePriceTestRestrictedIndicatorMessage" type="tns:regShoShortSalePriceTestRestrictedIndicatorMessage_t">
+            <xs:element name="regShoRestrictionMessage" type="tns:regShoRestrictionMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="Y" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="netOrderImbalanceIndicatorMessage" type="tns:netOrderImbalanceIndicatorMessage_t">
+            <xs:element name="noiiMessage" type="tns:noiiMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="I" />
@@ -136,13 +136,6 @@
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="K" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="directListingWithCapitalRaisePriceDiscoveryMessage" type="tns:directListingWithCapitalRaisePriceDiscoveryMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="O" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -170,7 +163,7 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="S">
               <xs:annotation>
-                <xs:documentation>System Event</xs:documentation>
+                <xs:documentation>System Event Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="R">
@@ -185,12 +178,12 @@
             </xs:enumeration>
             <xs:enumeration value="Y">
               <xs:annotation>
-                <xs:documentation>Reg Sho Short Sale Price Test Restricted Indicator Message</xs:documentation>
+                <xs:documentation>Reg Sho Restriction Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="I">
               <xs:annotation>
-                <xs:documentation>Net Order Imbalance Indicator Message</xs:documentation>
+                <xs:documentation>Noii Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Q">
@@ -203,17 +196,12 @@
                 <xs:documentation>Ipo Quoting Period Update Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="O">
-              <xs:annotation>
-                <xs:documentation>Direct Listing With Capital Raise Price Discovery Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="systemEvent_t">
+  <xs:complexType name="systemEventMessage_t">
     <xs:sequence>
       <xs:element name="trackingNumber" type="xs:unsignedShort">
         <xs:annotation>
@@ -229,12 +217,51 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="eventCode" type="xs:string">
+      <xs:element name="eventCode">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Start Of Messages</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Start Of System Hours</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>Start Of Market Hours</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Clear Noii Opening Cross Data</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M">
+              <xs:annotation>
+                <xs:documentation>End Of Market Hours</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="E">
+              <xs:annotation>
+                <xs:documentation>End Of System Hours</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>End Of Messages</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -254,7 +281,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="stock" type="xs:string">
+      <xs:element name="stockAlpha8" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
@@ -271,12 +298,12 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="Q">
               <xs:annotation>
-                <xs:documentation>Nasdaq Global Select Market Sm</xs:documentation>
+                <xs:documentation>Nasdaq Global Select Market</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="G">
               <xs:annotation>
-                <xs:documentation>Nasdaq Global Market Sm</xs:documentation>
+                <xs:documentation>Nasdaq Global Market</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="S">
@@ -286,12 +313,12 @@
             </xs:enumeration>
             <xs:enumeration value="N">
               <xs:annotation>
-                <xs:documentation>New York Stock Exchange Nyse</xs:documentation>
+                <xs:documentation>Nyse</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="A">
               <xs:annotation>
-                <xs:documentation>Nyse American</xs:documentation>
+                <xs:documentation>Nyse Mkt</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="P">
@@ -299,19 +326,19 @@
                 <xs:documentation>Nyse Arca</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="M">
-              <xs:annotation>
-                <xs:documentation>Nyse Texas</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="Z">
               <xs:annotation>
-                <xs:documentation>Bats Z Exchange</xs:documentation>
+                <xs:documentation>Bats Z</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="V">
               <xs:annotation>
-                <xs:documentation>Investors Exchange Llc</xs:documentation>
+                <xs:documentation>Investors Exchange</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Na</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -367,7 +394,7 @@
             </xs:enumeration>
             <xs:enumeration value="C">
               <xs:annotation>
-                <xs:documentation>Creations Andor Redemptions Suspended For Exchange Traded Product</xs:documentation>
+                <xs:documentation>Creations And Redemptions Suspended</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="N">
@@ -377,7 +404,7 @@
             </xs:enumeration>
             <xs:enumeration value=" ">
               <xs:annotation>
-                <xs:documentation>Not Available</xs:documentation>
+                <xs:documentation>Na</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -405,403 +432,25 @@
             </xs:enumeration>
             <xs:enumeration value="N">
               <xs:annotation>
-                <xs:documentation>No Restriction</xs:documentation>
+                <xs:documentation>No Restrictions</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="issueClassification">
+      <xs:element name="issueClassification" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="A">
-              <xs:annotation>
-                <xs:documentation>American Depositary Share</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="B">
-              <xs:annotation>
-                <xs:documentation>Bond</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C">
-              <xs:annotation>
-                <xs:documentation>Common Stock</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="F">
-              <xs:annotation>
-                <xs:documentation>Depository Receipt</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="I">
-              <xs:annotation>
-                <xs:documentation>Sec 144 A</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="L">
-              <xs:annotation>
-                <xs:documentation>Limited Partnership</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="N">
-              <xs:annotation>
-                <xs:documentation>Notes</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="O">
-              <xs:annotation>
-                <xs:documentation>Ordinary Share</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="P">
-              <xs:annotation>
-                <xs:documentation>Preferred Stock</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Q">
-              <xs:annotation>
-                <xs:documentation>Other Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R">
-              <xs:annotation>
-                <xs:documentation>Right</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="S">
-              <xs:annotation>
-                <xs:documentation>Shares Of Beneficial Interest</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T">
-              <xs:annotation>
-                <xs:documentation>Convertible Debenture</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="U">
-              <xs:annotation>
-                <xs:documentation>Unit</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="V">
-              <xs:annotation>
-                <xs:documentation>Units Benif Int</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="W">
-              <xs:annotation>
-                <xs:documentation>Warrant</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
-      <xs:element name="issueSubType">
+      <xs:element name="issueSubType" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="2" />
           </xs:appinfo>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="A">
-              <xs:annotation>
-                <xs:documentation>Preferred Trust Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="AI">
-              <xs:annotation>
-                <xs:documentation>Alpha Index Et Ns</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="B">
-              <xs:annotation>
-                <xs:documentation>Index Based Derivative</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C">
-              <xs:annotation>
-                <xs:documentation>Common Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CB">
-              <xs:annotation>
-                <xs:documentation>Commodity Based Trust Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CF">
-              <xs:annotation>
-                <xs:documentation>Commodity Futures Trust Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CL">
-              <xs:annotation>
-                <xs:documentation>Commodity Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CM">
-              <xs:annotation>
-                <xs:documentation>Commodity Index Trust Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CO">
-              <xs:annotation>
-                <xs:documentation>Collateralized Mortgage Obligation</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CT">
-              <xs:annotation>
-                <xs:documentation>Currency Trust Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CU">
-              <xs:annotation>
-                <xs:documentation>Commodity Currency Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="CW">
-              <xs:annotation>
-                <xs:documentation>Currency Warrants</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="D">
-              <xs:annotation>
-                <xs:documentation>Global Depositary Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="E">
-              <xs:annotation>
-                <xs:documentation>Etf Portfolio Depositary Receipt</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="EG">
-              <xs:annotation>
-                <xs:documentation>Equity Gold Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="EI">
-              <xs:annotation>
-                <xs:documentation>Etn Equity Index Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="EM">
-              <xs:annotation>
-                <xs:documentation>Exchange Traded Managed Funds</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="EN">
-              <xs:annotation>
-                <xs:documentation>Exchange Traded Notes</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="EU">
-              <xs:annotation>
-                <xs:documentation>Equity Units</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="F">
-              <xs:annotation>
-                <xs:documentation>Holdrs</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="FI">
-              <xs:annotation>
-                <xs:documentation>Etn Fixed Income Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="FL">
-              <xs:annotation>
-                <xs:documentation>Etn Futures Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="G">
-              <xs:annotation>
-                <xs:documentation>Global Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="I">
-              <xs:annotation>
-                <xs:documentation>Etf Index Fund Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="IR">
-              <xs:annotation>
-                <xs:documentation>Interest Rate</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="IW">
-              <xs:annotation>
-                <xs:documentation>Index Warrant</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="IX">
-              <xs:annotation>
-                <xs:documentation>Index Linked Exchangeable Notes</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="J">
-              <xs:annotation>
-                <xs:documentation>Corporate Backed Trust Security</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="L">
-              <xs:annotation>
-                <xs:documentation>Contingent Litigation Right</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="LL">
-              <xs:annotation>
-                <xs:documentation>Limited Liability Company Llc</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="M">
-              <xs:annotation>
-                <xs:documentation>Equity Based Derivative</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="MF">
-              <xs:annotation>
-                <xs:documentation>Managed Fund Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="ML">
-              <xs:annotation>
-                <xs:documentation>Etn Multi Factor Index Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="MT">
-              <xs:annotation>
-                <xs:documentation>Managed Trust Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="N">
-              <xs:annotation>
-                <xs:documentation>Ny Registry Shares</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="O">
-              <xs:annotation>
-                <xs:documentation>Open Ended Mutual Fund</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="P">
-              <xs:annotation>
-                <xs:documentation>Privately Held Security</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="PP">
-              <xs:annotation>
-                <xs:documentation>Poison Pill</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="PU">
-              <xs:annotation>
-                <xs:documentation>Partnership Units</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Q">
-              <xs:annotation>
-                <xs:documentation>Closed End Funds</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R">
-              <xs:annotation>
-                <xs:documentation>Reg S</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="RC">
-              <xs:annotation>
-                <xs:documentation>Commodity Redeemable Commodity Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="RF">
-              <xs:annotation>
-                <xs:documentation>Etn Redeemable Futures Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="RT">
-              <xs:annotation>
-                <xs:documentation>Reit</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="RU">
-              <xs:annotation>
-                <xs:documentation>Commodity Redeemable Currency Linked Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="S">
-              <xs:annotation>
-                <xs:documentation>Seed</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="SC">
-              <xs:annotation>
-                <xs:documentation>Spot Rate Closing</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="SI">
-              <xs:annotation>
-                <xs:documentation>Spot Rate Intraday</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T">
-              <xs:annotation>
-                <xs:documentation>Tracking Stock</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="TC">
-              <xs:annotation>
-                <xs:documentation>Trust Certificates</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="TU">
-              <xs:annotation>
-                <xs:documentation>Trust Units</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="U">
-              <xs:annotation>
-                <xs:documentation>Portal</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="V">
-              <xs:annotation>
-                <xs:documentation>Contingent Value Right</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="W">
-              <xs:annotation>
-                <xs:documentation>Trust Issued Receipts</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="WC">
-              <xs:annotation>
-                <xs:documentation>World Currency Option</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="X">
-              <xs:annotation>
-                <xs:documentation>Trust</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Y">
-              <xs:annotation>
-                <xs:documentation>Other</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Z">
-              <xs:annotation>
-                <xs:documentation>Not Applicable</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
       <xs:element name="authenticity">
         <xs:annotation>
@@ -844,7 +493,7 @@
             </xs:enumeration>
             <xs:enumeration value=" ">
               <xs:annotation>
-                <xs:documentation>Not Available</xs:documentation>
+                <xs:documentation>Na</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -860,17 +509,12 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="Y">
               <xs:annotation>
-                <xs:documentation>Ipo Security</xs:documentation>
+                <xs:documentation>Set Up For Ipo Release</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="N">
               <xs:annotation>
-                <xs:documentation>Not Ipo Security</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Z">
-              <xs:annotation>
-                <xs:documentation>Non Ipo New Listed Security</xs:documentation>
+                <xs:documentation>Not Set Up For Ipo Release</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value=" ">
@@ -891,12 +535,12 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="1">
               <xs:annotation>
-                <xs:documentation>Tier 1 Nms Stocks And Select Et Ps</xs:documentation>
+                <xs:documentation>Tier 1</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="2">
               <xs:annotation>
-                <xs:documentation>Tier 2 Nms Stocks</xs:documentation>
+                <xs:documentation>Tier 2</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value=" ">
@@ -979,7 +623,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="stock" type="xs:string">
+      <xs:element name="stockAlphanumeric8" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
@@ -996,211 +640,32 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="H">
               <xs:annotation>
-                <xs:documentation>Halted Across All Us Equity Markets Sr Os</xs:documentation>
+                <xs:documentation>Halted</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="P">
               <xs:annotation>
-                <xs:documentation>Paused Across All Us Equity Markets Sr Os</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Q">
-              <xs:annotation>
-                <xs:documentation>Quotation Only Period For Cross Sro Halt Or Pause</xs:documentation>
+                <xs:documentation>Paused</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="T">
               <xs:annotation>
-                <xs:documentation>Trading On Nasdaq</xs:documentation>
+                <xs:documentation>Trading</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="reason">
+      <xs:element name="reason" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="T1">
-              <xs:annotation>
-                <xs:documentation>Halt News Pending</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T2">
-              <xs:annotation>
-                <xs:documentation>Halt News Disseminated</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T3">
-              <xs:annotation>
-                <xs:documentation>News And Resumption Times</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T5">
-              <xs:annotation>
-                <xs:documentation>Single Stock Trading Pause In Effect</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T6">
-              <xs:annotation>
-                <xs:documentation>Regulatory Halt— Extraordinary Market Activity</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T7">
-              <xs:annotation>
-                <xs:documentation>Single Stock Trading Pause Quotation Only Period</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T8">
-              <xs:annotation>
-                <xs:documentation>Halt Etf</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T12">
-              <xs:annotation>
-                <xs:documentation>Trading Halted For Information Requested By Listing Market</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="H4">
-              <xs:annotation>
-                <xs:documentation>Halt Non Compliance</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="H9">
-              <xs:annotation>
-                <xs:documentation>Halt Filings Not Current</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="H10">
-              <xs:annotation>
-                <xs:documentation>Halt Sec Trading Suspension</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="H11">
-              <xs:annotation>
-                <xs:documentation>Halt Regulatory Concern</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="O1">
-              <xs:annotation>
-                <xs:documentation>Operations Halt Contact Market Operations</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="LUDP">
-              <xs:annotation>
-                <xs:documentation>Volatility Trading Pause</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="LUDS">
-              <xs:annotation>
-                <xs:documentation>Volatility Trading Pause Straddle Condition</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="MWC1">
-              <xs:annotation>
-                <xs:documentation>Market Wide Circuit Breaker Halt Level 1</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="MWC2">
-              <xs:annotation>
-                <xs:documentation>Market Wide Circuit Breaker Halt Level 2</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="MWC3">
-              <xs:annotation>
-                <xs:documentation>Market Wide Circuit Breaker Halt Level 3</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="MWC0">
-              <xs:annotation>
-                <xs:documentation>Market Wide Circuit Breaker Halt Carry Over From Previous Day</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="IPO1">
-              <xs:annotation>
-                <xs:documentation>Ipo Issue Not Yet Trading</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="M1">
-              <xs:annotation>
-                <xs:documentation>Corporate Action</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="M2">
-              <xs:annotation>
-                <xs:documentation>Quotation Not Available</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R1">
-              <xs:annotation>
-                <xs:documentation>New Issue Available</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R2">
-              <xs:annotation>
-                <xs:documentation>Issue Available</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R4">
-              <xs:annotation>
-                <xs:documentation>Qualifications Issues Reviewed Resolved Quotations Trading To Resume</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R9">
-              <xs:annotation>
-                <xs:documentation>Filing Requirements Satisfied Resolved Quotations Trading To Resume</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C3">
-              <xs:annotation>
-                <xs:documentation>Issuer News Not Forthcoming Quotations Trading To Resume</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C4">
-              <xs:annotation>
-                <xs:documentation>Qualifications Halt Ended Maintenance Requirements Met Resume</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C9">
-              <xs:annotation>
-                <xs:documentation>Qualifications Halt Concluded Filings Met Quotes Trades To Resume</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C11">
-              <xs:annotation>
-                <xs:documentation>Trade Halt Concluded By Other Regulatory Auth Quotes Trades Resume</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="MWCQ">
-              <xs:annotation>
-                <xs:documentation>Market Wide Circuit Breaker Resumption</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="IPOQ">
-              <xs:annotation>
-                <xs:documentation>Ipo Security Released For Quotation</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="IPOE">
-              <xs:annotation>
-                <xs:documentation>Ipo Security— Positioning Window Extension</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value=" ">
-              <xs:annotation>
-                <xs:documentation>Reason Not Available</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="regShoShortSalePriceTestRestrictedIndicatorMessage_t">
+  <xs:complexType name="regShoRestrictionMessage_t">
     <xs:sequence>
       <xs:element name="trackingNumber" type="xs:unsignedShort">
         <xs:annotation>
@@ -1216,7 +681,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="stock" type="xs:string">
+      <xs:element name="stockAlphanumeric8" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
@@ -1233,17 +698,17 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="0">
               <xs:annotation>
-                <xs:documentation>No Price Test In Place</xs:documentation>
+                <xs:documentation>No Price Test</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="1">
               <xs:annotation>
-                <xs:documentation>Restriction In Effect</xs:documentation>
+                <xs:documentation>Reg Sho Short Sale Price Test Restriction</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="2">
               <xs:annotation>
-                <xs:documentation>Restriction Remains In Effect</xs:documentation>
+                <xs:documentation>Test Restriction Remains</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -1251,7 +716,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="netOrderImbalanceIndicatorMessage_t">
+  <xs:complexType name="noiiMessage_t">
     <xs:sequence>
       <xs:element name="trackingNumber" type="xs:unsignedShort">
         <xs:annotation>
@@ -1306,18 +771,13 @@
             </xs:enumeration>
             <xs:enumeration value="O">
               <xs:annotation>
-                <xs:documentation>Insufficient Orders To Calculate</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="P">
-              <xs:annotation>
-                <xs:documentation>Paused</xs:documentation>
+                <xs:documentation>Insufficient Orders</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="stock" type="xs:string">
+      <xs:element name="stockAlphanumeric8" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
@@ -1355,22 +815,17 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="O">
               <xs:annotation>
-                <xs:documentation>Open Cross</xs:documentation>
+                <xs:documentation>Opening Cross</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="C">
               <xs:annotation>
-                <xs:documentation>Close Cross</xs:documentation>
+                <xs:documentation>Closing Cross</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="H">
               <xs:annotation>
-                <xs:documentation>Intraday Opening Cross For Ipo And Halted Paused Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="A">
-              <xs:annotation>
-                <xs:documentation>Extended Trading Close</xs:documentation>
+                <xs:documentation>Cross Halted Or Paused</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -1482,7 +937,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="stock" type="xs:string">
+      <xs:element name="stockAlphanumeric8" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
@@ -1513,22 +968,17 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="O">
               <xs:annotation>
-                <xs:documentation>Open Cross</xs:documentation>
+                <xs:documentation>Opening Cross</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="C">
               <xs:annotation>
-                <xs:documentation>Close Cross</xs:documentation>
+                <xs:documentation>Closing Cross</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="H">
               <xs:annotation>
-                <xs:documentation>Intraday Opening Cross For Ipo And Halted Paused Securities</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="A">
-              <xs:annotation>
-                <xs:documentation>Extended Trading Close</xs:documentation>
+                <xs:documentation>Cross Halted Or Paused</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -1552,7 +1002,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="stock" type="xs:string">
+      <xs:element name="stockAlphanumeric8" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
@@ -1581,87 +1031,13 @@
             </xs:enumeration>
             <xs:enumeration value="C">
               <xs:annotation>
-                <xs:documentation>Ipo Release Canceledpostponed</xs:documentation>
+                <xs:documentation>Ipo Release Canceled Or Postponed</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
       <xs:element name="ipoPrice" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="directListingWithCapitalRaisePriceDiscoveryMessage_t">
-    <xs:sequence>
-      <xs:element name="trackingNumber" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="timestamp" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="6" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="stock" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="openEligibilityStatus" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="minimumAllowablePrice" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="maximumAllowablePrice" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="nearExecutionPrice" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="nearExecutionTime" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="lowerPriceRangeCollar" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="upperPriceRangeCollar" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
