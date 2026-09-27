@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Dfdl schema definition for: Nasdaq NsmEquities NoiView v2.0.20100702
+  Dfdl schema definition for: Nasdaq NsmEquities NoiView v2.1.2011.1
 
   Protocol:
     Organization: National Association of Securities Dealers Automated Quotations (Nasdaq)
     Protocol: Net Order Imbalance View
     Encoding: Itch
-    Version: 2.0.20100702
-    Date: 07/02/2010
-    Specification: Noiview-v2spec.pdf
+    Version: 2.1.2011.1
+    Date: 05/02/2011
+    Specification: NQNoiview-v2_1.pdf
 
   Script:
     Generator: 1.0.0.0
@@ -29,7 +29,7 @@
   Open Markets Initiative website:
     https://openmarketsinitiative.com
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:nsmequities:noiview:v2:0:20100702" targetNamespace="urn:omi:nsmequities:noiview:v2:0:20100702">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:nsmequities:noiview:v2:1:2011:1" targetNamespace="urn:omi:nsmequities:noiview:v2:1:2011:1">
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="bigEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
@@ -111,10 +111,24 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
+            <xs:element name="regShoRestrictionMessage" type="tns:regShoRestrictionMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="Y" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
             <xs:element name="noiiMessage" type="tns:noiiMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="I" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="crossTradeMessage" type="tns:crossTradeMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="Q" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -162,9 +176,19 @@
                 <xs:documentation>Stock Trading Action Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="Y">
+              <xs:annotation>
+                <xs:documentation>Reg Sho Restriction Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="I">
               <xs:annotation>
                 <xs:documentation>Noii Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>Cross Trade Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -227,7 +251,7 @@
       <xs:element name="stock" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -239,9 +263,19 @@
         </xs:annotation>
         <xs:simpleType>
           <xs:restriction base="xs:string">
-            <xs:enumeration value="T">
+            <xs:enumeration value="N">
               <xs:annotation>
-                <xs:documentation>Cqs Issues Including Nyse Nyse Amex And Nyse Arca</xs:documentation>
+                <xs:documentation>New York Stock Exchange Nyse</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Nyse Amex</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+              <xs:annotation>
+                <xs:documentation>Nyse Arca</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Q">
@@ -353,11 +387,11 @@
       <xs:element name="stock" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="tradingState">
+      <xs:element name="currentTradingState">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
@@ -367,12 +401,12 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="H">
               <xs:annotation>
-                <xs:documentation>Halted Or Paused On Nasdaq And All Utp Participants</xs:documentation>
+                <xs:documentation>Halted Or Paused Across All Us Equity Markets Sr Os</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="V">
               <xs:annotation>
-                <xs:documentation>Halted Or Paused On Nasdaq Omx</xs:documentation>
+                <xs:documentation>Halted Or Paused On Nasdaq Only</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Q">
@@ -382,23 +416,16 @@
             </xs:enumeration>
             <xs:enumeration value="R">
               <xs:annotation>
-                <xs:documentation>Quotation Only Period For Nasdaq Omx Only Halt Or Pause</xs:documentation>
+                <xs:documentation>Quotation Only Period For Nasdaq Only Halt Or Pause</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="T">
               <xs:annotation>
-                <xs:documentation>Trading On Nasdaq Omx</xs:documentation>
+                <xs:documentation>Trading On Nasdaq</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
-      </xs:element>
-      <xs:element name="reserved1" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
       </xs:element>
       <xs:element name="reason">
         <xs:annotation>
@@ -548,6 +575,43 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="regShoRestrictionMessage_t">
+    <xs:sequence>
+      <xs:element name="stock" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="regShoAction">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>No Price Test In Place</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Reg Sho Short Sale Price Test Restriction In Effect Due To An Intraday Price Drop In Security</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Reg Sho Short Sale Price Test Restriction Remains In Effect</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="noiiMessage_t">
     <xs:sequence>
       <xs:element name="pairedShares" type="xs:string">
@@ -598,7 +662,7 @@
       <xs:element name="stock" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -725,6 +789,64 @@
             <xs:enumeration value=" ">
               <xs:annotation>
                 <xs:documentation>Cannot Be Calculated</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="crossTradeMessage_t">
+    <xs:sequence>
+      <xs:element name="shares" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="9" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="stock" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="crossPrice" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="matchNumber" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="crossType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Open Cross</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Close Cross</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Intraday Opening Cross For Ipo And Halted Paused Securities</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
