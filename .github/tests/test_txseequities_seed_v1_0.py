@@ -20,17 +20,6 @@ class TxseequitiesSeedV10Tests(unittest.TestCase):
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
-    def test_definesymbolmessage(self):
-        for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/DefineSymbolMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", False):
-                self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", False):
-                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-                with open(data, "wb") as handle:
-                    handle.write(message)
-                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-                self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_limitorderaccepted(self):
         for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/LimitOrderAccepted.pcap"):
             if payloads.partial(payload, 0, 2, "little", False):
@@ -55,6 +44,17 @@ class TxseequitiesSeedV10Tests(unittest.TestCase):
 
     def test_logonrequestmessage(self):
         for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/LogonRequestMessage.pcap"):
+            if payloads.partial(payload, 0, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_logonresponsemessage(self):
+        for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/LogonResponseMessage.pcap"):
             if payloads.partial(payload, 0, 2, "little", False):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 0, 2, "little", False):
