@@ -21,7 +21,7 @@ class NsmequitiesTotalviewV20Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
     def test_addordermessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.Itch.v2.0/AddOrderMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.AsciiItch.v2.0/AddOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -29,7 +29,7 @@ class NsmequitiesTotalviewV20Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_ordercancelmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.Itch.v2.0/OrderCancelMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.AsciiItch.v2.0/OrderCancelMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -37,7 +37,7 @@ class NsmequitiesTotalviewV20Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_orderexecutedmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.Itch.v2.0/OrderExecutedMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.AsciiItch.v2.0/OrderExecutedMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -45,7 +45,7 @@ class NsmequitiesTotalviewV20Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_systemeventmessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.Itch.v2.0/SystemEventMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.AsciiItch.v2.0/SystemEventMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -53,7 +53,7 @@ class NsmequitiesTotalviewV20Tests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_trademessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.Itch.v2.0/TradeMessage.pcap"):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.TotalView.AsciiItch.v2.0/TradeMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
