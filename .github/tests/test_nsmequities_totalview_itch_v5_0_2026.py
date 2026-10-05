@@ -9,12 +9,12 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "nasdaq/nsmequities/totalview/NsmEquities_TotalView_v5_0_2026.dfdl.xsd"
-PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "nsmequities_totalview_v5_0_2026.parser")
+SCHEMA = "nasdaq/nsmequities/totalview/NsmEquities_TotalView_Itch_v5_0_2026.dfdl.xsd"
+PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "nsmequities_totalview_itch_v5_0_2026.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
-class NsmequitiesTotalviewV502026Tests(unittest.TestCase):
+class NsmequitiesTotalviewItchV502026Tests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
