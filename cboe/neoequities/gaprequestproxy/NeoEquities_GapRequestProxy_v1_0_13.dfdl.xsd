@@ -42,7 +42,7 @@
         <xs:element name="messages" type="tns:message_t" maxOccurs="unbounded">
           <xs:annotation>
             <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:element occursCountKind="expression" occursCount="{ ../packetHeader/count }" />
+              <dfdl:element occursCountKind="expression" occursCount="{ ../packetHeader/messageCount }" />
             </xs:appinfo>
           </xs:annotation>
         </xs:element>
@@ -58,10 +58,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="count" type="xs:unsignedShort">
+      <xs:element name="messageCount" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -206,7 +206,7 @@
   </xs:complexType>
   <xs:complexType name="loginResponseMessage_t">
     <xs:sequence>
-      <xs:element name="status">
+      <xs:element name="loginResponseStatus">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
@@ -216,7 +216,7 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="A">
               <xs:annotation>
-                <xs:documentation>Accepted</xs:documentation>
+                <xs:documentation>Login Accepted</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="N">
@@ -234,36 +234,6 @@
                 <xs:documentation>Invalid Session</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="O">
-              <xs:annotation>
-                <xs:documentation>Out Of Range Ahead Of Sequence Or Too Far Behind</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="D">
-              <xs:annotation>
-                <xs:documentation>Daily Gap Request Allocation Exhausted</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="M">
-              <xs:annotation>
-                <xs:documentation>Minute Gap Request Allocation Exhausted</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C">
-              <xs:annotation>
-                <xs:documentation>Count Request Limit For One Gap Request Exceeded</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="I">
-              <xs:annotation>
-                <xs:documentation>Invalid Unit Specified In Request</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="U">
-              <xs:annotation>
-                <xs:documentation>Unit Is Currently Unavailable</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -271,14 +241,14 @@
   </xs:complexType>
   <xs:complexType name="gapRequestMessage_t">
     <xs:sequence>
-      <xs:element name="unit" type="xs:unsignedByte">
+      <xs:element name="gapUnit" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="sequence" type="xs:unsignedInt">
+      <xs:element name="gapSequence" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
@@ -296,14 +266,14 @@
   </xs:complexType>
   <xs:complexType name="gapResponseMessage_t">
     <xs:sequence>
-      <xs:element name="unit" type="xs:unsignedByte">
+      <xs:element name="gapUnit" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="sequence" type="xs:unsignedInt">
+      <xs:element name="gapSequence" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
@@ -317,7 +287,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="status">
+      <xs:element name="gapResponseStatus">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
@@ -328,21 +298,6 @@
             <xs:enumeration value="A">
               <xs:annotation>
                 <xs:documentation>Accepted</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="N">
-              <xs:annotation>
-                <xs:documentation>Not Authorized Invalid Username Password</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="B">
-              <xs:annotation>
-                <xs:documentation>Session In Use</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="S">
-              <xs:annotation>
-                <xs:documentation>Invalid Session</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="O">
@@ -358,6 +313,11 @@
             <xs:enumeration value="M">
               <xs:annotation>
                 <xs:documentation>Minute Gap Request Allocation Exhausted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Second Gap Request Allocation Exhausted</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="C">
