@@ -36,8 +36,8 @@ class C1optionsMarketdatafeedV142Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_heartbeat(self):
-        for payload in payloads.of("omi-data-packets/Cboe/C1Options.MarketDataFeed.Csm.v1.4.2/Heartbeat.pcap"):
+    def test_heartbeatmessage(self):
+        for payload in payloads.of("omi-data-packets/Cboe/C1Options.MarketDataFeed.Csm.v1.4.2/HeartbeatMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

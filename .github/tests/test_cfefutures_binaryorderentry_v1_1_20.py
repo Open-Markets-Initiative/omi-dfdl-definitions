@@ -22,8 +22,8 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "exchangePacket", PARSER_EXCHANGEPACKET], check=True)
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "firmPacket", PARSER_FIRMPACKET], check=True)
 
-    def test_clientheartbeatmessage(self):
-        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ClientHeartbeatMessage.pcap"):
+    def test_clientheartbeat(self):
+        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ClientHeartbeat.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
@@ -46,8 +46,8 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_EXCHANGEPACKET, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_serverheartbeatmessage(self):
-        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ServerHeartbeatMessage.pcap"):
+    def test_serverheartbeat(self):
+        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ServerHeartbeat.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

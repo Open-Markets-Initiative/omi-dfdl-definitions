@@ -20,8 +20,8 @@ class CfefuturesMulticastdepthofbookV1112Tests(unittest.TestCase):
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
-    def test_futureinstrumentdefinitionmessage(self):
-        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.MulticastDepthOfBook.Pitch.v1.1.12/FutureInstrumentDefinitionMessage.pcap"):
+    def test_futuresinstrumentdefinitionmessage(self):
+        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.MulticastDepthOfBook.Pitch.v1.1.12/FuturesInstrumentDefinitionMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

@@ -60,8 +60,8 @@ class AmexequitiesIntegratedfeedV21GTests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_sequenceresetmessage(self):
-        for payload in payloads.of("omi-data-packets/Nyse/AmexEquities.IntegratedFeed.Xdp.v2.1.g/SequenceResetMessage.pcap"):
+    def test_sequencenumberresetmessage(self):
+        for payload in payloads.of("omi-data-packets/Nyse/AmexEquities.IntegratedFeed.Xdp.v2.1.g/SequenceNumberResetMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)

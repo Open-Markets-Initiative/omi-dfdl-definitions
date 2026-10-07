@@ -42,8 +42,8 @@ class PearlequitiesExpressordersV26Tests(unittest.TestCase):
                 result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_cancelorreducesizeordernotification(self):
-        for payload in payloads.of("omi-data-packets/Miax/PearlEquities.ExpressOrders.Meo.v2.6/CancelOrReduceSizeOrderNotification.pcap"):
+    def test_cancelreducesizeordernotification(self):
+        for payload in payloads.of("omi-data-packets/Miax/PearlEquities.ExpressOrders.Meo.v2.6/CancelReduceSizeOrderNotification.pcap"):
             if payloads.partial(payload, 0, 2, "little", False):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 0, 2, "little", False):
@@ -97,8 +97,8 @@ class PearlequitiesExpressordersV26Tests(unittest.TestCase):
                 result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_neworderrequest(self):
-        for payload in payloads.of("omi-data-packets/Miax/PearlEquities.ExpressOrders.Meo.v2.6/NewOrderRequest.pcap"):
+    def test_neworderrequestmessage(self):
+        for payload in payloads.of("omi-data-packets/Miax/PearlEquities.ExpressOrders.Meo.v2.6/NewOrderRequestMessage.pcap"):
             if payloads.partial(payload, 0, 2, "little", False):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 0, 2, "little", False):
