@@ -22,17 +22,6 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "clientPacket", PARSER_CLIENTPACKET], check=True)
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "serverPacket", PARSER_SERVERPACKET], check=True)
 
-    def test_cancelordermessage(self):
-        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/CancelOrderMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
-                self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
-                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-                with open(data, "wb") as handle:
-                    handle.write(message)
-                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
-                self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_canceledmessage(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/CanceledMessage.pcap"):
             if payloads.partial(payload, 0, 2, "big", False):
@@ -42,6 +31,17 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
                 with open(data, "wb") as handle:
                     handle.write(message)
                 result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_cancelordermessage(self):
+        for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/CancelOrderMessage.pcap"):
+            if payloads.partial(payload, 0, 2, "big", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "big", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTPACKET, data], capture_output=True)
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_clientheartbeat(self):
