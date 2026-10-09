@@ -33,23 +33,61 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
+      <dfdl:defineVariable name="heartbeatLength" type="xs:int" />
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="packet">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="loginMessage" type="tns:loginMessage_t" />
-        <xs:element name="loginResponse" type="tns:loginResponse_t" />
-        <xs:element name="streamAvail" type="tns:streamAvail_t" />
-        <xs:element name="heartbeat" type="tns:heartbeat_t" />
-        <xs:element name="open" type="tns:open_t" />
-        <xs:element name="openResponse" type="tns:openResponse_t" />
-        <xs:element name="close" type="tns:close_t" />
-        <xs:element name="closeResponse" type="tns:closeResponse_t" />
-        <xs:element name="seqMsg" type="tns:seqMsg_t" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:element name="clientPillarMessage" type="tns:clientPillarMessage_t" />
+  <xs:element name="serverPillarMessage" type="tns:serverPillarMessage_t" />
+  <xs:complexType name="clientPillarMessage_t">
+    <xs:sequence>
+      <xs:element name="clientMessage">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(loginMessage/msgHeader/msgType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="loginMessage" type="tns:loginMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="513" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="heartbeat" type="tns:heartbeat_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="516" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="open" type="tns:open_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="517" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="close" type="tns:close_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="519" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="clientSeqMsg" type="tns:clientSeqMsg_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2309" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="loginMessage_t">
     <xs:sequence>
       <xs:element name="msgHeader" type="tns:msgHeader_t" />
@@ -179,147 +217,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="loginResponse_t">
-    <xs:sequence>
-      <xs:element name="msgHeader" type="tns:msgHeader_t" />
-      <xs:element name="username" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="status">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Request Processed Successfully</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="18">
-              <xs:annotation>
-                <xs:documentation>Not Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="24">
-              <xs:annotation>
-                <xs:documentation>Invalid Login Details</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="27">
-              <xs:annotation>
-                <xs:documentation>Already Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="28">
-              <xs:annotation>
-                <xs:documentation>Heartbeat Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="29">
-              <xs:annotation>
-                <xs:documentation>Login Timed Out</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="33">
-              <xs:annotation>
-                <xs:documentation>Invalid Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="54">
-              <xs:annotation>
-                <xs:documentation>No Stream Permission</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="81">
-              <xs:annotation>
-                <xs:documentation>Invalid Protocol Version</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="82">
-              <xs:annotation>
-                <xs:documentation>Message Out Of Sequence</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="84">
-              <xs:annotation>
-                <xs:documentation>Invalid Stream</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="85">
-              <xs:annotation>
-                <xs:documentation>Stream Not Open</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="86">
-              <xs:annotation>
-                <xs:documentation>Invalid Timestamp</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="89">
-              <xs:annotation>
-                <xs:documentation>Denial Of Service</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="90">
-              <xs:annotation>
-                <xs:documentation>Write Permission Revoked</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="93">
-              <xs:annotation>
-                <xs:documentation>Invalid Multimessage</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="streamAvail_t">
-    <xs:sequence>
-      <xs:element name="msgHeader" type="tns:msgHeader_t" />
-      <xs:element name="streamId" type="tns:streamId_t" />
-      <xs:element name="nextSeq" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="access" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="streamId_t">
-    <xs:sequence>
-      <xs:element name="sess" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="value" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="heartbeat_t">
     <xs:sequence>
       <xs:element name="msgHeader" type="tns:msgHeader_t" />
@@ -359,105 +256,19 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="openResponse_t">
+  <xs:complexType name="streamId_t">
     <xs:sequence>
-      <xs:element name="msgHeader" type="tns:msgHeader_t" />
-      <xs:element name="streamId" type="tns:streamId_t" />
-      <xs:element name="status">
+      <xs:element name="sess" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Request Processed Successfully</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="18">
-              <xs:annotation>
-                <xs:documentation>Not Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="24">
-              <xs:annotation>
-                <xs:documentation>Invalid Login Details</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="27">
-              <xs:annotation>
-                <xs:documentation>Already Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="28">
-              <xs:annotation>
-                <xs:documentation>Heartbeat Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="29">
-              <xs:annotation>
-                <xs:documentation>Login Timed Out</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="33">
-              <xs:annotation>
-                <xs:documentation>Invalid Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="54">
-              <xs:annotation>
-                <xs:documentation>No Stream Permission</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="81">
-              <xs:annotation>
-                <xs:documentation>Invalid Protocol Version</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="82">
-              <xs:annotation>
-                <xs:documentation>Message Out Of Sequence</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="84">
-              <xs:annotation>
-                <xs:documentation>Invalid Stream</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="85">
-              <xs:annotation>
-                <xs:documentation>Stream Not Open</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="86">
-              <xs:annotation>
-                <xs:documentation>Invalid Timestamp</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="89">
-              <xs:annotation>
-                <xs:documentation>Denial Of Service</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="90">
-              <xs:annotation>
-                <xs:documentation>Write Permission Revoked</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="93">
-              <xs:annotation>
-                <xs:documentation>Invalid Multimessage</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
-      <xs:element name="access" type="xs:unsignedByte">
+      <xs:element name="value" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -469,104 +280,7 @@
       <xs:element name="streamId" type="tns:streamId_t" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="closeResponse_t">
-    <xs:sequence>
-      <xs:element name="msgHeader" type="tns:msgHeader_t" />
-      <xs:element name="streamId" type="tns:streamId_t" />
-      <xs:element name="status">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Request Processed Successfully</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="18">
-              <xs:annotation>
-                <xs:documentation>Not Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="24">
-              <xs:annotation>
-                <xs:documentation>Invalid Login Details</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="27">
-              <xs:annotation>
-                <xs:documentation>Already Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="28">
-              <xs:annotation>
-                <xs:documentation>Heartbeat Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="29">
-              <xs:annotation>
-                <xs:documentation>Login Timed Out</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="33">
-              <xs:annotation>
-                <xs:documentation>Invalid Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="54">
-              <xs:annotation>
-                <xs:documentation>No Stream Permission</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="81">
-              <xs:annotation>
-                <xs:documentation>Invalid Protocol Version</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="82">
-              <xs:annotation>
-                <xs:documentation>Message Out Of Sequence</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="84">
-              <xs:annotation>
-                <xs:documentation>Invalid Stream</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="85">
-              <xs:annotation>
-                <xs:documentation>Stream Not Open</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="86">
-              <xs:annotation>
-                <xs:documentation>Invalid Timestamp</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="89">
-              <xs:annotation>
-                <xs:documentation>Denial Of Service</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="90">
-              <xs:annotation>
-                <xs:documentation>Write Permission Revoked</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="93">
-              <xs:annotation>
-                <xs:documentation>Invalid Multimessage</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="seqMsg_t">
+  <xs:complexType name="clientSeqMsg_t">
     <xs:sequence>
       <xs:element name="msgHeader" type="tns:msgHeader_t" />
       <xs:element name="seqMsgId" type="tns:seqMsgId_t" />
@@ -584,8 +298,50 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="seqMsgHeader" type="tns:seqMsgHeader_t" />
-      <xs:element name="sequencedMessage">
+      <xs:element name="clientSequencedMessage">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element lengthKind="explicit" length="{ ../msgHeader/msgLength - 36 }" />
@@ -688,153 +444,6 @@
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="817" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="equitiesSymbolReferenceDataMessage" type="tns:equitiesSymbolReferenceDataMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="562" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="dmmSymbolReferenceDataMessage" type="tns:dmmSymbolReferenceDataMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="2098" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="minimumPriceVariantClassReferenceDataMessage" type="tns:minimumPriceVariantClassReferenceDataMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="560" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="minimumPriceVariantLevelReferenceDataMessage" type="tns:minimumPriceVariantLevelReferenceDataMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="561" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="mpidConfigurationMessage" type="tns:mpidConfigurationMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="626" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="mmidConfigurationMessage" type="tns:mmidConfigurationMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="627" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="sessionConfigurationAcknowledgementMessage" type="tns:sessionConfigurationAcknowledgementMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="545" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="orderAndCancelReplaceAcknowledgementMessage" type="tns:orderAndCancelReplaceAcknowledgementMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="608" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="orderModifyCancelRequestAcknowledgmentAndUroutMessage" type="tns:orderModifyCancelRequestAcknowledgmentAndUroutMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="625" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="orderPriorityUpdateAcknowledgmentMessage" type="tns:orderPriorityUpdateAcknowledgmentMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="610" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="executionReportMessage" type="tns:executionReportMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="656" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="tradeBustCorrectMessage" type="tns:tradeBustCorrectMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="658" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="applicationLayerRejectMessage" type="tns:applicationLayerRejectMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="611" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="symbolSubscriptionAcknowledgementMessage" type="tns:symbolSubscriptionAcknowledgementMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="839" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="gtBeginMessage" type="tns:gtBeginMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="841" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="gtEndMessage" type="tns:gtEndMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="848" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="auctionPriceDataMessage" type="tns:auctionPriceDataMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="850" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="auctionRequestMessage" type="tns:auctionRequestMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="840" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="manualActionRequestMessage" type="tns:manualActionRequestMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="851" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="riskControlAcknowledgementMessage" type="tns:riskControlAcknowledgementMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="818" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="riskControlAlertMessage" type="tns:riskControlAlertMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="819" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -1254,21 +863,21 @@
       <xs:element name="optionalOrderAddOn" type="tns:optionalOrderAddOn_t" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 102 or ../../../seqMsgHeader/seqMsgLength eq 139) then 1 else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 106 or ../../../seqMsgHeader/seqMsgLength eq 143) then 1 else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="optionalRoutingStrategyAddOn" type="tns:optionalRoutingStrategyAddOn_t" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 93 or ../../../seqMsgHeader/seqMsgLength eq 130) then 1 else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 97 or ../../../seqMsgHeader/seqMsgLength eq 134) then 1 else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="optionalSettlementTypeAddOn" type="tns:optionalSettlementTypeAddOn_t" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 66 or ../../../seqMsgHeader/seqMsgLength eq 103 or ../../../seqMsgHeader/seqMsgLength eq 85) then 1 else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 70 or ../../../seqMsgHeader/seqMsgLength eq 107 or ../../../seqMsgHeader/seqMsgLength eq 89) then 1 else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -3257,6 +2866,613 @@
             <dfdl:element representation="binary" lengthKind="explicit" length="199" />
           </xs:appinfo>
         </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPillarMessage_t">
+    <xs:sequence>
+      <xs:element name="serverMessage">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(loginResponse/msgHeader/msgType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="loginResponse" type="tns:loginResponse_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="514" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="streamAvail" type="tns:streamAvail_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="515" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="heartbeat" type="tns:heartbeat_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="516" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="openResponse" type="tns:openResponse_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="518" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="closeResponse" type="tns:closeResponse_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="520" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="serverSeqMsg" type="tns:serverSeqMsg_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2309" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginResponse_t">
+    <xs:sequence>
+      <xs:element name="msgHeader" type="tns:msgHeader_t" />
+      <xs:element name="username" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="status">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Request Processed Successfully</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+              <xs:annotation>
+                <xs:documentation>Not Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+              <xs:annotation>
+                <xs:documentation>Invalid Login Details</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="27">
+              <xs:annotation>
+                <xs:documentation>Already Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="28">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="29">
+              <xs:annotation>
+                <xs:documentation>Login Timed Out</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="33">
+              <xs:annotation>
+                <xs:documentation>Invalid Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>No Stream Permission</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="81">
+              <xs:annotation>
+                <xs:documentation>Invalid Protocol Version</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="82">
+              <xs:annotation>
+                <xs:documentation>Message Out Of Sequence</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Invalid Stream</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="85">
+              <xs:annotation>
+                <xs:documentation>Stream Not Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Invalid Timestamp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+              <xs:annotation>
+                <xs:documentation>Denial Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+              <xs:annotation>
+                <xs:documentation>Write Permission Revoked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Invalid Multimessage</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="streamAvail_t">
+    <xs:sequence>
+      <xs:element name="msgHeader" type="tns:msgHeader_t" />
+      <xs:element name="streamId" type="tns:streamId_t" />
+      <xs:element name="nextSeq" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="access" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="openResponse_t">
+    <xs:sequence>
+      <xs:element name="msgHeader" type="tns:msgHeader_t" />
+      <xs:element name="streamId" type="tns:streamId_t" />
+      <xs:element name="status">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Request Processed Successfully</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+              <xs:annotation>
+                <xs:documentation>Not Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+              <xs:annotation>
+                <xs:documentation>Invalid Login Details</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="27">
+              <xs:annotation>
+                <xs:documentation>Already Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="28">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="29">
+              <xs:annotation>
+                <xs:documentation>Login Timed Out</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="33">
+              <xs:annotation>
+                <xs:documentation>Invalid Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>No Stream Permission</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="81">
+              <xs:annotation>
+                <xs:documentation>Invalid Protocol Version</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="82">
+              <xs:annotation>
+                <xs:documentation>Message Out Of Sequence</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Invalid Stream</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="85">
+              <xs:annotation>
+                <xs:documentation>Stream Not Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Invalid Timestamp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+              <xs:annotation>
+                <xs:documentation>Denial Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+              <xs:annotation>
+                <xs:documentation>Write Permission Revoked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Invalid Multimessage</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="access" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="closeResponse_t">
+    <xs:sequence>
+      <xs:element name="msgHeader" type="tns:msgHeader_t" />
+      <xs:element name="streamId" type="tns:streamId_t" />
+      <xs:element name="status">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Request Processed Successfully</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+              <xs:annotation>
+                <xs:documentation>Not Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+              <xs:annotation>
+                <xs:documentation>Invalid Login Details</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="27">
+              <xs:annotation>
+                <xs:documentation>Already Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="28">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="29">
+              <xs:annotation>
+                <xs:documentation>Login Timed Out</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="33">
+              <xs:annotation>
+                <xs:documentation>Invalid Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>No Stream Permission</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="81">
+              <xs:annotation>
+                <xs:documentation>Invalid Protocol Version</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="82">
+              <xs:annotation>
+                <xs:documentation>Message Out Of Sequence</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Invalid Stream</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="85">
+              <xs:annotation>
+                <xs:documentation>Stream Not Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Invalid Timestamp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+              <xs:annotation>
+                <xs:documentation>Denial Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+              <xs:annotation>
+                <xs:documentation>Write Permission Revoked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Invalid Multimessage</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverSeqMsg_t">
+    <xs:sequence>
+      <xs:element name="msgHeader" type="tns:msgHeader_t" />
+      <xs:element name="seqMsgId" type="tns:seqMsgId_t" />
+      <xs:element name="reserved4" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="seqMsgHeader" type="tns:seqMsgHeader_t" />
+      <xs:element name="serverSequencedMessage">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../msgHeader/msgLength - 36 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../seqMsgHeader/seqMsgType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="equitiesSymbolReferenceDataMessage" type="tns:equitiesSymbolReferenceDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="562" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="dmmSymbolReferenceDataMessage" type="tns:dmmSymbolReferenceDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2098" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="minimumPriceVariantClassReferenceDataMessage" type="tns:minimumPriceVariantClassReferenceDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="560" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="minimumPriceVariantLevelReferenceDataMessage" type="tns:minimumPriceVariantLevelReferenceDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="561" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="mpidConfigurationMessage" type="tns:mpidConfigurationMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="626" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="mmidConfigurationMessage" type="tns:mmidConfigurationMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="627" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sessionConfigurationAcknowledgementMessage" type="tns:sessionConfigurationAcknowledgementMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="545" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderAndCancelReplaceAcknowledgementMessage" type="tns:orderAndCancelReplaceAcknowledgementMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="608" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderModifyCancelRequestAcknowledgmentAndUroutMessage" type="tns:orderModifyCancelRequestAcknowledgmentAndUroutMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="625" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderPriorityUpdateAcknowledgmentMessage" type="tns:orderPriorityUpdateAcknowledgmentMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="610" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="executionReportMessage" type="tns:executionReportMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="656" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradeBustCorrectMessage" type="tns:tradeBustCorrectMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="658" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="applicationLayerRejectMessage" type="tns:applicationLayerRejectMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="611" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="symbolSubscriptionAcknowledgementMessage" type="tns:symbolSubscriptionAcknowledgementMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="839" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="gtBeginMessage" type="tns:gtBeginMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="841" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="gtEndMessage" type="tns:gtEndMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="848" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="auctionPriceDataMessage" type="tns:auctionPriceDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="850" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="auctionRequestMessage" type="tns:auctionRequestMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="840" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="manualActionRequestMessage" type="tns:manualActionRequestMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="851" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="riskControlAcknowledgementMessage" type="tns:riskControlAcknowledgementMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="818" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="riskControlAlertMessage" type="tns:riskControlAlertMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="819" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -6160,21 +6376,21 @@
       <xs:element name="optionalOrderAddOn" type="tns:optionalOrderAddOn_t" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 102 or ../../../seqMsgHeader/seqMsgLength eq 139) then 1 else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 106 or ../../../seqMsgHeader/seqMsgLength eq 143) then 1 else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="optionalRoutingStrategyAddOn" type="tns:optionalRoutingStrategyAddOn_t" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 93 or ../../../seqMsgHeader/seqMsgLength eq 130) then 1 else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 97 or ../../../seqMsgHeader/seqMsgLength eq 134) then 1 else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="optionalSettlementTypeAddOn" type="tns:optionalSettlementTypeAddOn_t" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 66 or ../../../seqMsgHeader/seqMsgLength eq 103 or ../../../seqMsgHeader/seqMsgLength eq 85) then 1 else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 70 or ../../../seqMsgHeader/seqMsgLength eq 107 or ../../../seqMsgHeader/seqMsgLength eq 89) then 1 else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -10046,7 +10262,7 @@
       <xs:element name="optionalSettlementTypeAddOn" type="tns:optionalSettlementTypeAddOn_t" minOccurs="0" maxOccurs="1">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 66 or ../../../seqMsgHeader/seqMsgLength eq 103 or ../../../seqMsgHeader/seqMsgLength eq 85) then 1 else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../seqMsgHeader/seqMsgLength eq 70 or ../../../seqMsgHeader/seqMsgLength eq 107 or ../../../seqMsgHeader/seqMsgLength eq 89) then 1 else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
