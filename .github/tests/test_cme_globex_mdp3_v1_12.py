@@ -24,83 +24,113 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_marketdatarequest(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MarketDataRequest.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshbooklongqty(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MdIncrementalRefreshBookLongQty.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdincrementalrefreshtradesummarylongqty(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MdIncrementalRefreshTradeSummaryLongQty.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_mdinstrumentdefinitionfx(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MdInstrumentDefinitionFx.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_requestack(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/RequestAck.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitylistrequest(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SecurityListRequest.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitystatus(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SecurityStatus.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_securitystatusrequest(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SecurityStatusRequest.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_snapshotfullrefreshtcplongqty(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SnapshotFullRefreshTcpLongQty.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_SERVERTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_subscriberheartbeat(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SubscriberHeartbeat.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 14, 2, "little", False):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 14, 2, "little", False):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER_CLIENTTCPPACKET, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
 
 if __name__ == "__main__":

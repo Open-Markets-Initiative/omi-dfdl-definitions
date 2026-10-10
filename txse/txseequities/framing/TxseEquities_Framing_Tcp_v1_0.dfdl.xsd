@@ -35,23 +35,23 @@
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="packet">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="rakeTcpMessage" type="tns:rakeTcpMessage_t" maxOccurs="unbounded">
-          <xs:annotation>
-            <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:element occursCountKind="implicit" />
-            </xs:appinfo>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:complexType name="rakeTcpMessage_t">
+  <xs:element name="clientPacket" type="tns:clientPacket_t" />
+  <xs:element name="serverPacket" type="tns:serverPacket_t" />
+  <xs:complexType name="clientPacket_t">
+    <xs:sequence>
+      <xs:element name="clientRakeTcpMessage" type="tns:clientRakeTcpMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="implicit" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clientRakeTcpMessage_t">
     <xs:sequence>
       <xs:element name="rakeMessageHeader" type="tns:rakeMessageHeader_t" />
-      <xs:element name="payload">
+      <xs:element name="clientPayload">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element lengthKind="explicit" length="{ ../rakeMessageHeader/messageLength + 2 - 3 }" />
@@ -75,37 +75,6 @@
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="54" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="debugMessage" type="tns:debugMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="48" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="endOfSessionMessage">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="52" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence />
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="logonResponseMessage" type="tns:logonResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="49" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="tcpSequencedMessage" type="tns:tcpSequencedMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="50" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -223,6 +192,69 @@
             <dfdl:element representation="binary" lengthKind="explicit" length="0" />
           </xs:appinfo>
         </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPacket_t">
+    <xs:sequence>
+      <xs:element name="serverRakeTcpMessage" type="tns:serverRakeTcpMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="implicit" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverRakeTcpMessage_t">
+    <xs:sequence>
+      <xs:element name="rakeMessageHeader" type="tns:rakeMessageHeader_t" />
+      <xs:element name="serverPayload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../rakeMessageHeader/messageLength + 2 - 3 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../rakeMessageHeader/packetType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="debugMessage" type="tns:debugMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="48" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="endOfSessionMessage">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="52" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="logonResponseMessage" type="tns:logonResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="49" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tcpSequencedMessage" type="tns:tcpSequencedMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="50" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>

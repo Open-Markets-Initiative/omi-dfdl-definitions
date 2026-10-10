@@ -35,20 +35,20 @@
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="packet">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="packetHeader" type="tns:packetHeader_t" />
-        <xs:element name="message" type="tns:message_t" maxOccurs="unbounded">
-          <xs:annotation>
-            <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:element occursCountKind="expression" occursCount="{ ../packetHeader/numberMsgs }" />
-            </xs:appinfo>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:element name="clientPacket" type="tns:clientPacket_t" />
+  <xs:element name="serverPacket" type="tns:serverPacket_t" />
+  <xs:complexType name="clientPacket_t">
+    <xs:sequence>
+      <xs:element name="packetHeader" type="tns:packetHeader_t" />
+      <xs:element name="clientMessage" type="tns:clientMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../packetHeader/numberMsgs }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="packetHeader_t">
     <xs:sequence>
       <xs:element name="pktSize" type="xs:unsignedShort">
@@ -222,10 +222,10 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="message_t">
+  <xs:complexType name="clientMessage_t">
     <xs:sequence>
       <xs:element name="messageHeader" type="tns:messageHeader_t" />
-      <xs:element name="payload">
+      <xs:element name="clientPayload">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element lengthKind="explicit" length="{ ../messageHeader/messageSize - 4 }" />
@@ -242,13 +242,6 @@
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="10" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="requestResponseMessage" type="tns:requestResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="11" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -364,6 +357,106 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="heartbeatResponseMessage_t">
+    <xs:sequence>
+      <xs:element name="sourceId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="symbolIndexMappingRequestMessage_t">
+    <xs:sequence>
+      <xs:element name="symbolIndex" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productId" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="channelId" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="retransmitMethod" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="refreshRequestMessage_t">
+    <xs:sequence>
+      <xs:element name="symbolIndex" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productId" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="channelId" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPacket_t">
+    <xs:sequence>
+      <xs:element name="packetHeader" type="tns:packetHeader_t" />
+      <xs:element name="serverMessage" type="tns:serverMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../packetHeader/numberMsgs }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="serverPayload" type="tns:requestResponseMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="requestResponseMessage_t">
     <xs:sequence>
       <xs:element name="requestSeqNum" type="xs:unsignedInt">
@@ -463,88 +556,6 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="heartbeatResponseMessage_t">
-    <xs:sequence>
-      <xs:element name="sourceId" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="symbolIndexMappingRequestMessage_t">
-    <xs:sequence>
-      <xs:element name="symbolIndex" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sourceId" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="productId" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="channelId" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="retransmitMethod" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="refreshRequestMessage_t">
-    <xs:sequence>
-      <xs:element name="symbolIndex" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sourceId" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="10" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="productId" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="channelId" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
