@@ -22,59 +22,80 @@ class BzxequitiesMulticastdepthofbookSpinV2204Tests(unittest.TestCase):
 
     def test_loginmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.MulticastDepthOfBook.Spin.v2.20.4/LoginMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 0, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_loginresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.MulticastDepthOfBook.Spin.v2.20.4/LoginResponseMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 0, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_spinfinishedmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.MulticastDepthOfBook.Spin.v2.20.4/SpinFinishedMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 0, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_spinimageavailablemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.MulticastDepthOfBook.Spin.v2.20.4/SpinImageAvailableMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 0, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_spinrequestmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.MulticastDepthOfBook.Spin.v2.20.4/SpinRequestMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 0, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_spinresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.MulticastDepthOfBook.Spin.v2.20.4/SpinResponseMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 0, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_timemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.MulticastDepthOfBook.Spin.v2.20.4/TimeMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 0, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 0, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
 
 if __name__ == "__main__":

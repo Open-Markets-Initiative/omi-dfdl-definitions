@@ -22,107 +22,146 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_cancelordermessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/CancelOrderMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_clientheartbeatmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ClientHeartbeatMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_loginrequestmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/LoginRequestMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_loginresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/LoginResponseMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_modifyordermessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ModifyOrderMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_newordermessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/NewOrderMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_orderacknowledgmentmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderAcknowledgmentMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_ordercancelledmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderCancelledMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_orderexecutionmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderExecutionMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_ordermodifiedmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderModifiedMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_orderrejectedmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderRejectedMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_replaycompletemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ReplayCompleteMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_serverheartbeatmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ServerHeartbeatMessage.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
+            if payloads.partial(payload, 2, 2, "little", True):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", True):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
 
 
 if __name__ == "__main__":
