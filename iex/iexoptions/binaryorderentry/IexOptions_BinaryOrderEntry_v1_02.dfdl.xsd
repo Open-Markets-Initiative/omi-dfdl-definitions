@@ -33,17 +33,16 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
-      <dfdl:defineVariable name="sbeMessageLength" type="xs:int" />
     </xs:appinfo>
   </xs:annotation>
   <xs:element name="clientPacket" type="tns:clientPacket_t" />
   <xs:element name="serverPacket" type="tns:serverPacket_t" />
   <xs:complexType name="clientPacket_t">
     <xs:sequence>
-      <xs:element name="sbeMessage" type="tns:sbeMessage_t" />
+      <xs:element name="clientSbeMessage" type="tns:clientSbeMessage_t" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="sbeMessage_t">
+  <xs:complexType name="clientSbeMessage_t">
     <xs:sequence>
       <xs:element name="packetLength" type="xs:unsignedShort">
         <xs:annotation>
@@ -53,10 +52,10 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="messageHeader" type="tns:messageHeader_t" />
-      <xs:element name="payload">
+      <xs:element name="clientPayload">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element lengthKind="explicit" length="{ $tns:sbeMessageLength - 10 }" />
+            <dfdl:element lengthKind="explicit" length="{ ../packetLength - 10 }" />
           </xs:appinfo>
         </xs:annotation>
         <xs:complexType>
@@ -66,14 +65,14 @@
                 <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/schemaId) }" />
               </xs:appinfo>
             </xs:annotation>
-            <xs:element name="sessionMessage" type="tns:sessionMessage_t">
+            <xs:element name="clientSessionMessage" type="tns:clientSessionMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="20000" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="businessMessage" type="tns:businessMessage_t">
+            <xs:element name="clientBusinessMessage" type="tns:clientBusinessMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="20001" />
@@ -295,9 +294,9 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="sessionMessage_t">
+  <xs:complexType name="clientSessionMessage_t">
     <xs:sequence>
-      <xs:element name="sessionPayload">
+      <xs:element name="clientSessionPayload">
         <xs:complexType>
           <xs:choice>
             <xs:annotation>
@@ -309,20 +308,6 @@
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="1" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="loginResponseMessage" type="tns:loginResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="2" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="gatewayHeartbeatMessage" type="tns:gatewayHeartbeatMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="3" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -346,13 +331,6 @@
                 <xs:sequence />
               </xs:complexType>
             </xs:element>
-            <xs:element name="terminateMessage" type="tns:terminateMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="6" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
             <xs:element name="sequencedMessageHeaderMessage" type="tns:sequencedMessageHeaderMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -367,24 +345,10 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="subsessionJoinResponseMessage" type="tns:subsessionJoinResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="9" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
             <xs:element name="subsessionLeaveMessage" type="tns:subsessionLeaveMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="10" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="subsessionLeaveResponseMessage" type="tns:subsessionLeaveResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="11" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -408,344 +372,6 @@
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
           </xs:appinfo>
         </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="loginResponseMessage_t">
-    <xs:sequence>
-      <xs:element name="logonId" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="status">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Success</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Session Level Reject</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Logout Requested</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Unknown</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Invalid Logon Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Invalid Token</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="6">
-              <xs:annotation>
-                <xs:documentation>Already Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="7">
-              <xs:annotation>
-                <xs:documentation>Login Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="8">
-              <xs:annotation>
-                <xs:documentation>Invalid Packet Length</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="9">
-              <xs:annotation>
-                <xs:documentation>Invalid Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="10">
-              <xs:annotation>
-                <xs:documentation>Join Revoked</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="11">
-              <xs:annotation>
-                <xs:documentation>Heartbeat Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="12">
-              <xs:annotation>
-                <xs:documentation>Message Out Of Sequence</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="13">
-              <xs:annotation>
-                <xs:documentation>Invalid Subsession Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="14">
-              <xs:annotation>
-                <xs:documentation>Subsession Not Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="15">
-              <xs:annotation>
-                <xs:documentation>Denial Of Service</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="16">
-              <xs:annotation>
-                <xs:documentation>Invalid Argument</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="17">
-              <xs:annotation>
-                <xs:documentation>Already Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="gatewayHeartbeatMessage_t">
-    <xs:sequence>
-      <xs:element name="keepAlive">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>False</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>True</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="subSessionsGroups" type="tns:subSessionsGroups_t" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="subSessionsGroups_t">
-    <xs:sequence>
-      <xs:element name="sessionInfoGroupEncoding" type="tns:sessionInfoGroupEncoding_t" />
-      <xs:element name="subSessionsGroup" type="tns:subSessionsGroup_t" maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ ../sessionInfoGroupEncoding/numInGroup }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="sessionInfoGroupEncoding_t">
-    <xs:sequence>
-      <xs:element name="blockLengthShort" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="numInGroup" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="subSessionsGroup_t">
-    <xs:sequence>
-      <xs:element name="subsessionType">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:byte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Client To Gateway</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Gateway To Client</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Reference Data</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="subsessionId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="joined">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>False</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>True</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="nextSeqNo" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="terminateMessage_t">
-    <xs:sequence>
-      <xs:element name="reason">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Success</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Session Level Reject</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Logout Requested</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Unknown</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Invalid Logon Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Invalid Token</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="6">
-              <xs:annotation>
-                <xs:documentation>Already Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="7">
-              <xs:annotation>
-                <xs:documentation>Login Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="8">
-              <xs:annotation>
-                <xs:documentation>Invalid Packet Length</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="9">
-              <xs:annotation>
-                <xs:documentation>Invalid Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="10">
-              <xs:annotation>
-                <xs:documentation>Join Revoked</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="11">
-              <xs:annotation>
-                <xs:documentation>Heartbeat Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="12">
-              <xs:annotation>
-                <xs:documentation>Message Out Of Sequence</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="13">
-              <xs:annotation>
-                <xs:documentation>Invalid Subsession Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="14">
-              <xs:annotation>
-                <xs:documentation>Subsession Not Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="15">
-              <xs:annotation>
-                <xs:documentation>Denial Of Service</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="16">
-              <xs:annotation>
-                <xs:documentation>Invalid Argument</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="17">
-              <xs:annotation>
-                <xs:documentation>Already Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -799,118 +425,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="subsessionJoinResponseMessage_t">
-    <xs:sequence>
-      <xs:element name="subsessionId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="status">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Success</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Session Level Reject</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Logout Requested</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Unknown</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Invalid Logon Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Invalid Token</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="6">
-              <xs:annotation>
-                <xs:documentation>Already Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="7">
-              <xs:annotation>
-                <xs:documentation>Login Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="8">
-              <xs:annotation>
-                <xs:documentation>Invalid Packet Length</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="9">
-              <xs:annotation>
-                <xs:documentation>Invalid Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="10">
-              <xs:annotation>
-                <xs:documentation>Join Revoked</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="11">
-              <xs:annotation>
-                <xs:documentation>Heartbeat Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="12">
-              <xs:annotation>
-                <xs:documentation>Message Out Of Sequence</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="13">
-              <xs:annotation>
-                <xs:documentation>Invalid Subsession Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="14">
-              <xs:annotation>
-                <xs:documentation>Subsession Not Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="15">
-              <xs:annotation>
-                <xs:documentation>Denial Of Service</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="16">
-              <xs:annotation>
-                <xs:documentation>Invalid Argument</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="17">
-              <xs:annotation>
-                <xs:documentation>Already Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="subsessionLeaveMessage_t">
     <xs:sequence>
       <xs:element name="subsessionId" type="xs:unsignedLong">
@@ -922,121 +436,9 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="subsessionLeaveResponseMessage_t">
+  <xs:complexType name="clientBusinessMessage_t">
     <xs:sequence>
-      <xs:element name="subsessionId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="reason">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Success</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Session Level Reject</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Logout Requested</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Unknown</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Invalid Logon Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Invalid Token</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="6">
-              <xs:annotation>
-                <xs:documentation>Already Logged In</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="7">
-              <xs:annotation>
-                <xs:documentation>Login Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="8">
-              <xs:annotation>
-                <xs:documentation>Invalid Packet Length</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="9">
-              <xs:annotation>
-                <xs:documentation>Invalid Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="10">
-              <xs:annotation>
-                <xs:documentation>Join Revoked</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="11">
-              <xs:annotation>
-                <xs:documentation>Heartbeat Timeout</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="12">
-              <xs:annotation>
-                <xs:documentation>Message Out Of Sequence</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="13">
-              <xs:annotation>
-                <xs:documentation>Invalid Subsession Id</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="14">
-              <xs:annotation>
-                <xs:documentation>Subsession Not Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="15">
-              <xs:annotation>
-                <xs:documentation>Denial Of Service</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="16">
-              <xs:annotation>
-                <xs:documentation>Invalid Argument</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="17">
-              <xs:annotation>
-                <xs:documentation>Already Joined</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="businessMessage_t">
-    <xs:sequence>
-      <xs:element name="businessPayload">
+      <xs:element name="clientBusinessPayload">
         <xs:complexType>
           <xs:choice>
             <xs:annotation>
@@ -1086,90 +488,6 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="orderAckMessage" type="tns:orderAckMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="101" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="unsolicitedModifyAckMessage" type="tns:unsolicitedModifyAckMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="102" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="orderCancelAckMessage" type="tns:orderCancelAckMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="103" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="massCancelAckMessage" type="tns:massCancelAckMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="104" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="bulkQuoteAckMessage" type="tns:bulkQuoteAckMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="105" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="newIocQuoteAckMessage" type="tns:newIocQuoteAckMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="106" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="quoteRestatedMessage" type="tns:quoteRestatedMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="107" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="quoteCanceledMessage" type="tns:quoteCanceledMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="108" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="purgeAckMessage" type="tns:purgeAckMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="109" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="executionReportMessage" type="tns:executionReportMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="110" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="tradeBustCorrectMessage" type="tns:tradeBustCorrectMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="111" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="applicationLayerRejectMessage" type="tns:applicationLayerRejectMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="112" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
             <xs:element name="riskLimitUpdateRequestMessage" type="tns:riskLimitUpdateRequestMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -1181,55 +499,6 @@
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="52" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="underlyingRefDataMessage" type="tns:underlyingRefDataMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="151" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="instrumentRefDataMessage" type="tns:instrumentRefDataMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="152" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="mpidConfigurationAcknowledgementMessage" type="tns:mpidConfigurationAcknowledgementMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="153" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="marketMakerSymbolAppointmentMessage" type="tns:marketMakerSymbolAppointmentMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="154" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="sessionConfigurationAcknowledgementMessage" type="tns:sessionConfigurationAcknowledgementMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="155" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="riskControlAcknowledgmentMessage" type="tns:riskControlAcknowledgmentMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="156" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="riskControlAlertMessage" type="tns:riskControlAlertMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="157" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -2352,6 +1621,1050 @@
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
           </xs:appinfo>
         </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="riskLimitUpdateRequestMessage_t">
+    <xs:sequence>
+      <xs:element name="underlyingIdOptional" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="marketParticipantId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="clOrdId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="riskControlOptional" nillable="true">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="128" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Transaction Based</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Volume Based</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Percentage Based</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Grmp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Purge Lockout Reset</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Intrinsic Value And Arbitrage</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="riskControlStatusOptional" nillable="true">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="128" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:byte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Disabled</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Enabled</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="timeLimit" nillable="true" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="18446744073709551615" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="percentageLimit" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="countLimit" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="iocAttribution" nillable="true">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="128" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Include Ioc</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Exclude Ioc</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="custCapacityWeightOptional" nillable="true" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="riskActionRequestMessage_t">
+    <xs:sequence>
+      <xs:element name="underlyingIdOptional" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="marketParticipantId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="clOrdId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="riskControl">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Transaction Based</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Volume Based</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Percentage Based</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Grmp</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Purge Lockout Reset</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Intrinsic Value And Arbitrage</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="riskAction">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:byte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Query Risk Control</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Unblock</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="customGroupIdOptional" nillable="true" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="65535" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPacket_t">
+    <xs:sequence>
+      <xs:element name="serverSbeMessage" type="tns:serverSbeMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverSbeMessage_t">
+    <xs:sequence>
+      <xs:element name="packetLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="serverPayload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../packetLength - 10 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/schemaId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="serverSessionMessage" type="tns:serverSessionMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="20000" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="serverBusinessMessage" type="tns:serverBusinessMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="20001" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverSessionMessage_t">
+    <xs:sequence>
+      <xs:element name="serverSessionPayload">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../../../messageHeader/templateId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="loginResponseMessage" type="tns:loginResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="gatewayHeartbeatMessage" type="tns:gatewayHeartbeatMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="3" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="terminateMessage" type="tns:terminateMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="6" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sequencedMessageHeaderMessage" type="tns:sequencedMessageHeaderMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="7" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="subsessionJoinResponseMessage" type="tns:subsessionJoinResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="9" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="subsessionLeaveResponseMessage" type="tns:subsessionLeaveResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="11" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginResponseMessage_t">
+    <xs:sequence>
+      <xs:element name="logonId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="status">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Success</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Session Level Reject</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Logout Requested</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Unknown</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Invalid Logon Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Invalid Token</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Already Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Login Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Invalid Packet Length</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Invalid Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Join Revoked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Message Out Of Sequence</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Invalid Subsession Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Subsession Not Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Denial Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Invalid Argument</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+              <xs:annotation>
+                <xs:documentation>Already Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gatewayHeartbeatMessage_t">
+    <xs:sequence>
+      <xs:element name="keepAlive">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>False</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>True</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="subSessionsGroups" type="tns:subSessionsGroups_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subSessionsGroups_t">
+    <xs:sequence>
+      <xs:element name="sessionInfoGroupEncoding" type="tns:sessionInfoGroupEncoding_t" />
+      <xs:element name="subSessionsGroup" type="tns:subSessionsGroup_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../sessionInfoGroupEncoding/numInGroup }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sessionInfoGroupEncoding_t">
+    <xs:sequence>
+      <xs:element name="blockLengthShort" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numInGroup" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subSessionsGroup_t">
+    <xs:sequence>
+      <xs:element name="subsessionType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:byte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Client To Gateway</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Gateway To Client</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Reference Data</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="subsessionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="joined">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>False</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>True</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="nextSeqNo" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="terminateMessage_t">
+    <xs:sequence>
+      <xs:element name="reason">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Success</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Session Level Reject</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Logout Requested</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Unknown</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Invalid Logon Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Invalid Token</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Already Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Login Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Invalid Packet Length</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Invalid Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Join Revoked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Message Out Of Sequence</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Invalid Subsession Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Subsession Not Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Denial Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Invalid Argument</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+              <xs:annotation>
+                <xs:documentation>Already Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subsessionJoinResponseMessage_t">
+    <xs:sequence>
+      <xs:element name="subsessionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="status">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Success</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Session Level Reject</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Logout Requested</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Unknown</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Invalid Logon Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Invalid Token</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Already Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Login Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Invalid Packet Length</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Invalid Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Join Revoked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Message Out Of Sequence</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Invalid Subsession Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Subsession Not Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Denial Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Invalid Argument</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+              <xs:annotation>
+                <xs:documentation>Already Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subsessionLeaveResponseMessage_t">
+    <xs:sequence>
+      <xs:element name="subsessionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="reason">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Success</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Session Level Reject</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Logout Requested</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Unknown</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Invalid Logon Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Invalid Token</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Already Logged In</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Login Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Invalid Packet Length</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Invalid Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Join Revoked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Timeout</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Message Out Of Sequence</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Invalid Subsession Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Subsession Not Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Denial Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Invalid Argument</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+              <xs:annotation>
+                <xs:documentation>Already Joined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverBusinessMessage_t">
+    <xs:sequence>
+      <xs:element name="serverBusinessPayload">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../../../messageHeader/templateId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="orderAckMessage" type="tns:orderAckMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="101" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="unsolicitedModifyAckMessage" type="tns:unsolicitedModifyAckMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="102" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="orderCancelAckMessage" type="tns:orderCancelAckMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="103" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="massCancelAckMessage" type="tns:massCancelAckMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="104" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="bulkQuoteAckMessage" type="tns:bulkQuoteAckMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="105" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="newIocQuoteAckMessage" type="tns:newIocQuoteAckMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="106" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="quoteRestatedMessage" type="tns:quoteRestatedMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="107" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="quoteCanceledMessage" type="tns:quoteCanceledMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="108" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="purgeAckMessage" type="tns:purgeAckMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="109" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="executionReportMessage" type="tns:executionReportMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="110" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradeBustCorrectMessage" type="tns:tradeBustCorrectMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="111" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="applicationLayerRejectMessage" type="tns:applicationLayerRejectMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="112" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="underlyingRefDataMessage" type="tns:underlyingRefDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="151" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="instrumentRefDataMessage" type="tns:instrumentRefDataMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="152" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="mpidConfigurationAcknowledgementMessage" type="tns:mpidConfigurationAcknowledgementMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="153" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="marketMakerSymbolAppointmentMessage" type="tns:marketMakerSymbolAppointmentMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="154" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sessionConfigurationAcknowledgementMessage" type="tns:sessionConfigurationAcknowledgementMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="155" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="riskControlAcknowledgmentMessage" type="tns:riskControlAcknowledgmentMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="156" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="riskControlAlertMessage" type="tns:riskControlAlertMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="157" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -10825,236 +11138,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="riskLimitUpdateRequestMessage_t">
-    <xs:sequence>
-      <xs:element name="underlyingIdOptional" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="marketParticipantId" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="clOrdId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="riskControlOptional" nillable="true">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="128" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:byte">
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Transaction Based</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Volume Based</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Percentage Based</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Grmp</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Purge Lockout Reset</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="6">
-              <xs:annotation>
-                <xs:documentation>Intrinsic Value And Arbitrage</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="riskControlStatusOptional" nillable="true">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="128" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:byte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Disabled</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Enabled</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="timeLimit" nillable="true" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="18446744073709551615" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="percentageLimit" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="countLimit" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="iocAttribution" nillable="true">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="128" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:byte">
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Include Ioc</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Exclude Ioc</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="custCapacityWeightOptional" nillable="true" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="riskActionRequestMessage_t">
-    <xs:sequence>
-      <xs:element name="underlyingIdOptional" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="marketParticipantId" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="clOrdId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="riskControl">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:byte">
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Transaction Based</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Volume Based</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Percentage Based</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Grmp</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Purge Lockout Reset</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="6">
-              <xs:annotation>
-                <xs:documentation>Intrinsic Value And Arbitrage</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="riskAction">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:byte">
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Query Risk Control</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Unblock</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="customGroupIdOptional" nillable="true" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="65535" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="underlyingRefDataMessage_t">
     <xs:sequence>
       <xs:element name="transactTime" type="xs:unsignedLong">
@@ -12040,11 +12123,6 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="serverPacket_t">
-    <xs:sequence>
-      <xs:element name="sbeMessage" type="tns:sbeMessage_t" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

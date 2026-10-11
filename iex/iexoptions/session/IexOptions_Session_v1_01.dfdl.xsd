@@ -33,17 +33,16 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
-      <dfdl:defineVariable name="sbeMessageLength" type="xs:int" />
     </xs:appinfo>
   </xs:annotation>
   <xs:element name="clientPacket" type="tns:clientPacket_t" />
   <xs:element name="serverPacket" type="tns:serverPacket_t" />
   <xs:complexType name="clientPacket_t">
     <xs:sequence>
-      <xs:element name="sbeMessage" type="tns:sbeMessage_t" />
+      <xs:element name="clientSbeMessage" type="tns:clientSbeMessage_t" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="sbeMessage_t">
+  <xs:complexType name="clientSbeMessage_t">
     <xs:sequence>
       <xs:element name="packetLength" type="xs:unsignedShort">
         <xs:annotation>
@@ -53,105 +52,7 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="messageHeader" type="tns:messageHeader_t" />
-      <xs:element name="payload">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element lengthKind="explicit" length="{ $tns:sbeMessageLength - 10 }" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:complexType>
-          <xs:choice>
-            <xs:annotation>
-              <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/templateId) }" />
-              </xs:appinfo>
-            </xs:annotation>
-            <xs:element name="loginRequestMessage" type="tns:loginRequestMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="1" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="loginResponseMessage" type="tns:loginResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="2" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="gatewayHeartbeatMessage" type="tns:gatewayHeartbeatMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="3" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="clientHeartbeatMessage">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="4" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence />
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="logoutRequestMessage">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="5" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence />
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="terminateMessage" type="tns:terminateMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="6" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="sequencedMessageHeaderMessage" type="tns:sequencedMessageHeaderMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="7" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="subsessionJoinMessage" type="tns:subsessionJoinMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="8" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="subsessionJoinResponseMessage" type="tns:subsessionJoinResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="9" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="subsessionLeaveMessage" type="tns:subsessionLeaveMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="10" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="subsessionLeaveResponseMessage" type="tns:subsessionLeaveResponseMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="11" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-          </xs:choice>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="clientPayload" type="tns:clientSessionMessage_t" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="messageHeader_t">
@@ -229,12 +130,21 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="schemaId" type="xs:unsignedShort">
+      <xs:element name="schemaId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedShort">
+            <xs:enumeration value="20000">
+              <xs:annotation>
+                <xs:documentation>Session</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
       <xs:element name="version" type="xs:unsignedShort">
         <xs:annotation>
@@ -242,6 +152,69 @@
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
           </xs:appinfo>
         </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clientSessionMessage_t">
+    <xs:sequence>
+      <xs:element name="clientSessionPayload">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../../messageHeader/templateId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="loginRequestMessage" type="tns:loginRequestMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="1" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="clientHeartbeatMessage">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="4" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="logoutRequestMessage">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="5" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="sequencedMessageHeaderMessage" type="tns:sequencedMessageHeaderMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="7" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="subsessionJoinMessage" type="tns:subsessionJoinMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="8" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="subsessionLeaveMessage" type="tns:subsessionLeaveMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -260,6 +233,142 @@
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
           </xs:appinfo>
         </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sequencedMessageHeaderMessage_t">
+    <xs:sequence>
+      <xs:element name="subsessionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sequence" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subsessionJoinMessage_t">
+    <xs:sequence>
+      <xs:element name="subsessionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="startSequence" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="endSequence" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="subsessionLeaveMessage_t">
+    <xs:sequence>
+      <xs:element name="subsessionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverPacket_t">
+    <xs:sequence>
+      <xs:element name="serverSbeMessage" type="tns:serverSbeMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverSbeMessage_t">
+    <xs:sequence>
+      <xs:element name="packetLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="serverPayload" type="tns:serverSessionMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serverSessionMessage_t">
+    <xs:sequence>
+      <xs:element name="serverSessionPayload">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../../messageHeader/templateId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="loginResponseMessage" type="tns:loginResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="gatewayHeartbeatMessage" type="tns:gatewayHeartbeatMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="3" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="terminateMessage" type="tns:terminateMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="6" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sequencedMessageHeaderMessage" type="tns:sequencedMessageHeaderMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="7" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="subsessionJoinResponseMessage" type="tns:subsessionJoinResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="9" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="subsessionLeaveResponseMessage" type="tns:subsessionLeaveResponseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="11" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -601,56 +710,6 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="sequencedMessageHeaderMessage_t">
-    <xs:sequence>
-      <xs:element name="subsessionId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sequence" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="timestamp" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="subsessionJoinMessage_t">
-    <xs:sequence>
-      <xs:element name="subsessionId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="startSequence" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="endSequence" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="subsessionJoinResponseMessage_t">
     <xs:sequence>
       <xs:element name="subsessionId" type="xs:unsignedLong">
@@ -760,17 +819,6 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="subsessionLeaveMessage_t">
-    <xs:sequence>
-      <xs:element name="subsessionId" type="xs:unsignedLong">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
-          </xs:appinfo>
-        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -884,11 +932,6 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="serverPacket_t">
-    <xs:sequence>
-      <xs:element name="sbeMessage" type="tns:sbeMessage_t" />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

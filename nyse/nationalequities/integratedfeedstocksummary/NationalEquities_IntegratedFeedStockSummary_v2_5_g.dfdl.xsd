@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Dfdl schema definition for: Nyse NationalEquities DepthFeedRefresh v1.6
+  Dfdl schema definition for: Nyse NationalEquities IntegratedFeedStockSummary v2.5.g
 
   Protocol:
     Organization: New York Stock Exchange
-    Protocol: Depth Feed Refresh
+    Protocol: Integrated Feed Stock Summary
     Encoding: Pillar
-    Version: 1.6
+    Version: 2.5.g
     Date: 10/23/2025
-    Specification: NYSE_Pillar_Depth_Client_Specification.pdf
+    Specification: NYSE_Pillar_Integrated_Feed_Client_Specification.pdf
 
   Script:
     Generator: 1.0.0.0
@@ -29,7 +29,7 @@
   Open Markets Initiative website:
     https://openmarketsinitiative.com
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:nationalequities:depthfeedrefresh:v1:6" targetNamespace="urn:omi:nationalequities:depthfeedrefresh:v1:6">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:nationalequities:integratedfeedstocksummary:v2:5:g" targetNamespace="urn:omi:nationalequities:integratedfeedstocksummary:v2:5:g">
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
@@ -245,10 +245,24 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
+            <xs:element name="sourceTimeReferenceMessage" type="tns:sourceTimeReferenceMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
             <xs:element name="symbolIndexMappingMessage" type="tns:symbolIndexMappingMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="3" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="symbolClearMessage" type="tns:symbolClearMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="32" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -259,24 +273,10 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="refreshHeaderMessage" type="tns:refreshHeaderMessage_t">
+            <xs:element name="stockSummaryMessage" type="tns:stockSummaryMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="35" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="deltaMessage" type="tns:deltaMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="115" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="imbalanceMessage" type="tns:imbalanceMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="105" />
+                  <dfdl:element choiceBranchKey="223" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -307,9 +307,19 @@
                 <xs:documentation>Sequence Number Reset Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Source Time Reference Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="3">
               <xs:annotation>
                 <xs:documentation>Symbol Index Mapping Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="32">
+              <xs:annotation>
+                <xs:documentation>Symbol Clear Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="34">
@@ -317,19 +327,9 @@
                 <xs:documentation>Security Status Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="35">
+            <xs:enumeration value="223">
               <xs:annotation>
-                <xs:documentation>Refresh Header Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="115">
-              <xs:annotation>
-                <xs:documentation>Delta Message</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="105">
-              <xs:annotation>
-                <xs:documentation>Imbalance Message</xs:documentation>
+                <xs:documentation>Stock Summary Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -346,10 +346,73 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="sourceTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 3600)) div 3600)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 60)) div 60)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTime mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="sourceTimeNs" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTimeNs mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -364,6 +427,52 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sourceTimeReferenceMessage_t">
+    <xs:sequence>
+      <xs:element name="id" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbolSeqNum" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTime" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 3600)) div 3600)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 60)) div 60)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTime mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -402,12 +511,12 @@
           <xs:restriction base="xs:unsignedShort">
             <xs:enumeration value="1">
               <xs:annotation>
-                <xs:documentation>Nyse</xs:documentation>
+                <xs:documentation>Nyse Equities</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="3">
               <xs:annotation>
-                <xs:documentation>Nyse Arca</xs:documentation>
+                <xs:documentation>Nyse Arca Equities</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="4">
@@ -427,17 +536,17 @@
             </xs:enumeration>
             <xs:enumeration value="9">
               <xs:annotation>
-                <xs:documentation>Nyse American</xs:documentation>
+                <xs:documentation>Nyse American Equities</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="10">
               <xs:annotation>
-                <xs:documentation>Nyse National</xs:documentation>
+                <xs:documentation>Nyse National Equities</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="11">
               <xs:annotation>
-                <xs:documentation>Nyse Texas</xs:documentation>
+                <xs:documentation>Nyse Texas Equities</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -620,31 +729,12 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="priceResolution">
+      <xs:element name="priceResolution" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>All Penny</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Penny Nickel</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Nickel Dime</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
       <xs:element name="roundLot">
         <xs:annotation>
@@ -690,6 +780,101 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="symbolClearMessage_t">
+    <xs:sequence>
+      <xs:element name="sourceTime" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 3600)) div 3600)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 60)) div 60)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTime mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNs" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTimeNs mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbolIndex" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nextSourceSeqNum" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="securityStatusMessage_t">
     <xs:sequence>
       <xs:element name="sourceTime" type="xs:unsignedInt">
@@ -699,10 +884,73 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="sourceTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 3600)) div 3600)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 60)) div 60)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTime mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="sourceTimeNs" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeNsNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTimeNs mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -897,61 +1145,10 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="marketId">
+      <xs:element name="reserved4" type="xs:hexBinary">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedShort">
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Nyse</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Nyse Arca</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Nyse Arca Options</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Nyse Bonds</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="8">
-              <xs:annotation>
-                <xs:documentation>Nyse American Options</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="9">
-              <xs:annotation>
-                <xs:documentation>Nyse American</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="10">
-              <xs:annotation>
-                <xs:documentation>Nyse National</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="11">
-              <xs:annotation>
-                <xs:documentation>Nyse Texas</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="reserved2" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+            <dfdl:element representation="binary" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1004,7 +1201,7 @@
             </xs:enumeration>
             <xs:enumeration value="H">
               <xs:annotation>
-                <xs:documentation>Miami Pearl</xs:documentation>
+                <xs:documentation>Miami Peral</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="I">
@@ -1198,66 +1395,33 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="refreshHeaderMessage_t">
-    <xs:sequence>
-      <xs:element name="currentRefreshPkt" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="totalRefreshPkts" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="refreshHeaderLayout">
-        <xs:complexType>
-          <xs:choice>
-            <xs:annotation>
-              <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../currentRefreshPkt) }" />
-              </xs:appinfo>
-            </xs:annotation>
-            <xs:element name="fullRefreshHeader" type="tns:fullRefreshHeader_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="1" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-          </xs:choice>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="fullRefreshHeader_t">
-    <xs:sequence>
-      <xs:element name="lastSeqNum" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="lastSymbolSeqNum" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="deltaMessage_t">
+  <xs:complexType name="stockSummaryMessage_t">
     <xs:sequence>
       <xs:element name="sourceTime" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 3600)) div 3600)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTime - (../sourceTime mod 60)) div 60)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sourceTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sourceTime mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1268,164 +1432,45 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="symbolIndex" type="xs:unsignedInt">
+      <xs:element name="sourceTimeNsHour" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 3600000000000)) div 3600000000000)) mod 24 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="symbolSeqNum" type="xs:unsignedInt">
+      <xs:element name="sourceTimeNsMinute" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 60000000000)) div 60000000000)) mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="updateCount" type="xs:unsignedByte">
+      <xs:element name="sourceTimeNsSecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000000)) div 1000000000)) mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="pricePoint" type="tns:pricePoint_t" maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="sourceTimeNsMillisecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../updateCount gt 0) then ../updateCount else 0 }" />
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000000)) div 1000000)) mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="pricePoint_t">
-    <xs:sequence>
-      <xs:element name="price" type="xs:int">
+      <xs:element name="sourceTimeNsMicrosecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element inputValueCalc="{ (xs:long((../sourceTimeNs - (../sourceTimeNs mod 1000)) div 1000)) mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="side">
+      <xs:element name="sourceTimeNsNanosecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="B">
-              <xs:annotation>
-                <xs:documentation>Buy</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="S">
-              <xs:annotation>
-                <xs:documentation>Sell</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="participants" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="participant" type="tns:participant_t" maxOccurs="unbounded" minOccurs="0">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../participants gt 0) then ../participants else 0 }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="participant_t">
-    <xs:sequence>
-      <xs:element name="marketId">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedShort">
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Nyse</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Nyse Arca</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Nyse Arca Options</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Nyse Bonds</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="8">
-              <xs:annotation>
-                <xs:documentation>Nyse American Options</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="9">
-              <xs:annotation>
-                <xs:documentation>Nyse American</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="10">
-              <xs:annotation>
-                <xs:documentation>Nyse National</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="11">
-              <xs:annotation>
-                <xs:documentation>Nyse Texas</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="numberOfOrders" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="volume" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="imbalanceMessage_t">
-    <xs:sequence>
-      <xs:element name="sourceTime" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="sourceTimeNs" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element inputValueCalc="{ ../sourceTimeNs mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1436,306 +1481,40 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="symbolSeqNum" type="xs:unsignedInt">
+      <xs:element name="highPrice" type="xs:int">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="referencePrice" type="xs:int">
+      <xs:element name="lowPrice" type="xs:int">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="pairedQty" type="xs:unsignedInt">
+      <xs:element name="open" type="xs:int">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="totalImbalanceQty" type="xs:unsignedInt">
+      <xs:element name="close" type="xs:int">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="marketImbalanceQty" type="xs:unsignedInt">
+      <xs:element name="totalVolume" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
-      </xs:element>
-      <xs:element name="auctionTime" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="auctionType">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="O">
-              <xs:annotation>
-                <xs:documentation>Early Opening Auction</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="M">
-              <xs:annotation>
-                <xs:documentation>Core Opening Auction</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="H">
-              <xs:annotation>
-                <xs:documentation>Reopening Auction Halt Resume</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="C">
-              <xs:annotation>
-                <xs:documentation>Closing Auction</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="P">
-              <xs:annotation>
-                <xs:documentation>Extreme Closing Imbalance</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="R">
-              <xs:annotation>
-                <xs:documentation>Significant Closing Imbalance</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="imbalanceSide">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="B">
-              <xs:annotation>
-                <xs:documentation>Buy Side</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="S">
-              <xs:annotation>
-                <xs:documentation>Sell Side</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value=" ">
-              <xs:annotation>
-                <xs:documentation>No Imbalance</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="continuousBookClearingPrice" type="xs:int">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="auctionInterestClearingPrice" type="xs:int">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="ssrFilingPrice" type="xs:int">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="indicativeMatchPrice" type="xs:int">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="upperCollar" type="xs:int">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="lowerCollar" type="xs:int">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="auctionStatus">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Will Run As Always For Open And Close</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Will Run Interest Exists Inside Or At The Collars Or Is Fully Paired Off</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-              <xs:annotation>
-                <xs:documentation>Will Not Run Because There Is An Imbalance Through The Collars</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Will Not Run Will Transition To The Closing Auction Instead</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="freezeStatus">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedByte">
-            <xs:enumeration value="0">
-              <xs:annotation>
-                <xs:documentation>Imbalance Freeze Not In Effect</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Imbalance Freeze Is In Effect</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="numExtensions" type="xs:unsignedByte">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="unpairedQty" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="unpairedSide">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="B">
-              <xs:annotation>
-                <xs:documentation>Buy Side</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="S">
-              <xs:annotation>
-                <xs:documentation>Sell Side</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value=" ">
-              <xs:annotation>
-                <xs:documentation>Not Applicable</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="reserved1" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="marketId">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:unsignedShort">
-            <xs:enumeration value="1">
-              <xs:annotation>
-                <xs:documentation>Nyse</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-              <xs:annotation>
-                <xs:documentation>Nyse Arca</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-              <xs:annotation>
-                <xs:documentation>Nyse Arca Options</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-              <xs:annotation>
-                <xs:documentation>Nyse Bonds</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="8">
-              <xs:annotation>
-                <xs:documentation>Nyse American Options</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="9">
-              <xs:annotation>
-                <xs:documentation>Nyse American</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="10">
-              <xs:annotation>
-                <xs:documentation>Nyse National</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="11">
-              <xs:annotation>
-                <xs:documentation>Nyse Texas</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>

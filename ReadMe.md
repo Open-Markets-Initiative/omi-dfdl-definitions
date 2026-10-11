@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 1118 | 6,270,914 |
+| 1128 | 6,287,088 |
 
 ## Testing
 
@@ -469,6 +469,7 @@ Enjoy.
 [Nyse.AmexEquities.IntegratedFeedRefresh]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/AmexEquities/IntegratedFeedRefresh.md "Integrated Feed Refresh"
 [Nyse.AmexEquities.IntegratedFeedRequest]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/AmexEquities/IntegratedFeedRequest.md "Integrated Feed Request"
 [Nyse.AmexEquities.IntegratedFeedRetransmission]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/AmexEquities/IntegratedFeedRetransmission.md "Integrated Feed Retransmission"
+[Nyse.AmexEquities.IntegratedFeedStockSummary]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/AmexEquities/IntegratedFeedStockSummary.md "Integrated Feed Stock Summary"
 [Nyse.AmexEquities.OpenBook.Aggregated]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/AmexEquities/OpenBook.Aggregated.md "Open Book Aggregated"
 [Nyse.AmexEquities.OpenBook]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/AmexEquities/OpenBook.md "Open Book"
 [Nyse.AmexEquities.Trades]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/AmexEquities/Trades.md "Trades"
@@ -489,6 +490,7 @@ Enjoy.
 [Nyse.ArcaEquities.IntegratedFeedRefresh]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/ArcaEquities/IntegratedFeedRefresh.md "Integrated Feed Refresh"
 [Nyse.ArcaEquities.IntegratedFeedRequest]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/ArcaEquities/IntegratedFeedRequest.md "Integrated Feed Request"
 [Nyse.ArcaEquities.IntegratedFeedRetransmission]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/ArcaEquities/IntegratedFeedRetransmission.md "Integrated Feed Retransmission"
+[Nyse.ArcaEquities.IntegratedFeedStockSummary]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/ArcaEquities/IntegratedFeedStockSummary.md "Integrated Feed Stock Summary"
 [Nyse.ArcaEquities.Trades]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/ArcaEquities/Trades.md "Trades"
 [Nyse.ArcaOptions.BinaryGateway]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/ArcaOptions/BinaryGateway.md "Binary Gateway"
 [Nyse.ArcaOptions.ComplexFeed]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/ArcaOptions/ComplexFeed.md "Complex Feed"
@@ -505,6 +507,7 @@ Enjoy.
 [Nyse.NationalEquities.IntegratedFeedRefresh]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NationalEquities/IntegratedFeedRefresh.md "Integrated Feed Refresh"
 [Nyse.NationalEquities.IntegratedFeedRequest]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NationalEquities/IntegratedFeedRequest.md "Integrated Feed Request"
 [Nyse.NationalEquities.IntegratedFeedRetransmission]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NationalEquities/IntegratedFeedRetransmission.md "Integrated Feed Retransmission"
+[Nyse.NationalEquities.IntegratedFeedStockSummary]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NationalEquities/IntegratedFeedStockSummary.md "Integrated Feed Stock Summary"
 [Nyse.NationalEquities.Trades]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NationalEquities/Trades.md "Trades"
 [Nyse.NyseBonds.DepthOfBook]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseBonds/DepthOfBook.md "DepthOfBook"
 [Nyse.NyseBonds.Quote]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseBonds/Quote.md "Quote"
@@ -522,6 +525,7 @@ Enjoy.
 [Nyse.NyseEquities.IntegratedFeedRefresh]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseEquities/IntegratedFeedRefresh.md "Integrated Feed Refresh"
 [Nyse.NyseEquities.IntegratedFeedRequest]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseEquities/IntegratedFeedRequest.md "Integrated Feed Request"
 [Nyse.NyseEquities.IntegratedFeedRetransmission]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseEquities/IntegratedFeedRetransmission.md "Integrated Feed Retransmission"
+[Nyse.NyseEquities.IntegratedFeedStockSummary]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseEquities/IntegratedFeedStockSummary.md "Integrated Feed Stock Summary"
 [Nyse.NyseEquities.OpenBook.Aggregated]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseEquities/OpenBook.Aggregated.md "Open Book Aggregated"
 [Nyse.NyseEquities.OpenBook]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseEquities/OpenBook.md "Open Book"
 [Nyse.NyseEquities.Trades]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/NyseEquities/Trades.md "Trades"
@@ -541,6 +545,7 @@ Enjoy.
 [Nyse.TexasEquities.IntegratedFeedRefresh]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/TexasEquities/IntegratedFeedRefresh.md "Integrated Feed Refresh"
 [Nyse.TexasEquities.IntegratedFeedRequest]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/TexasEquities/IntegratedFeedRequest.md "Integrated Feed Request"
 [Nyse.TexasEquities.IntegratedFeedRetransmission]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/TexasEquities/IntegratedFeedRetransmission.md "Integrated Feed Retransmission"
+[Nyse.TexasEquities.IntegratedFeedStockSummary]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/TexasEquities/IntegratedFeedStockSummary.md "Integrated Feed Stock Summary"
 [Nyse.TexasEquities.Trades]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Nyse/Protocols/TexasEquities/Trades.md "Trades"
 [Odx.OdxEquities.Pts]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Protocols/OdxEquities/Pts.md "Proprietary Trading System"
 [Odx.OdxSecurityToken.Pts]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Protocols/OdxSecurityToken/Pts.md "Proprietary Trading System"
