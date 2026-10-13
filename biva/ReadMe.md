@@ -58,7 +58,7 @@
 [Biva.BivaEquities.News.Itch.v1.12.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Biva/Specifications/ "Bolsa Institucional de Valores 1.12 Pdf"
 [Biva.BivaEquities.OrderEntry.Ouch.v1.05.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/biva/bivaequities/orderentry/BivaEquities_OrderEntry_v1_05.dfdl.xsd "Biva BivaEquities OrderEntry Ouch v1.05 Dfdl Definition"
 [Biva.BivaEquities.OrderEntry.Ouch.v1.05.Url]: https://www.biva.mx/en/web/portal-en/technology "Bolsa Institucional de Valores 1.05 Url"
-[Biva.BivaEquities.OrderEntry.Ouch.v1.05.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Biva/Specifications/ "Bolsa Institucional de Valores 1.05 Pdf"
+[Biva.BivaEquities.OrderEntry.Ouch.v1.05.Pdf]: https://www.biva.mx/en/web/portal-en/technology "Bolsa Institucional de Valores 1.05 Pdf"
 [Biva.BivaEquities.TotalView.Glimpse.v1.12.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/biva/bivaequities/totalview/BivaEquities_TotalView_Glimpse_v1_12.dfdl.xsd "Biva BivaEquities TotalView Glimpse v1.12 Dfdl Definition"
 [Biva.BivaEquities.TotalView.Glimpse.v1.12.Url]: https://www.biva.mx/en/web/portal-en/technology "Bolsa Institucional de Valores 1.12 Url"
 [Biva.BivaEquities.TotalView.Glimpse.v1.12.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Biva/Specifications/ "Bolsa Institucional de Valores 1.12 Pdf"

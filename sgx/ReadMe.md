@@ -35,7 +35,7 @@
 
 [Sgx.TitanDt.DepthOfBook.Glimpse.v1.4.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/sgx/titandt/depthofbook/Sgx_TitanDt_DepthOfBook_Glimpse_v1_4.dfdl.xsd "Sgx TitanDt DepthOfBook Glimpse v1.4 Dfdl Definition"
 [Sgx.TitanDt.DepthOfBook.Glimpse.v1.4.Url]: https://www.sgx.com/securities/technical-information "Singapore Exchange 1.4 Url"
-[Sgx.TitanDt.DepthOfBook.Glimpse.v1.4.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Sgx/Specifications/TitanDt/Sgx.TitanDt.DepthOfBook.Itch.v1.4.pdf "Singapore Exchange 1.4 Pdf"
+[Sgx.TitanDt.DepthOfBook.Glimpse.v1.4.Pdf]: https://www.sgx.com/securities/technical-information "Singapore Exchange 1.4 Pdf"
 [Sgx.TitanDt.DepthOfBook.Itch.v1.4.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/sgx/titandt/depthofbook/Sgx_TitanDt_DepthOfBook_Itch_v1_4.dfdl.xsd "Sgx TitanDt DepthOfBook Itch v1.4 Dfdl Definition"
 [Sgx.TitanDt.DepthOfBook.Itch.v1.4.Url]: https://www.sgx.com/securities/technical-information "Singapore Exchange 1.4 Url"
-[Sgx.TitanDt.DepthOfBook.Itch.v1.4.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Sgx/Specifications/TitanDt/Sgx.TitanDt.DepthOfBook.Itch.v1.4.pdf "Singapore Exchange 1.4 Pdf"
+[Sgx.TitanDt.DepthOfBook.Itch.v1.4.Pdf]: https://www.sgx.com/securities/technical-information "Singapore Exchange 1.4 Pdf"
