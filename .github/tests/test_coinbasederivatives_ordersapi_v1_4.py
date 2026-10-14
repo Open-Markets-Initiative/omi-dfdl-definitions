@@ -22,9 +22,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_instrumentinfomessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/InstrumentInfoMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -33,9 +33,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_instrumentinforequestmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/InstrumentInfoRequestMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -44,9 +44,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_loggedoutmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/LoggedOutMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -55,9 +55,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_logonconfmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/LogonConfMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -66,9 +66,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_logonmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/LogonMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -77,9 +77,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_masscancelorderackmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/MassCancelOrderAckMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -88,9 +88,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_masscancelordermessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/MassCancelOrderMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -99,9 +99,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_newordermessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/NewOrderMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -110,9 +110,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_orderfilledmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/OrderFilledMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -121,9 +121,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_orderreplacedmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/OrderReplacedMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -132,9 +132,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_replaceordermessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/ReplaceOrderMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -143,9 +143,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_setaccountmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/SetAccountMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -154,9 +154,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_setackmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/SetAckMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -165,9 +165,9 @@ class CoinbasederivativesOrdersapiV14Tests(unittest.TestCase):
 
     def test_settradermessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.4/SetTraderMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

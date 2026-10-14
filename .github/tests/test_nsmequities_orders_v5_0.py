@@ -24,9 +24,9 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
 
     def test_canceledmessage(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/CanceledMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -35,9 +35,9 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
 
     def test_cancelordermessage(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/CancelOrderMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -46,9 +46,9 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
 
     def test_clientheartbeat(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/ClientHeartbeat.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -57,9 +57,9 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
 
     def test_enterordermessage(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/EnterOrderMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -68,9 +68,9 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
 
     def test_orderacceptedmessage(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/OrderAcceptedMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -79,9 +79,9 @@ class NsmequitiesOrdersV50Tests(unittest.TestCase):
 
     def test_serverheartbeat(self):
         for payload in payloads.of("omi-data-packets/Nasdaq/NsmEquities.Orders.Ouch.v5.0/ServerHeartbeat.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

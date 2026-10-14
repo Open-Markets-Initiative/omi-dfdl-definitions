@@ -40,6 +40,11 @@
       <xs:sequence>
         <xs:element name="packetHeader" type="tns:packetHeader_t" />
         <xs:element name="payload">
+          <xs:annotation>
+            <xs:appinfo source="http://www.ogf.org/dfdl/">
+              <dfdl:element lengthKind="explicit" length="{ ../packetHeader/packetSize + 2 - 16 }" />
+            </xs:appinfo>
+          </xs:annotation>
           <xs:complexType>
             <xs:choice>
               <xs:annotation>
@@ -47,6 +52,13 @@
                   <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../packetHeader/messageType) }" />
                 </xs:appinfo>
               </xs:annotation>
+              <xs:element name="symbolIndexMappingResponseMessages" type="tns:symbolIndexMappingResponseMessages_t">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element choiceBranchKey="35" />
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
               <xs:element name="sequenceNumberResetMessage" type="tns:sequenceNumberResetMessage_t">
                 <xs:annotation>
                   <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -120,13 +132,6 @@
                 <xs:annotation>
                   <xs:appinfo source="http://www.ogf.org/dfdl/">
                     <dfdl:element choiceBranchKey="34" />
-                  </xs:appinfo>
-                </xs:annotation>
-              </xs:element>
-              <xs:element name="symbolIndexMappingResponseMessage" type="tns:symbolIndexMappingResponseMessage_t">
-                <xs:annotation>
-                  <xs:appinfo source="http://www.ogf.org/dfdl/">
-                    <dfdl:element choiceBranchKey="35" />
                   </xs:appinfo>
                 </xs:annotation>
               </xs:element>
@@ -274,6 +279,42 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="symbolIndexMappingResponseMessages_t">
+    <xs:sequence>
+      <xs:element name="symbolIndexMappingResponseMessage" type="tns:symbolIndexMappingResponseMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../../../packetHeader/messageCount }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="symbolIndexMappingResponseMessage_t">
+    <xs:sequence>
+      <xs:element name="symbol11" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="11" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbolIndex" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -497,34 +538,15 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="symbolIndexMappingResponseMessage_t">
-    <xs:sequence>
-      <xs:element name="symbol11" type="xs:string">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="11" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="filler1" type="xs:hexBinary">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="symbolIndex" type="xs:int">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="fullUpdateMessages_t">
     <xs:sequence>
-      <xs:element name="fullUpdateMessage" type="tns:fullUpdateMessage_t" />
+      <xs:element name="fullUpdateMessage" type="tns:fullUpdateMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../../../packetHeader/messageCount }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="fullUpdateMessage_t">
@@ -714,7 +736,13 @@
   </xs:complexType>
   <xs:complexType name="deltaUpdateMessages_t">
     <xs:sequence>
-      <xs:element name="deltaUpdateMessage" type="tns:deltaUpdateMessage_t" />
+      <xs:element name="deltaUpdateMessage" type="tns:deltaUpdateMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../../../packetHeader/messageCount }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="deltaUpdateMessage_t">

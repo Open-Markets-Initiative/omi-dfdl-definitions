@@ -24,9 +24,9 @@ class EurexT7EtiV61Tests(unittest.TestCase):
 
     def test_heartbeat(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eti.Fbe.v6.1/Heartbeat.pcap"):
-            if payloads.partial(payload, 0, 4, "little", True):
+            if payloads.partial(payload, 0, 4, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 4, "little", True):
+            for message in payloads.messages(payload, 0, 4, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -35,9 +35,9 @@ class EurexT7EtiV61Tests(unittest.TestCase):
 
     def test_retransmitmemessagerequest(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eti.Fbe.v6.1/RetransmitMeMessageRequest.pcap"):
-            if payloads.partial(payload, 0, 4, "little", True):
+            if payloads.partial(payload, 0, 4, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 4, "little", True):
+            for message in payloads.messages(payload, 0, 4, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -46,9 +46,9 @@ class EurexT7EtiV61Tests(unittest.TestCase):
 
     def test_userloginresponse(self):
         for payload in payloads.of("omi-data-packets/Eurex/T7.Eti.Fbe.v6.1/UserLoginResponse.pcap"):
-            if payloads.partial(payload, 0, 4, "little", True):
+            if payloads.partial(payload, 0, 4, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 4, "little", True):
+            for message in payloads.messages(payload, 0, 4, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

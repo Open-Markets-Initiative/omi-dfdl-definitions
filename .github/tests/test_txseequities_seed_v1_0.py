@@ -24,9 +24,9 @@ class TxseequitiesSeedV10Tests(unittest.TestCase):
 
     def test_limitorderacceptedmessage(self):
         for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/LimitOrderAcceptedMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", False):
+            if payloads.partial(payload, 0, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", False):
+            for message in payloads.messages(payload, 0, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -35,9 +35,9 @@ class TxseequitiesSeedV10Tests(unittest.TestCase):
 
     def test_limitordermessage(self):
         for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/LimitOrderMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", False):
+            if payloads.partial(payload, 0, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", False):
+            for message in payloads.messages(payload, 0, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -46,9 +46,9 @@ class TxseequitiesSeedV10Tests(unittest.TestCase):
 
     def test_logonrequestpacket(self):
         for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/LogonRequestPacket.pcap"):
-            if payloads.partial(payload, 0, 2, "little", False):
+            if payloads.partial(payload, 0, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", False):
+            for message in payloads.messages(payload, 0, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -57,9 +57,9 @@ class TxseequitiesSeedV10Tests(unittest.TestCase):
 
     def test_logonresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Txse/TxseEquities.Seed.Rake.v1.0/LogonResponseMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", False):
+            if payloads.partial(payload, 0, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", False):
+            for message in payloads.messages(payload, 0, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

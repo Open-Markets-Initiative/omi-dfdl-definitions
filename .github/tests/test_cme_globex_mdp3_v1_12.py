@@ -24,9 +24,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_marketdatarequest(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MarketDataRequest.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -35,9 +35,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_mdincrementalrefreshbooklongqty(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MdIncrementalRefreshBookLongQty.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -46,9 +46,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_mdincrementalrefreshtradesummarylongqty(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MdIncrementalRefreshTradeSummaryLongQty.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -57,9 +57,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_mdinstrumentdefinitionfx(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/MdInstrumentDefinitionFx.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -68,9 +68,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_requestack(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/RequestAck.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -79,9 +79,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_securitylistrequest(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SecurityListRequest.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -90,9 +90,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_securitystatus(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SecurityStatus.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -101,9 +101,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_securitystatusrequest(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SecurityStatusRequest.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -112,9 +112,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_snapshotfullrefreshtcplongqty(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SnapshotFullRefreshTcpLongQty.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -123,9 +123,9 @@ class CmeGlobexMdp3V112Tests(unittest.TestCase):
 
     def test_subscriberheartbeat(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.Mdp3.Sbe.v1.12/SubscriberHeartbeat.pcap"):
-            if payloads.partial(payload, 14, 2, "little", False):
+            if payloads.partial(payload, 14, 2, "little", 14):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 14, 2, "little", False):
+            for message in payloads.messages(payload, 14, 2, "little", 14):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

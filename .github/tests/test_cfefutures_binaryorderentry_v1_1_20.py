@@ -24,9 +24,9 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
 
     def test_clientheartbeat(self):
         for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ClientHeartbeat.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -35,9 +35,9 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
 
     def test_quoteupdate(self):
         for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/QuoteUpdate.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -46,9 +46,9 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
 
     def test_quoteupdateacknowledgement(self):
         for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/QuoteUpdateAcknowledgement.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -57,9 +57,9 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
 
     def test_serverheartbeat(self):
         for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ServerHeartbeat.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

@@ -45,7 +45,7 @@ def linked(link, frame):
     return dpkt.ethernet.Ethernet(frame)
 
 
-def partial(payload, offset, size, endian, inclusive):
+def partial(payload, offset, size, endian, addend):
     """Does the payload end part way through a message?
 
     A capture holds tcp segments, so the last message in one can be cut short at the segment
@@ -56,7 +56,7 @@ def partial(payload, offset, size, endian, inclusive):
 
     while position + offset + size <= len(payload):
         declared = int.from_bytes(payload[position + offset:position + offset + size], endian)
-        length = declared if inclusive else declared + offset + size
+        length = declared + addend
 
         if length <= 0:
             return False
@@ -69,7 +69,7 @@ def partial(payload, offset, size, endian, inclusive):
     return position != len(payload)
 
 
-def messages(payload, offset, size, endian, inclusive):
+def messages(payload, offset, size, endian, addend):
     """The whole messages a length framed payload holds, in order.
 
     One tcp segment can carry several messages back to back. A parser describes one message, and
@@ -80,7 +80,7 @@ def messages(payload, offset, size, endian, inclusive):
 
     while position + offset + size <= len(payload):
         declared = int.from_bytes(payload[position + offset:position + offset + size], endian)
-        length = declared if inclusive else declared + offset + size
+        length = declared + addend
 
         if length <= 0 or position + length > len(payload):
             break

@@ -22,9 +22,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_amendorderrejectmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/AmendOrderRejectMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -33,9 +33,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_amendorderrequestmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/AmendOrderRequestMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -44,9 +44,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_amendorderresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/AmendOrderResponseMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -55,9 +55,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_cancelorderrequestmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/CancelOrderRequestMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -66,9 +66,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_cancelorderresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/CancelOrderResponseMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -77,9 +77,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_massquoterejectmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/MassQuoteRejectMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -88,9 +88,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_massquoterequestmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/MassQuoteRequestMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -99,9 +99,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_massquoteresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/MassQuoteResponseMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -110,9 +110,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_neworderrejectmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/NewOrderRejectMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -121,9 +121,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_neworderrequestmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/NewOrderRequestMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -132,9 +132,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_neworderresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/NewOrderResponseMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -143,9 +143,9 @@ class DeribitOrdersapiV01Tests(unittest.TestCase):
 
     def test_orderfilledmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/Deribit.OrdersApi.Sbe.v0.1/OrderFilledMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", True):
+            if payloads.partial(payload, 2, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", True):
+            for message in payloads.messages(payload, 2, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

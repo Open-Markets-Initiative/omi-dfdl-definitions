@@ -22,9 +22,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_cancelordermessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/CancelOrderMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -33,9 +33,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_clientheartbeatmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ClientHeartbeatMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -44,9 +44,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_loginrequestmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/LoginRequestMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -55,9 +55,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_loginresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/LoginResponseMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -66,9 +66,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_modifyordermessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ModifyOrderMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -77,9 +77,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_newordermessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/NewOrderMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -88,9 +88,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_orderacknowledgmentmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderAcknowledgmentMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -99,9 +99,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_ordercancelledmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderCancelledMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -110,9 +110,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_orderexecutionmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderExecutionMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -121,9 +121,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_ordermodifiedmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderModifiedMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -132,9 +132,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_orderrejectedmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/OrderRejectedMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -143,9 +143,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_replaycompletemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ReplayCompleteMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -154,9 +154,9 @@ class BzxoptionsBinaryorderentryV210Tests(unittest.TestCase):
 
     def test_serverheartbeatmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/BzxOptions.BinaryOrderEntry.Boe.v2.10/ServerHeartbeatMessage.pcap"):
-            if payloads.partial(payload, 2, 2, "little", False):
+            if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 2, 2, "little", False):
+            for message in payloads.messages(payload, 2, 2, "little", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

@@ -24,9 +24,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_cancelordermessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/CancelOrderMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -35,9 +35,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_enterordermessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/EnterOrderMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -46,9 +46,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_loginacceptedpacket(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/LoginAcceptedPacket.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -57,9 +57,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_loginrequestpacket(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/LoginRequestPacket.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -68,9 +68,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_orderacceptedmessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/OrderAcceptedMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -79,9 +79,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_ordercanceledmessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/OrderCanceledMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -90,9 +90,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_orderexecutedmessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/OrderExecutedMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -101,9 +101,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_orderrejectedmessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/OrderRejectedMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -112,9 +112,9 @@ class JnxequitiesPtsV111Tests(unittest.TestCase):
 
     def test_replaceordermessage(self):
         for payload in payloads.of("omi-data-packets/Jnx/JnxEquities.Pts.Ouch.v1.11/ReplaceOrderMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "big", False):
+            if payloads.partial(payload, 0, 2, "big", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "big", False):
+            for message in payloads.messages(payload, 0, 2, "big", 2):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

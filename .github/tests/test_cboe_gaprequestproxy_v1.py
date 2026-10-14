@@ -22,9 +22,9 @@ class CboeGaprequestproxyV1Tests(unittest.TestCase):
 
     def test_gaprequestmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/GapRequestProxy.Pitch.v1/GapRequestMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -33,9 +33,9 @@ class CboeGaprequestproxyV1Tests(unittest.TestCase):
 
     def test_gapresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/GapRequestProxy.Pitch.v1/GapResponseMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -44,9 +44,9 @@ class CboeGaprequestproxyV1Tests(unittest.TestCase):
 
     def test_loginmessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/GapRequestProxy.Pitch.v1/LoginMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -55,9 +55,9 @@ class CboeGaprequestproxyV1Tests(unittest.TestCase):
 
     def test_loginresponsemessage(self):
         for payload in payloads.of("omi-data-packets/Cboe/GapRequestProxy.Pitch.v1/LoginResponseMessage.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)

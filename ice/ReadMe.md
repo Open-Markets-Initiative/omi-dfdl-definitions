@@ -5,7 +5,7 @@
 
 | Division | [Protocol][Omi.Ice.Protocol.Definitions] | [Encoding][Omi.Encoding.Definitions] | Version | Date | Size | [Deployment][Omi.Glossary.Deployment] | [Testing][Omi.Glossary.Testing] | [Documentation][Omi.Ice.Specifications] |
 | --- | --- | --- | --- | ---: | ---: | --- | --- | --- |
-| [IceFutures][IceFutures.Exchange] | [Bgw][Ice.IceFutures.Bgw] | [Sbe][Omi.Encoding.Sbe] | [7.0][Ice.IceFutures.Bgw.Sbe.v7.0.Definition] | 10/24/2025 | 9155 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Ice.IceFutures.Bgw.Sbe.v7.0.Url] - [pdf][Ice.IceFutures.Bgw.Sbe.v7.0.Pdf] |
+| [IceFutures][IceFutures.Exchange] | [Bgw][Ice.IceFutures.Bgw] | [Sbe][Omi.Encoding.Sbe] | [7.0][Ice.IceFutures.Bgw.Sbe.v7.0.Definition] | 10/24/2025 | 9155 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Ice.IceFutures.Bgw.Sbe.v7.0.Url] |
 | [IceFutures][IceFutures.Exchange] | [Mdf][Ice.IceFutures.Mdf] | [iMpact][Omi.Encoding.iMpact] | [1.1.24][Ice.IceFutures.Mdf.iMpact.v1.1.24.Definition] | 3/30/2016 | 8079 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [pdf][Ice.IceFutures.Mdf.iMpact.v1.1.24.Pdf] |
 | [IceFutures][IceFutures.Exchange] | [Mdf][Ice.IceFutures.Mdf] | [iMpact][Omi.Encoding.iMpact] | [1.1.33][Ice.IceFutures.Mdf.iMpact.v1.1.33.Definition] | 8/6/2018 | 8955 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [pdf][Ice.IceFutures.Mdf.iMpact.v1.1.33.Pdf] |
 | [IceFutures][IceFutures.Exchange] | [Mdf][Ice.IceFutures.Mdf] | [iMpact][Omi.Encoding.iMpact] | [1.1.34][Ice.IceFutures.Mdf.iMpact.v1.1.34.Definition] | 9/4/2018 | 9097 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [pdf][Ice.IceFutures.Mdf.iMpact.v1.1.34.Pdf] |
@@ -40,7 +40,6 @@
 
 [Ice.IceFutures.Bgw.Sbe.v7.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/ice/icefutures/bgw/IceFutures_Bgw_v7_0.dfdl.xsd "Ice IceFutures Bgw Sbe v7.0 Dfdl Definition"
 [Ice.IceFutures.Bgw.Sbe.v7.0.Url]: https://service.ice.com/s/article/Binary-Order-API "Intercontinental Exchange 7.0 Url"
-[Ice.IceFutures.Bgw.Sbe.v7.0.Pdf]: https://service.ice.com/s/article/Binary-Order-API "Intercontinental Exchange 7.0 Pdf"
 [Ice.IceFutures.Mdf.iMpact.v1.1.24.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/ice/icefutures/mdf/IceFutures_Mdf_v1_1_24.dfdl.xsd "Ice IceFutures Mdf iMpact v1.1.24 Dfdl Definition"
 [Ice.IceFutures.Mdf.iMpact.v1.1.24.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Specifications/ "Intercontinental Exchange 1.1.24 Pdf"
 [Ice.IceFutures.Mdf.iMpact.v1.1.33.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/ice/icefutures/mdf/IceFutures_Mdf_v1_1_33.dfdl.xsd "Ice IceFutures Mdf iMpact v1.1.33 Dfdl Definition"

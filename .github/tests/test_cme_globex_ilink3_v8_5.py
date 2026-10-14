@@ -24,9 +24,9 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
 
     def test_executionreportstatus(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.Sbe.v8.5/ExecutionReportStatus.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -35,9 +35,9 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
 
     def test_quotecancel(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.Sbe.v8.5/QuoteCancel.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -46,9 +46,9 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
 
     def test_quotecancelack(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.Sbe.v8.5/QuoteCancelAck.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
@@ -57,9 +57,9 @@ class CmeGlobexIlink3V85Tests(unittest.TestCase):
 
     def test_sequence(self):
         for payload in payloads.of("omi-data-packets/Cme/Globex.iLink3.Sbe.v8.5/Sequence.pcap"):
-            if payloads.partial(payload, 0, 2, "little", True):
+            if payloads.partial(payload, 0, 2, "little", 0):
                 self.skipTest("capture ends mid message; tcp reassembly required")
-            for message in payloads.messages(payload, 0, 2, "little", True):
+            for message in payloads.messages(payload, 0, 2, "little", 0):
                 data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
                 with open(data, "wb") as handle:
                     handle.write(message)
