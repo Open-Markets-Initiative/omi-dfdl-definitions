@@ -41,20 +41,22 @@
         <xs:element name="packetHeader" type="tns:packetHeader_t" />
         <xs:element name="messages">
           <xs:complexType>
-            <xs:choice>
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../packetHeader/messageCount) }" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:element name="heartbeat" type="tns:heartbeat_t">
+            <xs:sequence>
+              <xs:element name="heartbeat" type="tns:heartbeat_t" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                   <xs:appinfo source="http://www.ogf.org/dfdl/">
-                    <dfdl:element choiceBranchKey="0" />
+                    <dfdl:element occursCountKind="expression" occursCount="{ if (xs:string(../../packetHeader/messageCount) eq '0') then 1 else 0 }" />
                   </xs:appinfo>
                 </xs:annotation>
               </xs:element>
-            </xs:choice>
+              <xs:element name="message" type="tns:message_t" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element occursCountKind="expression" occursCount="{ if (fn:not(xs:string(../../packetHeader/messageCount) eq '0')) then 1 else 0 }" />
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:sequence>

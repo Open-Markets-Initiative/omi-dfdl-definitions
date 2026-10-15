@@ -1,0 +1,2197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Dfdl schema definition for: 24X MemoirLastSale v2.0
+
+  Protocol:
+    Organization: 24 National Exchange
+    Protocol: Member Order Information Record Last Sale
+    Encoding: Simple Binary Encoding
+    Version: 2.0
+    Date: 9/25/2026
+    Specification: MEMOIR Last Sale Feed-v2.0a.pdf
+
+  Script:
+    Generator: 1.0.0.0
+    License: Public/GPLv3
+    Authors: Omi Developers
+
+  Copyright (c) 2026 Scaled Sources LLC.  https://www.scaledsources.com
+
+  This dfdl schema is contributed to The Open Markets Initiative under
+  the license noted above.
+
+  The protocol compiler technologies used to produce this file
+  are the subject of patents owned by Scaled Sources LLC.  Those patent
+  rights are retained and are not transferred by this contribution:
+    https://patents.google.com/patent/US20240129382A1/en
+    https://patents.google.com/patent/US20240419416A1/en
+
+  Open Markets Initiative website:
+    https://openmarketsinitiative.com
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:24xequities:memoirlastsale:v2:0" targetNamespace="urn:omi:24xequities:memoirlastsale:v2:0">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format byteOrder="bigEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="packet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="commonHeader" type="tns:commonHeader_t" />
+        <xs:element name="sequencedMessages">
+          <xs:complexType>
+            <xs:choice>
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../commonHeader/messageType) }" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:element name="heartbeat">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element choiceBranchKey="0" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="sessionShutdown">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element choiceBranchKey="1" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="sequencedMessage" type="tns:sequencedMessage_t">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element choiceBranchKey="2" />
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="commonHeader_t">
+    <xs:sequence>
+      <xs:element name="messageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Session Shutdown Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Sequenced Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="headerLength" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sessionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sequenceNumber" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sequencedMessage_t">
+    <xs:sequence>
+      <xs:element name="messageCount" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="message" type="tns:message_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../messageCount }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="message_t">
+    <xs:sequence>
+      <xs:element name="messageLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sbeMessage" type="tns:sbeMessage_t" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../messageLength + 2 - 2 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sbeMessage_t">
+    <xs:sequence>
+      <xs:element name="sbeHeader" type="tns:sbeHeader_t" />
+      <xs:element name="payload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../sbeHeader/blockLength }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../sbeHeader/templateId) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="instrumentDirectoryMessage" type="tns:instrumentDirectoryMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="1" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="regShoRestrictionMessage" type="tns:regShoRestrictionMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="securityTradingStatusMessage" type="tns:securityTradingStatusMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="3" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradingSessionStatusMessage" type="tns:tradingSessionStatusMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="5" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradeReportMessage" type="tns:tradeReportMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="10" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradeCancelMessage" type="tns:tradeCancelMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="11" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradeCorrectMessage" type="tns:tradeCorrectMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="12" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="auctionTradeMessage" type="tns:auctionTradeMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="13" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="brokenAuctionTradeMessage" type="tns:brokenAuctionTradeMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="14" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="correctedAuctionTradeMessage" type="tns:correctedAuctionTradeMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="15" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sbeHeader_t">
+    <xs:sequence>
+      <xs:element name="blockLength" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="templateId">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Instrument Directory Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Reg Sho Restriction Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Security Trading Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Trading Session Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Trade Report Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Trade Cancel Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Trade Correct Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Auction Trade Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Broken Auction Trade Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Corrected Auction Trade Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="schemaId" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="version" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="instrumentDirectoryMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbol" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbolSfx" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="roundLot" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isTestSymbol">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>False</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>True</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="regShoRestrictionMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="shortSaleRestriction">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>False</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>True</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="securityTradingStatusMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityTradingStatus">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Halted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+              <xs:annotation>
+                <xs:documentation>Paused</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>Quoting</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Trading</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="securityTradingStatusReason">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>None</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="R">
+              <xs:annotation>
+                <xs:documentation>Regulatory</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Administrative</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="haltReason">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Unknown</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Admin</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Additional Info Requested</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Regulatory Concern</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>News Released</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Merger Effective</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Etf Component Prices Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Order Imbalance</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Luld Trading Pause</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Corporate Action</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>New Security Offering</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>News Pending</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Intraday Indicative Value Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Operational</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Sub Penny Trading</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Market Wide Circuit Breaker Level 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Market Wide Circuit Breaker Level 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+              <xs:annotation>
+                <xs:documentation>Market Wide Circuit Breaker Level 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradingSessionStatusMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradingSession">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Overnight</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Opening</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Trading</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Post Trading</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeReportMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeQty" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradePrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradePriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../tradePrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="saleCondition1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="@">
+              <xs:annotation>
+                <xs:documentation>Regular Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition2">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Intermarket Sweep</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Center Opening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Market Center Reopening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Center Closing Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition3">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Form T</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition4">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Price Variation Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Odd Lot Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Auction Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeCancelMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeQty" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lastPrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lastPriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../lastPrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="saleCondition1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="@">
+              <xs:annotation>
+                <xs:documentation>Regular Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition2">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Intermarket Sweep</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Center Opening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Market Center Reopening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Center Closing Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition3">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Form T</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition4">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Price Variation Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Odd Lot Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Auction Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeCorrectMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalTradeQty" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalTradePrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalTradePriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../originalTradePrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalSaleCondition1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="@">
+              <xs:annotation>
+                <xs:documentation>Regular Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="originalSaleCondition2">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Intermarket Sweep</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Center Opening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Market Center Reopening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Center Closing Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="originalSaleCondition3">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Form T</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="originalSaleCondition4">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Price Variation Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Odd Lot Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Auction Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedTradeQty" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="correctedTradePrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="correctedTradePriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../correctedTradePrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="correctedSaleCondition1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="@">
+              <xs:annotation>
+                <xs:documentation>Regular Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedSaleCondition2">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Intermarket Sweep</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Center Opening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Market Center Reopening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Center Closing Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedSaleCondition3">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Form T</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedSaleCondition4">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Price Variation Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Odd Lot Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Auction Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="auctionTradeMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="auctionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="auctionType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Unknown</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Opening</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Closing</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Halt</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Ipo</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+              <xs:annotation>
+                <xs:documentation>Pause</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="auctionQuantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="auctionPrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="auctionPriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../auctionPrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="saleCondition1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="@">
+              <xs:annotation>
+                <xs:documentation>Regular Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition2">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Intermarket Sweep</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Center Opening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Market Center Reopening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Center Closing Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition3">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Form T</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="saleCondition4">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Price Variation Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Odd Lot Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Auction Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="brokenAuctionTradeMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="auctionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalAuctionQuantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalAuctionPrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalAuctionPriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../originalAuctionPrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="correctedAuctionTradeMessage_t">
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../timestamp - (../timestamp mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="timestampNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../timestamp mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="auctionId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalAuctionQuantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalAuctionPrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalAuctionPriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../originalAuctionPrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="originalSaleCondition1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="@">
+              <xs:annotation>
+                <xs:documentation>Regular Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="originalSaleCondition2">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Intermarket Sweep</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Center Opening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Market Center Reopening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Center Closing Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="originalSaleCondition3">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Form T</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="originalSaleCondition4">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Price Variation Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Odd Lot Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Auction Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedAuctionQuantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="correctedAuctionPrice" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="correctedAuctionPriceReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ xs:decimal(../correctedAuctionPrice) div 1000000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="correctedSaleCondition1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="@">
+              <xs:annotation>
+                <xs:documentation>Regular Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedSaleCondition2">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Intermarket Sweep</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Center Opening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Market Center Reopening Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Center Closing Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedSaleCondition3">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Form T</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="correctedSaleCondition4">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Price Variation Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Odd Lot Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>Auction Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

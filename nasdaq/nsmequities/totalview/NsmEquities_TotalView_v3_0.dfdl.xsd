@@ -1651,23 +1651,25 @@
           </xs:appinfo>
         </xs:annotation>
         <xs:complexType>
-          <xs:choice>
-            <xs:annotation>
-              <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageLength) }" />
-              </xs:appinfo>
-            </xs:annotation>
-            <xs:element name="endOfSession">
+          <xs:sequence>
+            <xs:element name="endOfSession" minOccurs="0" maxOccurs="1">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="0" />
+                  <dfdl:element occursCountKind="expression" occursCount="{ if (xs:string(../../messageLength) eq '0') then 1 else 0 }" />
                 </xs:appinfo>
               </xs:annotation>
               <xs:complexType>
                 <xs:sequence />
               </xs:complexType>
             </xs:element>
-          </xs:choice>
+            <xs:element name="messageData" type="tns:messageData_t" minOccurs="0" maxOccurs="1">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element occursCountKind="expression" occursCount="{ if (fn:not(xs:string(../../messageLength) eq '0')) then 1 else 0 }" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:sequence>

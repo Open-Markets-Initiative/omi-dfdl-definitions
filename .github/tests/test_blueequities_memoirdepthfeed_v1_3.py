@@ -20,6 +20,22 @@ class BlueequitiesMemoirdepthfeedV13Tests(unittest.TestCase):
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
+    def test_heartbeat(self):
+        for payload in payloads.of("omi-data-packets/BlueOceanAts/BlueEquities.MemoirDepthFeed.Sbe.v1.3/Heartbeat.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_instrumentdirectorymessage(self):
+        for payload in payloads.of("omi-data-packets/BlueOceanAts/BlueEquities.MemoirDepthFeed.Sbe.v1.3/InstrumentDirectoryMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
     def test_orderaddedmessage(self):
         for payload in payloads.of("omi-data-packets/BlueOceanAts/BlueEquities.MemoirDepthFeed.Sbe.v1.3/OrderAddedMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
@@ -46,6 +62,22 @@ class BlueequitiesMemoirdepthfeedV13Tests(unittest.TestCase):
 
     def test_orderreducedmessage(self):
         for payload in payloads.of("omi-data-packets/BlueOceanAts/BlueEquities.MemoirDepthFeed.Sbe.v1.3/OrderReducedMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_securitytradingstatusmessage(self):
+        for payload in payloads.of("omi-data-packets/BlueOceanAts/BlueEquities.MemoirDepthFeed.Sbe.v1.3/SecurityTradingStatusMessage.pcap"):
+            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+            with open(data, "wb") as handle:
+                handle.write(payload)
+            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_tradingsessionstatusmessage(self):
+        for payload in payloads.of("omi-data-packets/BlueOceanAts/BlueEquities.MemoirDepthFeed.Sbe.v1.3/TradingSessionStatusMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
             with open(data, "wb") as handle:
                 handle.write(payload)
