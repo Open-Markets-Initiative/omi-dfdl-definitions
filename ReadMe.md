@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 1294 | 7,459,797 |
+| 1301 | 7,575,046 |
 
 ## Testing
 
@@ -105,6 +105,7 @@ Enjoy.
 [Omi.Encoding.Aspen]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Aspen.md "Aspen Encoding"
 [Omi.Encoding.Tcp]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Tcp.md "Tcp Encoding"
 [Omi.Encoding.Xdp]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Xdp.md "Xdp Encoding"
+[Omi.Encoding.Wats]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Wats.md "Wats Encoding"
 [Omi.Encoding.iMpact]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/iMpact.md "iMpact Encoding"
 [Omi.Encoding.IexTp]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/IexTp.md "IexTp Encoding"
 [Omi.Encoding.Snap]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Snap.md "Snap Encoding"
@@ -338,8 +339,15 @@ Enjoy.
 [Gpw.Wse.Indices]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/Indices.md "Warsaw Stock Exchange Indices"
 [Gpw.Wse.MarketInformation]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/MarketInformation.md "Warsaw Stock Exchange Market Information"
 [Gpw.Wse.OrderBook]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/OrderBook.md "Warsaw Stock Exchange Order Book"
+[Gpw.Wse.OrderEntry]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/OrderEntry.md "Warsaw Stock Exchange Native Order Gateway"
 [Gpw.Wse.PricesAndTrades]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/PricesAndTrades.md "Warsaw Stock Exchange Prices and Trades"
 [Gpw.Wse.Quotes]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/Quotes.md "Warsaw Stock Exchange Quotes"
+[Gpw.Wse.ReplayBbo]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/ReplayBbo.md "Warsaw Stock Exchange BBO Replay"
+[Gpw.Wse.ReplayFullDepth]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/ReplayFullDepth.md "Warsaw Stock Exchange Full Depth Replay"
+[Gpw.Wse.SnapshotBbo]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/SnapshotBbo.md "Warsaw Stock Exchange BBO Snapshot"
+[Gpw.Wse.SnapshotFullDepth]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/SnapshotFullDepth.md "Warsaw Stock Exchange Full Depth Snapshot"
+[Gpw.Wse.StreamBbo]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/StreamBbo.md "Warsaw Stock Exchange BBO Stream"
+[Gpw.Wse.StreamFullDepth]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Gpw/Protocols/Wse/StreamFullDepth.md "Warsaw Stock Exchange Full Depth Stream"
 [Ice.IceFutures.Bgw]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Protocols/IceFutures/Bgw.md "Binary Order Gateway"
 [Ice.IceFutures.Mdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Protocols/IceFutures/Mdf.md "Multicast Data Feed"
 [Iex.IexEquities.Deep]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Iex/Protocols/IexEquities/Deep.md "Depth Of Book"
