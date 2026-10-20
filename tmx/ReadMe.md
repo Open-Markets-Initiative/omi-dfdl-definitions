@@ -12,10 +12,13 @@
 | [Mx][Mx.Exchange] | [SolaMulticast][Tmx.Mx.SolaMulticast] | [Hsvf][Omi.Encoding.Hsvf] | [2.1][Tmx.Mx.SolaMulticast.Hsvf.v2.1.Definition] | 1/23/2019 | 202 | [Active][Omi.Glossary.Deployment.Active] | [Beta][Omi.Glossary.Testing.Beta] | [pdf][Tmx.Mx.SolaMulticast.Hsvf.v2.1.Pdf] |
 | [Mx][Mx.Exchange] | [SolaOrderEntry][Tmx.Mx.SolaOrderEntry] | [Sail][Omi.Encoding.Sail] | [1.21][Tmx.Mx.SolaOrderEntry.Sail.v1.21.Definition] | 6/18/2020 | 4028 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Tmx.Mx.SolaOrderEntry.Sail.v1.21.Url] - [pdf][Tmx.Mx.SolaOrderEntry.Sail.v1.21.Pdf] |
 | [Tsx][Tsx.Exchange] | [GlobalFx][Tmx.Tsx.GlobalFx] | [Gfx][Omi.Encoding.Gfx] | [1.0][Tmx.Tsx.GlobalFx.Gfx.v1.0.Definition] | 5/20/2016 | 499 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Tmx.Tsx.GlobalFx.Gfx.v1.0.Url] - [pdf][Tmx.Tsx.GlobalFx.Gfx.v1.0.Pdf] |
+| [Tsx][Tsx.Exchange] | [IndexFeed][Tmx.Tsx.IndexFeed] | [Qrtmd][Omi.Encoding.Qrtmd] | [1.19][Tmx.Tsx.IndexFeed.Qrtmd.v1.19.Definition] | 10/12/2021 | 431 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Tmx.Tsx.IndexFeed.Qrtmd.v1.19.Url] - [pdf][Tmx.Tsx.IndexFeed.Qrtmd.v1.19.Pdf] |
+| [Tsx][Tsx.Exchange] | [Level1][Tmx.Tsx.Level1] | [Qrtmd][Omi.Encoding.Qrtmd] | [2.8][Tmx.Tsx.Level1.Qrtmd.v2.8.Definition] | 8/10/2021 | 2524 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Tmx.Tsx.Level1.Qrtmd.v2.8.Url] - [pdf][Tmx.Tsx.Level1.Qrtmd.v2.8.Pdf] |
 | [Tsx][Tsx.Exchange] | [QuantumFeedLevel1][Tmx.Tsx.QuantumFeedLevel1] | [Xmt][Omi.Encoding.Xmt] | [2.6][Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.6.Definition] | 10/20/2020 | 1619 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Beta][Omi.Glossary.Testing.Beta] | [url][Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.6.Url] - [pdf][Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.6.Pdf] |
 | [Tsx][Tsx.Exchange] | [QuantumFeedLevel1][Tmx.Tsx.QuantumFeedLevel1] | [Xmt][Omi.Encoding.Xmt] | [2.8][Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.8.Definition] | 2/22/2023 | 1766 | [Active][Omi.Glossary.Deployment.Active] | [Beta][Omi.Glossary.Testing.Beta] | [url][Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.8.Url] - [pdf][Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.8.Pdf] |
 | [Tsx][Tsx.Exchange] | [QuantumFeedLevel2][Tmx.Tsx.QuantumFeedLevel2] | [Xmt][Omi.Encoding.Xmt] | [2.1][Tmx.Tsx.QuantumFeedLevel2.Xmt.v2.1.Definition] | 10/20/2015 | 4160 | [Active][Omi.Glossary.Deployment.Active] | [Verified][Omi.Glossary.Testing.Verified] | [url][Tmx.Tsx.QuantumFeedLevel2.Xmt.v2.1.Url] |
 | [Tsx][Tsx.Exchange] | [QuantumFeedLevel2][Tmx.Tsx.QuantumFeedLevel2] | [Xmt][Omi.Encoding.Xmt] | [3.6][Tmx.Tsx.QuantumFeedLevel2.Xmt.v3.6.Definition] | 10/20/2020 | 4397 | [Active][Omi.Glossary.Deployment.Active] | [Beta][Omi.Glossary.Testing.Beta] | [url][Tmx.Tsx.QuantumFeedLevel2.Xmt.v3.6.Url] - [pdf][Tmx.Tsx.QuantumFeedLevel2.Xmt.v3.6.Pdf] |
+| [TsxAlpha][TsxAlpha.Exchange] | [Level1][Tmx.TsxAlpha.Level1] | [Qrtmd][Omi.Encoding.Qrtmd] | [2.1][Tmx.TsxAlpha.Level1.Qrtmd.v2.1.Definition] | 10/20/2020 | 1321 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Tmx.TsxAlpha.Level1.Qrtmd.v2.1.Url] - [pdf][Tmx.TsxAlpha.Level1.Qrtmd.v2.1.Pdf] |
 | [TsxAlpha][TsxAlpha.Exchange] | [QuantumFeedLevel1][Tmx.TsxAlpha.QuantumFeedLevel1] | [Xmt][Omi.Encoding.Xmt] | [2.1][Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.1.Definition] | 10/20/2020 | 901 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Beta][Omi.Glossary.Testing.Beta] | [url][Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.1.Url] - [pdf][Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.1.Pdf] |
 | [TsxAlpha][TsxAlpha.Exchange] | [QuantumFeedLevel1][Tmx.TsxAlpha.QuantumFeedLevel1] | [Xmt][Omi.Encoding.Xmt] | [2.2][Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.2.Definition] | 4/17/2023 | 1048 | [Active][Omi.Glossary.Deployment.Active] | [Beta][Omi.Glossary.Testing.Beta] | [url][Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.2.Url] - [pdf][Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.2.Pdf] |
 | [TsxAlpha][TsxAlpha.Exchange] | [QuantumFeedLevel2][Tmx.TsxAlpha.QuantumFeedLevel2] | [Xmt][Omi.Encoding.Xmt] | [2.1][Tmx.TsxAlpha.QuantumFeedLevel2.Xmt.v2.1.Definition] | 10/20/2020 | 2363 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Beta][Omi.Glossary.Testing.Beta] | [url][Tmx.TsxAlpha.QuantumFeedLevel2.Xmt.v2.1.Url] - [pdf][Tmx.TsxAlpha.QuantumFeedLevel2.Xmt.v2.1.Pdf] |
@@ -44,6 +47,7 @@
 [Omi.Encoding.Hsvf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Hsvf.md "Hsvf Encoding"
 [Omi.Encoding.Sail]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Sail.md "Sail Encoding"
 [Omi.Encoding.Gfx]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Gfx.md "Gfx Encoding"
+[Omi.Encoding.Qrtmd]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Qrtmd.md "Qrtmd Encoding"
 [Omi.Encoding.Xmt]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Xmt.md "Xmt Encoding"
 [Mx.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Tmx/Protocols/Mx "Tmx Mx"
 [Tsx.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Tmx/Protocols/Tsx "Tmx Tsx"
@@ -51,8 +55,11 @@
 [Tmx.Mx.SolaMulticast]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/Mx/SolaMulticast.md "Sola Multicast"
 [Tmx.Mx.SolaOrderEntry]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/Mx/SolaOrderEntry.md "Sola Order Entry"
 [Tmx.Tsx.GlobalFx]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/Tsx/GlobalFx.md "Global Fx Feed"
+[Tmx.Tsx.IndexFeed]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/Tsx/IndexFeed.md "Index Feed"
+[Tmx.Tsx.Level1]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/Tsx/Level1.md "Level 1"
 [Tmx.Tsx.QuantumFeedLevel1]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/Tsx/QuantumFeedLevel1.md "Quantum Feed Level 1"
 [Tmx.Tsx.QuantumFeedLevel2]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/Tsx/QuantumFeedLevel2.md "Quantum Feed Level 2"
+[Tmx.TsxAlpha.Level1]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/TsxAlpha/Level1.md "Level 1"
 [Tmx.TsxAlpha.QuantumFeedLevel1]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/TsxAlpha/QuantumFeedLevel1.md "Quantum Feed Level 1"
 [Tmx.TsxAlpha.QuantumFeedLevel2]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Protocols/TsxAlpha/QuantumFeedLevel2.md "Quantum Feed Level 2"
 
@@ -76,6 +83,12 @@
 [Tmx.Tsx.GlobalFx.Gfx.v1.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/tmx/tsx/globalfx/Tsx_GlobalFx_v1_0.dfdl.xsd "Tmx Tsx GlobalFx Gfx v1.0 Dfdl Definition"
 [Tmx.Tsx.GlobalFx.Gfx.v1.0.Url]: https://www.tmx.com/market-data "TMX Group 1.0 Url"
 [Tmx.Tsx.GlobalFx.Gfx.v1.0.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Specifications/ "TMX Group 1.0 Pdf"
+[Tmx.Tsx.IndexFeed.Qrtmd.v1.19.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/tmx/tsx/indexfeed/Tsx_IndexFeed_v1_19.dfdl.xsd "Tmx Tsx IndexFeed Qrtmd v1.19 Dfdl Definition"
+[Tmx.Tsx.IndexFeed.Qrtmd.v1.19.Url]: https://www.tmxwebstore.com/ "TMX Group 1.19 Url"
+[Tmx.Tsx.IndexFeed.Qrtmd.v1.19.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Specifications/ "TMX Group 1.19 Pdf"
+[Tmx.Tsx.Level1.Qrtmd.v2.8.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/tmx/tsx/level1/Tsx_Level1_v2_8.dfdl.xsd "Tmx Tsx Level1 Qrtmd v2.8 Dfdl Definition"
+[Tmx.Tsx.Level1.Qrtmd.v2.8.Url]: https://www.tmxwebstore.com/ "TMX Group 2.8 Url"
+[Tmx.Tsx.Level1.Qrtmd.v2.8.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Specifications/ "TMX Group 2.8 Pdf"
 [Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.6.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/tmx/tsx/quantumfeedlevel1/Tsx_QuantumFeedLevel1_v2_6.dfdl.xsd "Tmx Tsx QuantumFeedLevel1 Xmt v2.6 Dfdl Definition"
 [Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.6.Url]: https://www.tmxwebstore.com/ "TMX Group 2.6 Url"
 [Tmx.Tsx.QuantumFeedLevel1.Xmt.v2.6.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Specifications/ "TMX Group 2.6 Pdf"
@@ -87,6 +100,9 @@
 [Tmx.Tsx.QuantumFeedLevel2.Xmt.v3.6.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/tmx/tsx/quantumfeedlevel2/Tsx_QuantumFeedLevel2_v3_6.dfdl.xsd "Tmx Tsx QuantumFeedLevel2 Xmt v3.6 Dfdl Definition"
 [Tmx.Tsx.QuantumFeedLevel2.Xmt.v3.6.Url]: https://www.tmxwebstore.com/ "TMX Group 3.6 Url"
 [Tmx.Tsx.QuantumFeedLevel2.Xmt.v3.6.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Specifications/ "TMX Group 3.6 Pdf"
+[Tmx.TsxAlpha.Level1.Qrtmd.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/tmx/tsxalpha/level1/TsxAlpha_Level1_v2_1.dfdl.xsd "Tmx TsxAlpha Level1 Qrtmd v2.1 Dfdl Definition"
+[Tmx.TsxAlpha.Level1.Qrtmd.v2.1.Url]: https://www.tmxwebstore.com/ "TMX Group 2.1 Url"
+[Tmx.TsxAlpha.Level1.Qrtmd.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Specifications/ "TMX Group 2.1 Pdf"
 [Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/tmx/tsxalpha/quantumfeedlevel1/TsxAlpha_QuantumFeedLevel1_v2_1.dfdl.xsd "Tmx TsxAlpha QuantumFeedLevel1 Xmt v2.1 Dfdl Definition"
 [Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.1.Url]: https://www.tmxwebstore.com/ "TMX Group 2.1 Url"
 [Tmx.TsxAlpha.QuantumFeedLevel1.Xmt.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Tmx/Specifications/ "TMX Group 2.1 Pdf"

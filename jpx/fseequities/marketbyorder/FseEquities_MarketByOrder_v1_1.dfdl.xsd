@@ -1182,17 +1182,31 @@
                 <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ fn:substring-before(fn:concat(xs:string(../tcpPacketHeader/packetType), ' '), ' ') }" />
               </xs:appinfo>
             </xs:annotation>
-            <xs:element name="loginRequestMessage" type="tns:loginRequestMessage_t">
+            <xs:element name="loginRequestRetransmissionMessage" type="tns:loginRequestRetransmissionMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="R" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="loginResultMessage" type="tns:loginResultMessage_t">
+            <xs:element name="loginRequestSnapshotMessage" type="tns:loginRequestSnapshotMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="L" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="loginResultAcceptedMessage" type="tns:loginResultAcceptedMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="A" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="loginResultRejectedMessage" type="tns:loginResultRejectedMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="J" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
@@ -1234,12 +1248,22 @@
           <xs:restriction base="xs:string">
             <xs:enumeration value="R">
               <xs:annotation>
-                <xs:documentation>Login Request Message</xs:documentation>
+                <xs:documentation>Login Request Retransmission Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="L">
+              <xs:annotation>
+                <xs:documentation>Login Request Snapshot Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="A">
               <xs:annotation>
-                <xs:documentation>Login Result Message</xs:documentation>
+                <xs:documentation>Login Result Accepted Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="J">
+              <xs:annotation>
+                <xs:documentation>Login Result Rejected Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="S">
@@ -1257,7 +1281,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="loginRequestMessage_t">
+  <xs:complexType name="loginRequestRetransmissionMessage_t">
     <xs:sequence>
       <xs:element name="userId" type="xs:string">
         <xs:annotation>
@@ -1296,7 +1320,103 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="loginResultMessage_t">
+  <xs:complexType name="loginRequestSnapshotMessage_t">
+    <xs:sequence>
+      <xs:element name="userId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="multicastGroupNumber" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numberOfSystemReboots" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sequenceNumber" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="requestedMessageCount" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginResultAcceptedMessage_t">
+    <xs:sequence>
+      <xs:element name="multicastGroupNumber" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="resultCode">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Accepted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Out Of Service</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Incorrect User Id</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Incorrect Sequence Number</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Incorrect Packet Type</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M">
+              <xs:annotation>
+                <xs:documentation>Incorrect Mcg Number</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Z">
+              <xs:annotation>
+                <xs:documentation>Other Error</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="loginResultRejectedMessage_t">
     <xs:sequence>
       <xs:element name="multicastGroupNumber" type="xs:unsignedByte">
         <xs:annotation>
