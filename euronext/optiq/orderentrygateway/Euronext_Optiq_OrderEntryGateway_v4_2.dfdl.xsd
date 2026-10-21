@@ -33,6 +33,7 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
+      <dfdl:defineVariable name="statedBlockLength" type="xs:int" defaultValue="0" />
     </xs:appinfo>
   </xs:annotation>
   <xs:element name="packet">
@@ -324,6 +325,13 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
+            <xs:element name="rfqAuditMessage" type="tns:rfqAuditMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="72" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
             <xs:element name="logonMessage" type="tns:logonMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -450,6 +458,7 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+            <dfdl:setVariable ref="tns:statedBlockLength" value="{ . }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -644,6 +653,11 @@
             <xs:enumeration value="67">
               <xs:annotation>
                 <xs:documentation>Cross Order Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72">
+              <xs:annotation>
+                <xs:documentation>Rfq Audit Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="100">
@@ -1159,6 +1173,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 66 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="freeTextGroups" type="tns:freeTextGroups_t" />
       <xs:element name="mifidShortCodesGroups" type="tns:mifidShortCodesGroups_t" />
       <xs:element name="orderOptionalFieldsGroups" type="tns:orderOptionalFieldsGroups_t" />
@@ -1366,6 +1387,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 18 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="mifidShortCodesGroups_t">
@@ -1400,6 +1428,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 12 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1533,6 +1568,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 50 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="tradingSession_t">
@@ -1565,10 +1607,17 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="reserved4" type="xs:unsignedInt">
+      <xs:element name="session4" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="4" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="reserved3" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="3" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1743,6 +1792,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 34 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="openClose_t">
@@ -1854,6 +1910,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="16" textStringPadCharacter="%NUL;" textTrimKind="padChar" textStringJustification="left" nilKind="literalValue" nilValue="%ES;" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 16 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2135,6 +2198,11 @@
                 <xs:documentation>Rfie Ack</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="22">
+              <xs:annotation>
+                <xs:documentation>Cross Order Ack</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -2218,6 +2286,13 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="ackQualifiers" type="tns:ackQualifiers_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 125 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mifidFieldsGroups" type="tns:mifidFieldsGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -2310,6 +2385,13 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="mifidIndicatorsOptional" type="tns:mifidIndicatorsOptional_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 9 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="mifidIndicatorsOptional_t">
@@ -2693,6 +2775,11 @@
                 <xs:documentation>Guaranteed Cross Negotiateddeal Oilq</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="41">
+              <xs:annotation>
+                <xs:documentation>Largein Scale Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="42">
               <xs:annotation>
                 <xs:documentation>Largein Scale Tradeinbasispoints</xs:documentation>
@@ -2708,9 +2795,29 @@
                 <xs:documentation>Strategy Leg Largein Scale Tradeinbasispoints</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="41">
+            <xs:enumeration value="46">
               <xs:annotation>
-                <xs:documentation>Largein Scale Trade</xs:documentation>
+                <xs:documentation>Non Standard Settlement</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="47">
+              <xs:annotation>
+                <xs:documentation>Repurchase Agreement Repo</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="48">
+              <xs:annotation>
+                <xs:documentation>Exchange Granted Trade</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Other</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Odd Lot</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="100">
@@ -2814,6 +2921,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 102 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2925,6 +3039,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 32 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="fillStrategyFieldGroups_t">
@@ -2990,6 +3111,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 25 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="fillDerivativesFieldGroups_t">
@@ -3038,6 +3166,27 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="finalSymbolIndex" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="finalExecutionId" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 17 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -3333,10 +3482,27 @@
                 <xs:documentation>Order Cancelledduetoapotentialtradeoutside Fs Plimits</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="37">
+              <xs:annotation>
+                <xs:documentation>Remaining Rfc Quantity Cancelled</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="38">
+              <xs:annotation>
+                <xs:documentation>Order Cancelledduetoanincorrect Reactor Response</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
       <xs:element name="ackQualifiersOptional" type="tns:ackQualifiersOptional_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 100 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mifidFieldsGroups" type="tns:mifidFieldsGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -3812,6 +3978,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 83 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="freeTextGroups" type="tns:freeTextGroups_t" />
       <xs:element name="cancelReplaceOptionalFieldGroups" type="tns:cancelReplaceOptionalFieldGroups_t" />
       <xs:element name="cancelReplaceClearingFieldsGroups" type="tns:cancelReplaceClearingFieldsGroups_t" />
@@ -3934,6 +4107,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 34 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cancelReplaceClearingFieldsGroups_t">
@@ -4053,6 +4233,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 33 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -4225,6 +4412,13 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="ackQualifiersOptional" type="tns:ackQualifiersOptional_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 95 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="collarFieldsGroups" type="tns:collarFieldsGroups_t" />
       <xs:element name="mifidFieldsGroups" type="tns:mifidFieldsGroups_t" />
     </xs:sequence>
@@ -4268,6 +4462,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="-9223372036854775808" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 9 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -4464,6 +4665,13 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="executionInstructionOptional" type="tns:executionInstructionOptional_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 38 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mifidShortCodesGroups" type="tns:mifidShortCodesGroups_t" />
       <xs:element name="clearingDatasetGroups" type="tns:clearingDatasetGroups_t" />
       <xs:element name="quotesRepGroups" type="tns:quotesRepGroups_t" />
@@ -4654,6 +4862,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 51 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="quotesRepGroups_t">
@@ -4765,6 +4980,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 37 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -4925,6 +5147,13 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="ackQualifiersOptional" type="tns:ackQualifiersOptional_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 83 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="quoteAcksGroups" type="tns:quoteAcksGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -5087,6 +5316,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="65535" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 27 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -5298,6 +5534,64 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="18446744073709551615" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="accountTypeOptional" nillable="true">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Client</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>House</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Ro</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Liquidity Provider</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Related Party</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Structured Product Market Maker</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Omega Client</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Ceres Client</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 72 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -5588,6 +5882,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
       <xs:element name="notUsedGroups" type="tns:notUsedGroups_t" />
       <xs:element name="otherNotUsedGroups" type="tns:otherNotUsedGroups_t" />
@@ -5918,6 +6219,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 69 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="notUsedGroups" type="tns:notUsedGroups_t" />
       <xs:element name="otherNotUsedGroups" type="tns:otherNotUsedGroups_t" />
     </xs:sequence>
@@ -6241,6 +6549,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 114 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mifidFieldsGroups" type="tns:mifidFieldsGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -6443,6 +6758,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 58 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ownershipRequestAckMessage_t">
@@ -6533,6 +6855,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 43 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -6749,6 +7078,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 64 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="tradeBustNotificationMessage_t">
@@ -6902,6 +7238,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 81 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -7072,6 +7415,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="-9223372036854775808" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 57 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -7256,6 +7606,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="-9223372036854775808" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 50 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -7451,6 +7808,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 42 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="askForQuoteMessage_t">
@@ -7573,6 +7937,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 18 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="requestForExecutionMessage_t">
@@ -7658,6 +8029,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 17 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -7866,6 +8244,64 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="accountTypeOptional" nillable="true">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Client</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>House</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Ro</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Liquidity Provider</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Related Party</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Structured Product Market Maker</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Omega Client</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Ceres Client</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 96 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="rfqMatchingStatusMessage_t">
@@ -8055,6 +8491,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 76 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="rfqlpMatchingStatusMessage_t">
@@ -8208,6 +8651,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 66 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -8427,6 +8877,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="18446744073709551615" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 45 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -8705,6 +9162,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 102 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="mmSignInAckMessage_t">
@@ -8979,6 +9443,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 150 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="instrumentSynchronizationListMessage_t">
@@ -9001,6 +9472,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 14 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -9089,6 +9567,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 5 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="synchronizationTimeMessage_t">
@@ -9118,6 +9603,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 22 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -9453,6 +9945,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 33 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="strategyLegsGroups" type="tns:strategyLegsGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -9573,6 +10072,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 35 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="securityDefinitionAckMessage_t">
@@ -9651,6 +10157,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 80 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -9829,6 +10342,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 38 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mmpRequestGroups" type="tns:mmpRequestGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -9894,6 +10414,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 10 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -10045,6 +10572,13 @@
         </xs:simpleType>
       </xs:element>
       <xs:element name="mmpExecutionType" type="tns:mmpExecutionType_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 86 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mmpAckGroups" type="tns:mmpAckGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -10154,6 +10688,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 19 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -10603,6 +11144,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 62 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="wholesaleLegsGroups" type="tns:wholesaleLegsGroups_t" />
       <xs:element name="wholesaleClientGroups" type="tns:wholesaleClientGroups_t" />
     </xs:sequence>
@@ -10735,6 +11283,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" textStringPadCharacter="%NUL;" textTrimKind="padChar" textStringJustification="left" nilKind="literalValue" nilValue="%ES;" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 51 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -11002,6 +11557,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 80 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -11452,6 +12014,13 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="ackQualifiers" type="tns:ackQualifiers_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 113 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="wholesaleAckLegsGroups" type="tns:wholesaleAckLegsGroups_t" />
       <xs:element name="wholesaleAckClearingGroups" type="tns:wholesaleAckClearingGroups_t" />
     </xs:sequence>
@@ -11516,6 +12085,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="65535" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 23 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -11593,6 +12169,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="65535" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 19 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -11760,6 +12343,13 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="mifidIndicators" type="tns:mifidIndicators_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 50 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="crossOrderMessage_t">
@@ -12065,6 +12655,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="freeTextGroups" type="tns:freeTextGroups_t" />
       <xs:element name="mifidShortCodesGroups" type="tns:mifidShortCodesGroups_t" />
       <xs:element name="crossClearingFieldsGroups" type="tns:crossClearingFieldsGroups_t" />
@@ -12266,6 +12863,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 43 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="crossStrategyFieldsGroups_t">
@@ -12300,6 +12904,254 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="4294967295" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 20 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rfqAuditMessage_t">
+    <xs:sequence>
+      <xs:element name="msgSeqNum" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="firmId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bookIn" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bookOutTime" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="oegInFromMe" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="oegOutToMember" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="quoteReqId" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbolIndex" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="emm">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Cashand Derivative Central Order Book</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Nav Trading Facility</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Derivatives Wholesales</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Cash On Exchange Offbook</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Euronextoffexchangetradereports</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Derivatives On Exchange Offbook</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Etfmtfnav Central Order Book</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Listednottraded</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Delta Neutral Contingency Leg</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 57 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rfqCounterpartsGroups" type="tns:rfqCounterpartsGroups_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rfqCounterpartsGroups_t">
+    <xs:sequence>
+      <xs:element name="groupSizeEncoding" type="tns:groupSizeEncoding_t" />
+      <xs:element name="rfqCounterpartsGroup" type="tns:rfqCounterpartsGroup_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../groupSizeEncoding/numInGroup }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rfqCounterpartsGroup_t">
+    <xs:sequence>
+      <xs:element name="orderOrigin" nillable="true">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Cob</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Lp Answer</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="orderPrice" nillable="true" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="-9223372036854775808" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lastTradedQuantity" nillable="true" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="18446744073709551615" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="darkExecutionInstructionOptional" type="tns:darkExecutionInstructionOptional_t" />
+      <xs:element name="minimumOrderQuantity" nillable="true" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="18446744073709551615" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLengthShort - 26 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="darkExecutionInstructionOptional_t">
+    <xs:sequence>
+      <xs:element name="darkIndicator" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deferredTradeIndicator" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="displayedOrderInteraction" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sweepOrderIndicator" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="minimumQuantityType" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="reserved3" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="3" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -12342,6 +13194,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 19 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="logonAckMessage_t">
@@ -12357,6 +13216,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 12 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -12431,6 +13297,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 17 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="logoutMessage_t">
@@ -12476,6 +13349,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 1 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="technicalRejectMessage_t">
@@ -12512,6 +13392,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="65535" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 17 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -13073,6 +13960,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 198 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="notUsedGroups" type="tns:notUsedGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -13259,6 +14153,13 @@
         </xs:simpleType>
       </xs:element>
       <xs:element name="waiverIndicator" type="tns:waiverIndicator_t" />
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 40 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="notUsedGroups" type="tns:notUsedGroups_t" />
     </xs:sequence>
   </xs:complexType>
@@ -13959,6 +14860,21 @@
                 <xs:documentation>Lch Sa</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Bilateral Settlement</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Lch Limited</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Sixx Clear</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="6">
               <xs:annotation>
                 <xs:documentation>Euro Ccp</xs:documentation>
@@ -13966,6 +14882,13 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 202 }" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
       <xs:element name="notUsedGroups" type="tns:notUsedGroups_t" />
       <xs:element name="otherNotUsedGroups" type="tns:otherNotUsedGroups_t" />
@@ -14144,6 +15067,13 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 42 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="fundPriceInputMessage_t">
@@ -14300,6 +15230,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 42 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="fundPriceInputAckMessage_t">
@@ -14404,6 +15341,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 34 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -14561,6 +15505,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="65535" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ $tns:statedBlockLength - 35 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>

@@ -7,7 +7,7 @@
     Protocol: Quantum Feed Level 2
     Encoding: eXtreme Message Transfer
     Version: 3.6
-    Date: 10/20/2020
+    Date: 8/10/2021
     Specification: TSX TSXV Level 2 QuantumFeed Business Message Specification (3.6.0).pdf
 
   Script:
@@ -39,12 +39,30 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element name="frameHeader" type="tns:frameHeader_t" />
-        <xs:element name="body" type="tns:body_t" maxOccurs="unbounded">
+        <xs:element name="packetBody" minOccurs="0" maxOccurs="1">
           <xs:annotation>
             <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:element occursCountKind="expression" occursCount="{ ../frameHeader/numBody }" />
+              <dfdl:element lengthKind="explicit" length="{ ../frameHeader/messageLength + 5 - 11 }" occursCountKind="expression" occursCount="{ if (../frameHeader/messageLength gt 6) then 1 else 0 }" />
             </xs:appinfo>
           </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="heartbeatBody" type="tns:heartbeatBody_t" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element occursCountKind="expression" occursCount="{ if (fn:substring-before(fn:concat(xs:string(../heartbeatBody/bodyHeader/msgType), ' '), ' ') eq '0') then 1 else 0 }" />
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="businessBodies" type="tns:businessBodies_t" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element occursCountKind="expression" occursCount="{ if (fn:not(fn:substring-before(fn:concat(xs:string(../heartbeatBody/bodyHeader/msgType), ' '), ' ') eq '0')) then 1 else 0 }" />
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
         </xs:element>
       </xs:sequence>
     </xs:complexType>
@@ -99,6 +117,16 @@
                 <xs:documentation>Unused</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Ack Required</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="D">
+              <xs:annotation>
+                <xs:documentation>Poss Dup</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
@@ -111,13 +139,27 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="body_t">
+  <xs:complexType name="heartbeatBody_t">
     <xs:sequence>
       <xs:element name="bodyHeader" type="tns:bodyHeader_t" />
-      <xs:element name="bodyMessage" type="tns:bodyMessage_t" maxOccurs="unbounded">
+      <xs:element name="adminId" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="implicit" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="hbInterval" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="adminBody" type="tns:adminBody_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../../../frameHeader/numBody }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -140,6 +182,11 @@
         </xs:annotation>
         <xs:simpleType>
           <xs:restriction base="xs:string">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Heartbeat</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="J">
               <xs:annotation>
                 <xs:documentation>Symbol Status Message</xs:documentation>
@@ -247,6 +294,85 @@
             </xs:enumeration>
           </xs:restriction>
         </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="adminBody_t">
+    <xs:sequence>
+      <xs:element name="sourceId">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Non Source Related</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>TSX</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="V">
+              <xs:annotation>
+                <xs:documentation>TSX Venture</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Alpha</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="streamId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sequence0" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sequence1" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="businessBodies_t">
+    <xs:sequence>
+      <xs:element name="body" type="tns:body_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../../../frameHeader/numBody }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="body_t">
+    <xs:sequence>
+      <xs:element name="bodyHeader" type="tns:bodyHeader_t" />
+      <xs:element name="bodyMessage" type="tns:bodyMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="implicit" />
+          </xs:appinfo>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
@@ -427,12 +553,36 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="sourceId" type="xs:string">
+      <xs:element name="sourceId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Non Source Related</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>TSX</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="V">
+              <xs:annotation>
+                <xs:documentation>TSX Venture</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Alpha</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
       <xs:element name="streamId" type="xs:unsignedShort">
         <xs:annotation>
@@ -576,7 +726,7 @@
             </xs:enumeration>
             <xs:enumeration value="X">
               <xs:annotation>
-                <xs:documentation>N No Market</xs:documentation>
+                <xs:documentation>No Market</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -790,90 +940,14 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="price" nillable="true" type="xs:unsignedLong">
+      <xs:element name="orderPrice" type="xs:unsignedLong">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="priceReal" type="xs:decimal">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ if (xs:string(../price) eq '0') then 0 else xs:decimal(../price) div 1000000 }" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="volume" nillable="true" type="xs:unsignedInt">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="nonResident">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="Y">
-              <xs:annotation>
-                <xs:documentation>Yes</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="N">
-              <xs:annotation>
-                <xs:documentation>No</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="settlementTerms">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
-          </xs:appinfo>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="C">
-              <xs:annotation>
-                <xs:documentation>Cash</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="N">
-              <xs:annotation>
-                <xs:documentation>Nn</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="M">
-              <xs:annotation>
-                <xs:documentation>Ms</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="T">
-              <xs:annotation>
-                <xs:documentation>Ct</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="D">
-              <xs:annotation>
-                <xs:documentation>Valid Settlement Date</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value=" ">
-              <xs:annotation>
-                <xs:documentation>No Settlement Terms</xs:documentation>
-              </xs:annotation>
-            </xs:enumeration>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="settlementDate" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
@@ -1490,6 +1564,11 @@
                 <xs:documentation>Extended Hours Open</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="F">
+              <xs:annotation>
+                <xs:documentation>Extended Hours Close</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="C">
               <xs:annotation>
                 <xs:documentation>Closed</xs:documentation>
@@ -1759,6 +1838,20 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="priceVariation" nillable="true" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="priceVariationReal" type="xs:decimal">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../priceVariation) eq '0') then 0 else xs:decimal(../priceVariation) div 100 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="orderBookedMessage_t">
@@ -1805,17 +1898,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="price" nillable="true" type="xs:unsignedLong">
+      <xs:element name="orderPrice" type="xs:unsignedLong">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="priceReal" type="xs:decimal">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ if (xs:string(../price) eq '0') then 0 else xs:decimal(../price) div 1000000 }" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2808,7 +2894,7 @@
             </xs:enumeration>
             <xs:enumeration value="X">
               <xs:annotation>
-                <xs:documentation>N No Market</xs:documentation>
+                <xs:documentation>No Market</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -3104,7 +3190,7 @@
             </xs:enumeration>
             <xs:enumeration value="X">
               <xs:annotation>
-                <xs:documentation>N No Market</xs:documentation>
+                <xs:documentation>No Market</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -3603,7 +3689,7 @@
             </xs:enumeration>
             <xs:enumeration value="X">
               <xs:annotation>
-                <xs:documentation>N No Market</xs:documentation>
+                <xs:documentation>No Market</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -3996,7 +4082,7 @@
             </xs:enumeration>
             <xs:enumeration value="X">
               <xs:annotation>
-                <xs:documentation>N No Market</xs:documentation>
+                <xs:documentation>No Market</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>

@@ -39,12 +39,38 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element name="packetHeader" type="tns:packetHeader_t" />
-        <xs:element name="packetBody" type="tns:messageBlock_t" maxOccurs="unbounded">
-          <xs:annotation>
-            <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:element occursCountKind="implicit" />
-            </xs:appinfo>
-          </xs:annotation>
+        <xs:element name="packetBody">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="multicastHeartbeat" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element occursCountKind="expression" occursCount="{ if (xs:string(../../packetHeader/channel) eq '0') then 1 else 0 }" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="dataFlowEnd" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element occursCountKind="expression" occursCount="{ if (xs:string(../../packetHeader/channel) eq '65535') then 1 else 0 }" />
+                  </xs:appinfo>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="messageBlock" type="tns:messageBlock_t" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:element occursCountKind="expression" occursCount="{ if (fn:not(xs:string(../../packetHeader/channel) eq '0' or xs:string(../../packetHeader/channel) eq '65535')) then 1 else 0 }" />
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
         </xs:element>
         <xs:element name="packetTrailer" type="tns:packetTrailer_t" />
       </xs:sequence>
@@ -301,14 +327,14 @@
       <xs:element name="messageLengths" type="tns:messageLengths_t" maxOccurs="unbounded" minOccurs="0">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ if (../../packetHeader/flag/msgHeader eq 1) then ../../packetHeader/msgCount else 0 }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../../../packetHeader/flag/msgHeader eq 1) then ../../../packetHeader/msgCount else 0 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="messages" type="tns:messages_t" maxOccurs="unbounded">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element occursCountKind="expression" occursCount="{ ../../packetHeader/msgCount }" />
+            <dfdl:element occursCountKind="expression" occursCount="{ ../../../packetHeader/msgCount }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
