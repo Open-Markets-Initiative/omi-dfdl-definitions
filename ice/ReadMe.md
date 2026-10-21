@@ -5,7 +5,6 @@
 
 | Division | [Protocol][Omi.Ice.Protocol.Definitions] | [Encoding][Omi.Encoding.Definitions] | Version | Date | Size | [Deployment][Omi.Glossary.Deployment] | [Testing][Omi.Glossary.Testing] | [Documentation][Omi.Ice.Specifications] |
 | --- | --- | --- | --- | ---: | ---: | --- | --- | --- |
-| [IceDataServices][IceDataServices.Redistributor] | [ConsolidatedFeed][Ice.IceDataServices.ConsolidatedFeed] | [Ctf][Omi.Encoding.Ctf] | [2017.10.10][Ice.IceDataServices.ConsolidatedFeed.Ctf.v2017.10.10.Definition] | 10/10/2017 | 83 | [Header][Omi.Glossary.Deployment.Header] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Ice.IceDataServices.ConsolidatedFeed.Ctf.v2017.10.10.Pdf] |
 | [IceFutures][IceFutures.Exchange] | [Bgw][Ice.IceFutures.Bgw] | [Sbe][Omi.Encoding.Sbe] | [7.0][Ice.IceFutures.Bgw.Sbe.v7.0.Definition] | 10/24/2025 | 9535 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Ice.IceFutures.Bgw.Sbe.v7.0.Url] - [pdf][Ice.IceFutures.Bgw.Sbe.v7.0.Pdf] |
 | [IceFutures][IceFutures.Exchange] | [Mdf][Ice.IceFutures.Mdf] | [iMpact][Omi.Encoding.iMpact] | [1.1.24][Ice.IceFutures.Mdf.iMpact.v1.1.24.Definition] | 3/30/2016 | 8114 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [pdf][Ice.IceFutures.Mdf.iMpact.v1.1.24.Pdf] |
 | [IceFutures][IceFutures.Exchange] | [Mdf][Ice.IceFutures.Mdf] | [iMpact][Omi.Encoding.iMpact] | [1.1.33][Ice.IceFutures.Mdf.iMpact.v1.1.33.Definition] | 8/6/2018 | 8969 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [pdf][Ice.IceFutures.Mdf.iMpact.v1.1.33.Pdf] |
@@ -33,17 +32,12 @@
 [Omi.Encoding.Definitions]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Protocols/ReadMe.md "Encoding Directory"
 [Omi.Ice.Protocol.Definitions]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Ice/Protocols "Ice Protocol Directory"
 [Omi.Ice.Specifications]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Ice/Specifications "Ice Specifications Directory"
-[Omi.Encoding.Ctf]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Ctf.md "Ctf Encoding"
 [Omi.Encoding.Sbe]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Sbe.md "Sbe Encoding"
 [Omi.Encoding.iMpact]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/iMpact.md "iMpact Encoding"
-[IceDataServices.Redistributor]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Ice/Protocols/IceDataServices "Ice IceDataServices"
 [IceFutures.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Ice/Protocols/IceFutures "Ice IceFutures"
-[Ice.IceDataServices.ConsolidatedFeed]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Protocols/IceDataServices/ConsolidatedFeed.md "ConsolidatedFeed"
 [Ice.IceFutures.Bgw]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Protocols/IceFutures/Bgw.md "Binary Order Gateway"
 [Ice.IceFutures.Mdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Protocols/IceFutures/Mdf.md "Multicast Data Feed"
 
-[Ice.IceDataServices.ConsolidatedFeed.Ctf.v2017.10.10.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/ice/consolidatedfeed/Ice_IceDataServices_ConsolidatedFeed_v2017_10_10.dfdl.xsd "Ice ConsolidatedFeed Ctf v2017.10.10 Dfdl Definition"
-[Ice.IceDataServices.ConsolidatedFeed.Ctf.v2017.10.10.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Specifications/ "Intercontinental Exchange 2017.10.10 Pdf"
 [Ice.IceFutures.Bgw.Sbe.v7.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/ice/icefutures/bgw/IceFutures_Bgw_v7_0.dfdl.xsd "Ice IceFutures Bgw Sbe v7.0 Dfdl Definition"
 [Ice.IceFutures.Bgw.Sbe.v7.0.Url]: https://service.ice.com/s/article/Binary-Order-API "Intercontinental Exchange 7.0 Url"
 [Ice.IceFutures.Bgw.Sbe.v7.0.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Ice/Specifications/ "Intercontinental Exchange 7.0 Pdf"
