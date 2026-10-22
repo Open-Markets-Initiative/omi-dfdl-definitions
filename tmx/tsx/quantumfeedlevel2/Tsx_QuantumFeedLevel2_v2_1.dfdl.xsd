@@ -46,22 +46,21 @@
             </xs:appinfo>
           </xs:annotation>
           <xs:complexType>
-            <xs:sequence>
-              <xs:element name="heartbeatBody" type="tns:heartbeatBody_t" minOccurs="0" maxOccurs="1">
+            <xs:choice>
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:choice choiceLengthKind="implicit" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:element name="heartbeatBody" type="tns:heartbeatBody_t">
                 <xs:annotation>
                   <xs:appinfo source="http://www.ogf.org/dfdl/">
-                    <dfdl:element occursCountKind="expression" occursCount="{ if (fn:substring-before(fn:concat(xs:string(../heartbeatBody/bodyHeader/msgType), ' '), ' ') eq '0') then 1 else 0 }" />
+                    <dfdl:discriminator test="{ fn:substring-before(fn:concat(xs:string(./bodyHeader/msgType), ' '), ' ') eq '0' }" />
                   </xs:appinfo>
                 </xs:annotation>
               </xs:element>
-              <xs:element name="businessBodies" type="tns:businessBodies_t" minOccurs="0" maxOccurs="1">
-                <xs:annotation>
-                  <xs:appinfo source="http://www.ogf.org/dfdl/">
-                    <dfdl:element occursCountKind="expression" occursCount="{ if (fn:not(fn:substring-before(fn:concat(xs:string(../heartbeatBody/bodyHeader/msgType), ' '), ' ') eq '0')) then 1 else 0 }" />
-                  </xs:appinfo>
-                </xs:annotation>
-              </xs:element>
-            </xs:sequence>
+              <xs:element name="businessBodies" type="tns:businessBodies_t" />
+            </xs:choice>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
