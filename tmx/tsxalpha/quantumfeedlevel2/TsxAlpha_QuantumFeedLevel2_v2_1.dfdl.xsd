@@ -38,34 +38,45 @@
   <xs:element name="packet">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="frameHeader" type="tns:frameHeader_t" />
-        <xs:element name="packetBody" minOccurs="0" maxOccurs="1">
+        <xs:element name="packet" type="tns:packet_t" maxOccurs="unbounded">
           <xs:annotation>
             <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:element lengthKind="explicit" length="{ ../frameHeader/messageLength + 5 - 11 }" occursCountKind="expression" occursCount="{ if (../frameHeader/messageLength gt 6) then 1 else 0 }" />
+              <dfdl:element occursCountKind="implicit" />
             </xs:appinfo>
           </xs:annotation>
-          <xs:complexType>
-            <xs:choice>
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:choice choiceLengthKind="implicit" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:element name="heartbeatBody" type="tns:heartbeatBody_t">
-                <xs:annotation>
-                  <xs:appinfo source="http://www.ogf.org/dfdl/">
-                    <dfdl:discriminator test="{ fn:substring-before(fn:concat(xs:string(./bodyHeader/msgType), ' '), ' ') eq '0' }" />
-                  </xs:appinfo>
-                </xs:annotation>
-              </xs:element>
-              <xs:element name="businessBodies" type="tns:businessBodies_t" />
-            </xs:choice>
-          </xs:complexType>
         </xs:element>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:complexType name="packet_t">
+    <xs:sequence>
+      <xs:element name="frameHeader" type="tns:frameHeader_t" />
+      <xs:element name="packetBody" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../frameHeader/messageLength + 5 - 11 }" occursCountKind="expression" occursCount="{ if (../frameHeader/messageLength gt 6) then 1 else 0 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="heartbeatBody" type="tns:heartbeatBody_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:discriminator test="{ fn:substring-before(fn:concat(xs:string(./bodyHeader/msgType), ' '), ' ') eq '0' }" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="businessBodies" type="tns:businessBodies_t" />
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="frameHeader_t">
     <xs:sequence>
       <xs:element name="startOfFrame" type="xs:unsignedByte">
