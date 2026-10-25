@@ -40,7 +40,7 @@
   <xs:element name="tcpPacket" type="tns:tcpPacket_t" />
   <xs:complexType name="udpPacket_t">
     <xs:sequence>
-      <xs:element name="machMessage" type="tns:machMessage_t" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="machMessage" type="tns:machMessage_t" maxOccurs="unbounded">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element occursCountKind="implicit" />
@@ -50,6 +50,64 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="machMessage_t">
+    <xs:sequence>
+      <xs:element name="machPacketHeader" type="tns:machPacketHeader_t" />
+      <xs:element name="payload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../machPacketHeader/packetLength - 12 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../machPacketHeader/packetType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="heartbeat">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="0" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="startOfSession">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="1" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="endOfSession">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="2" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="applicationMessage" type="tns:applicationMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="3" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="machPacketHeader_t">
     <xs:sequence>
       <xs:element name="sequenceNumber" type="xs:unsignedLong">
         <xs:annotation>
@@ -102,54 +160,6 @@
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
-      </xs:element>
-      <xs:element name="payload">
-        <xs:complexType>
-          <xs:choice>
-            <xs:annotation>
-              <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../packetType) }" />
-              </xs:appinfo>
-            </xs:annotation>
-            <xs:element name="heartbeat">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="0" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence />
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="startOfSession">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="1" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence />
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="endOfSession">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="2" />
-                </xs:appinfo>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:sequence />
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="applicationMessage" type="tns:applicationMessage_t">
-              <xs:annotation>
-                <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="3" />
-                </xs:appinfo>
-              </xs:annotation>
-            </xs:element>
-          </xs:choice>
-        </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:complexType>

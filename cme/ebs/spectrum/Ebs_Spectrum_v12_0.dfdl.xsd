@@ -112,25 +112,18 @@
   </xs:complexType>
   <xs:complexType name="message_t">
     <xs:sequence>
-      <xs:element name="messageSize" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="messageHeader" type="tns:messageHeader_t" />
       <xs:element name="payload">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element lengthKind="explicit" length="{ ../messageSize - 10 }" />
+            <dfdl:element lengthKind="explicit" length="{ ../messageHeader/messageSize - 10 }" />
           </xs:appinfo>
         </xs:annotation>
         <xs:complexType>
           <xs:choice>
             <xs:annotation>
               <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/templateId) }" />
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/simpleBinaryHeader/templateId) }" />
               </xs:appinfo>
             </xs:annotation>
             <xs:element name="adminHeartbeat">
@@ -184,6 +177,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="messageHeader_t">
+    <xs:sequence>
+      <xs:element name="messageSize" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="simpleBinaryHeader" type="tns:simpleBinaryHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="simpleBinaryHeader_t">
     <xs:sequence>
       <xs:element name="blockLength" type="xs:unsignedShort">
         <xs:annotation>
@@ -1500,7 +1505,13 @@
   <xs:complexType name="tcpFrame_t">
     <xs:sequence>
       <xs:element name="technicalHeader" type="tns:technicalHeader_t" />
-      <xs:element name="tcpMessage" type="tns:tcpMessage_t" />
+      <xs:element name="tcpMessage" type="tns:tcpMessage_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="implicit" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="technicalHeader_t">
@@ -1526,13 +1537,6 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="tcpMessageSize" type="xs:unsignedShort">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="tcpMessage_t">
@@ -1543,7 +1547,7 @@
           <xs:choice>
             <xs:annotation>
               <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/templateId) }" />
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/simpleBinaryHeader/templateId) }" />
               </xs:appinfo>
             </xs:annotation>
             <xs:element name="adminHeartbeat">
