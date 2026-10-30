@@ -143,27 +143,32 @@
       <xs:element name="issueClassification" type="tns:issueClassification_t" />
       <xs:element name="issueCode">
         <xs:complexType>
-          <xs:choice>
-            <xs:annotation>
-              <xs:appinfo source="http://www.ogf.org/dfdl/">
-                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ fn:substring-before(fn:concat(xs:string(../issueClassification/issueClassificationLargeClassification), ' '), ' ') }" />
-              </xs:appinfo>
-            </xs:annotation>
-            <xs:element name="stockIssueCode" type="tns:stockIssueCode_t">
+          <xs:sequence>
+            <xs:element name="stockIssueCode" type="tns:stockIssueCode_t" minOccurs="0" maxOccurs="1">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="01" />
+                  <dfdl:element occursCountKind="expression" occursCount="{ if (fn:substring-before(fn:concat(xs:string(../../issueClassification/issueClassificationLargeClassification), ' '), ' ') eq '01') then 1 else 0 }" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="cbIssueCode" type="tns:cbIssueCode_t">
+            <xs:element name="cbIssueCode" type="tns:cbIssueCode_t" minOccurs="0" maxOccurs="1">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
-                  <dfdl:element choiceBranchKey="02" />
+                  <dfdl:element occursCountKind="expression" occursCount="{ if (fn:substring-before(fn:concat(xs:string(../../issueClassification/issueClassificationLargeClassification), ' '), ' ') eq '02') then 1 else 0 }" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-          </xs:choice>
+            <xs:element name="blankIssueCode" minOccurs="0" maxOccurs="1">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element occursCountKind="expression" occursCount="{ if (fn:not(fn:substring-before(fn:concat(xs:string(../../issueClassification/issueClassificationLargeClassification), ' '), ' ') eq '01' or fn:substring-before(fn:concat(xs:string(../../issueClassification/issueClassificationLargeClassification), ' '), ' ') eq '02')) then 1 else 0 }" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -746,7 +751,7 @@
             </xs:enumeration>
             <xs:enumeration value="35">
               <xs:annotation>
-                <xs:documentation>Preclosing</xs:documentation>
+                <xs:documentation>Pre Closing</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="40">

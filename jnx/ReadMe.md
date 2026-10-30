@@ -6,6 +6,7 @@
 | Division | [Protocol][Omi.Jnx.Protocol.Definitions] | [Encoding][Omi.Encoding.Definitions] | Version | Date | Size | [Deployment][Omi.Glossary.Deployment] | [Testing][Omi.Glossary.Testing] | [Documentation][Omi.Jnx.Specifications] |
 | --- | --- | --- | --- | ---: | ---: | --- | --- | --- |
 | [JnxBonds][JnxBonds.Exchange] | [Pts][Jnx.JnxBonds.Pts] | [Itch][Omi.Encoding.Itch] | [1.2][Jnx.JnxBonds.Pts.Itch.v1.2.Definition] | 4/1/2020 | 1026 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Jnx.JnxBonds.Pts.Itch.v1.2.Url] - [pdf][Jnx.JnxBonds.Pts.Itch.v1.2.Pdf] |
+| [JnxBonds][JnxBonds.Exchange] | [Pts][Jnx.JnxBonds.Pts] | [Itch][Omi.Encoding.Itch] | [2.02][Jnx.JnxBonds.Pts.Itch.v2.02.Definition] | 7/2/2026 | 1033 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Jnx.JnxBonds.Pts.Itch.v2.02.Url] - [pdf][Jnx.JnxBonds.Pts.Itch.v2.02.Pdf] |
 | [JnxBonds][JnxBonds.Exchange] | [Pts][Jnx.JnxBonds.Pts] | [Ouch][Omi.Encoding.Ouch] | [1.4][Jnx.JnxBonds.Pts.Ouch.v1.4.Definition] | 4/1/2020 | 2027 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Jnx.JnxBonds.Pts.Ouch.v1.4.Url] - [pdf][Jnx.JnxBonds.Pts.Ouch.v1.4.Pdf] |
 | [JnxBonds][JnxBonds.Exchange] | [Pts][Jnx.JnxBonds.Pts] | [Ouch][Omi.Encoding.Ouch] | [2.01][Jnx.JnxBonds.Pts.Ouch.v2.01.Definition] | 1/16/2026 | 2027 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Jnx.JnxBonds.Pts.Ouch.v2.01.Url] - [pdf][Jnx.JnxBonds.Pts.Ouch.v2.01.Pdf] |
 | [JnxEquities][JnxEquities.Exchange] | [Pts][Jnx.JnxEquities.Pts] | [Itch][Omi.Encoding.Itch] | [1.6][Jnx.JnxEquities.Pts.Itch.v1.6.Definition] | 3/9/2023 | 1392 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [url][Jnx.JnxEquities.Pts.Itch.v1.6.Url] - [pdf][Jnx.JnxEquities.Pts.Itch.v1.6.Pdf] |
@@ -44,6 +45,9 @@
 [Jnx.JnxBonds.Pts.Itch.v1.2.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/jnx/jnxbonds/pts/JnxBonds_Pts_v1_2.dfdl.xsd "Jnx JnxBonds Pts Itch v1.2 Dfdl Definition"
 [Jnx.JnxBonds.Pts.Itch.v1.2.Url]: https://www.japannext.co.jp/library "Japannext Securities 1.2 Url"
 [Jnx.JnxBonds.Pts.Itch.v1.2.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Jnx/Specifications/JnxBonds/Itch/Jnx.JnxBonds.Pts.Itch.v1.2.pdf "Japannext Securities 1.2 Pdf"
+[Jnx.JnxBonds.Pts.Itch.v2.02.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/jnx/jnxbonds/pts/JnxBonds_Pts_v2_02.dfdl.xsd "Jnx JnxBonds Pts Itch v2.02 Dfdl Definition"
+[Jnx.JnxBonds.Pts.Itch.v2.02.Url]: https://www.japannext.co.jp/library "Japannext Securities 2.02 Url"
+[Jnx.JnxBonds.Pts.Itch.v2.02.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Jnx/Specifications/JnxBonds/Itch/Jnx.JnxBonds.Pts.Itch.v2.02.pdf "Japannext Securities 2.02 Pdf"
 [Jnx.JnxBonds.Pts.Ouch.v1.4.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/jnx/jnxbonds/pts/JnxBonds_Pts_v1_4.dfdl.xsd "Jnx JnxBonds Pts Ouch v1.4 Dfdl Definition"
 [Jnx.JnxBonds.Pts.Ouch.v1.4.Url]: https://www.japannext.co.jp/library "Japannext Securities 1.4 Url"
 [Jnx.JnxBonds.Pts.Ouch.v1.4.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Jnx/Specifications/JnxBonds/Ouch/Jnx.JnxBonds.Pts.Ouch.v1.4.pdf "Japannext Securities 1.4 Pdf"
