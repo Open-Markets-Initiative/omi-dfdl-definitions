@@ -7,8 +7,8 @@
     Protocol: Real Time Market Data Feed
     Encoding: Aquis Market Data Protocol
     Version: 4.0
-    Date: 8/1/2025
-    Specification: Unknown
+    Date: 8/15/2025
+    Specification: Aquis Market Data Technical Specification v4.0.pdf
 
   Script:
     Generator: 1.0.0.0
@@ -76,28 +76,38 @@
                 <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../messageHeader/msgType) }" />
               </xs:appinfo>
             </xs:annotation>
-            <xs:element name="orderAdd" type="tns:orderAdd_t">
+            <xs:element name="heartbeatMessage">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="1" />
+                </xs:appinfo>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="orderAddMessage" type="tns:orderAddMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="2" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="orderCancel" type="tns:orderCancel_t">
+            <xs:element name="orderCancelMessage" type="tns:orderCancelMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="3" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="orderModify" type="tns:orderModify_t">
+            <xs:element name="orderModifyMessage" type="tns:orderModifyMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="4" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="trade" type="tns:trade_t">
+            <xs:element name="tradeMessage" type="tns:tradeMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="5" />
@@ -132,14 +142,14 @@
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="aoDUpdateMessage" type="tns:aoDUpdateMessage_t">
+            <xs:element name="aodUpdateMessage" type="tns:aodUpdateMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="17" />
                 </xs:appinfo>
               </xs:annotation>
             </xs:element>
-            <xs:element name="maCUpdateMessage" type="tns:maCUpdateMessage_t">
+            <xs:element name="macUpdateMessage" type="tns:macUpdateMessage_t">
               <xs:annotation>
                 <xs:appinfo source="http://www.ogf.org/dfdl/">
                   <dfdl:element choiceBranchKey="16" />
@@ -161,24 +171,29 @@
         </xs:annotation>
         <xs:simpleType>
           <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Heartbeat Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="2">
               <xs:annotation>
-                <xs:documentation>Order Add</xs:documentation>
+                <xs:documentation>Order Add Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="3">
               <xs:annotation>
-                <xs:documentation>Order Cancel</xs:documentation>
+                <xs:documentation>Order Cancel Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="4">
               <xs:annotation>
-                <xs:documentation>Order Modify</xs:documentation>
+                <xs:documentation>Order Modify Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="5">
               <xs:annotation>
-                <xs:documentation>Trade</xs:documentation>
+                <xs:documentation>Trade Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="6">
@@ -203,12 +218,12 @@
             </xs:enumeration>
             <xs:enumeration value="17">
               <xs:annotation>
-                <xs:documentation>Ao D Update Message</xs:documentation>
+                <xs:documentation>Aod Update Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="16">
               <xs:annotation>
-                <xs:documentation>Ma C Update Message</xs:documentation>
+                <xs:documentation>Mac Update Message</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -230,7 +245,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="orderAdd_t">
+  <xs:complexType name="orderAddMessage_t">
     <xs:sequence>
       <xs:element name="securityId" type="xs:unsignedShort">
         <xs:annotation>
@@ -274,10 +289,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="orderRef" type="xs:unsignedInt">
+      <xs:element name="orderRef" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -335,12 +350,26 @@
   </xs:complexType>
   <xs:complexType name="mdFlags_t">
     <xs:sequence>
-      <xs:element name="unrestrictedLiquidityIndicator" type="xs:unsignedInt">
+      <xs:element name="unrestrictedLiquidity">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Restricted Liquidity Only</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Unrestricted Liquidity Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
       <xs:element name="unused7" type="xs:unsignedInt">
         <xs:annotation>
@@ -351,7 +380,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="orderCancel_t">
+  <xs:complexType name="orderCancelMessage_t">
     <xs:sequence>
       <xs:element name="securityId" type="xs:unsignedShort">
         <xs:annotation>
@@ -360,10 +389,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="orderRef" type="xs:unsignedInt">
+      <xs:element name="orderRef" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -419,7 +448,7 @@
       <xs:element name="mdFlags" type="tns:mdFlags_t" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="orderModify_t">
+  <xs:complexType name="orderModifyMessage_t">
     <xs:sequence>
       <xs:element name="securityId" type="xs:unsignedShort">
         <xs:annotation>
@@ -442,10 +471,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="orderRef" type="xs:unsignedInt">
+      <xs:element name="orderRef" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -501,7 +530,7 @@
       <xs:element name="mdFlags" type="tns:mdFlags_t" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="trade_t">
+  <xs:complexType name="tradeMessage_t">
     <xs:sequence>
       <xs:element name="securityId" type="xs:unsignedShort">
         <xs:annotation>
@@ -520,37 +549,37 @@
           <xs:restriction base="xs:unsignedByte">
             <xs:enumeration value="1">
               <xs:annotation>
-                <xs:documentation>Visible Order</xs:documentation>
+                <xs:documentation>Visible</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="2">
               <xs:annotation>
-                <xs:documentation>Hidden Order</xs:documentation>
+                <xs:documentation>Hidden Or Reserve</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="3">
               <xs:annotation>
-                <xs:documentation>Market At Close</xs:documentation>
+                <xs:documentation>Market At Close Trade</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="4">
               <xs:annotation>
-                <xs:documentation>Lis Cross</xs:documentation>
+                <xs:documentation>Lis Cross Trade</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="5">
               <xs:annotation>
-                <xs:documentation>Benchmark Cross</xs:documentation>
+                <xs:documentation>Benchmark Cross Trade</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="6">
               <xs:annotation>
-                <xs:documentation>Auction On Demand</xs:documentation>
+                <xs:documentation>Auction On Demand Trade</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="12">
               <xs:annotation>
-                <xs:documentation>Aquis Vwap Match</xs:documentation>
+                <xs:documentation>Aquis Vwap Match Trade</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -570,10 +599,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="orderRef" type="xs:unsignedInt">
+      <xs:element name="orderRef" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -905,7 +934,7 @@
             </xs:enumeration>
             <xs:enumeration value="3">
               <xs:annotation>
-                <xs:documentation>No Benchmark Or Reference Price</xs:documentation>
+                <xs:documentation>No Benchmark Or Ref Price</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -1056,12 +1085,21 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="deferralType" type="xs:unsignedInt">
+      <xs:element name="deferralType">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>None Apply</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
       <xs:element name="duplicativeIndicator">
         <xs:annotation>
@@ -1251,8 +1289,8 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="securityDefinitionFlags" type="tns:securityDefinitionFlags_t" />
-      <xs:element name="reserved20" type="xs:string">
+      <xs:element name="flags" type="tns:flags_t" />
+      <xs:element name="reserved" type="xs:string">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="20" />
@@ -1262,7 +1300,7 @@
       <xs:element name="lotSizeComposite" type="tns:lotSizeComposite_t" />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="securityDefinitionFlags_t">
+  <xs:complexType name="flags_t">
     <xs:sequence>
       <xs:element name="macEnabled" type="xs:unsignedInt">
         <xs:annotation>
@@ -1374,12 +1412,12 @@
             </xs:enumeration>
             <xs:enumeration value="8">
               <xs:annotation>
-                <xs:documentation>Ao D Start</xs:documentation>
+                <xs:documentation>Aod Start</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="24">
               <xs:annotation>
-                <xs:documentation>Ao D End</xs:documentation>
+                <xs:documentation>Aod End</xs:documentation>
               </xs:annotation>
             </xs:enumeration>
           </xs:restriction>
@@ -1460,26 +1498,68 @@
   </xs:complexType>
   <xs:complexType name="marketFlags_t">
     <xs:sequence>
-      <xs:element name="trading" type="xs:unsignedInt">
+      <xs:element name="trading">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Continuous Trading Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Continuous Trading Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
-      <xs:element name="macOpen" type="xs:unsignedInt">
+      <xs:element name="macOpen">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Mac Is Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Mac Is Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
-      <xs:element name="macRun" type="xs:unsignedInt">
+      <xs:element name="macRun">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" bitOrder="leastSignificantBitFirst" byteOrder="littleEndian" alignment="1" alignmentUnits="bits" lengthKind="explicit" lengthUnits="bits" length="1" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Mac Is Not Locked Down</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Mac Is Locked Down</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
       <xs:element name="unused5" type="xs:unsignedInt">
         <xs:annotation>
@@ -1490,7 +1570,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="aoDUpdateMessage_t">
+  <xs:complexType name="aodUpdateMessage_t">
     <xs:sequence>
       <xs:element name="securityId" type="xs:unsignedShort">
         <xs:annotation>
@@ -1564,7 +1644,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="maCUpdateMessage_t">
+  <xs:complexType name="macUpdateMessage_t">
     <xs:sequence>
       <xs:element name="securityId" type="xs:unsignedShort">
         <xs:annotation>
@@ -1580,17 +1660,17 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="closingBuyQty" type="xs:unsignedInt">
+      <xs:element name="closingBuyQty" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="closingSellQty" type="xs:unsignedInt">
+      <xs:element name="closingSellQty" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>

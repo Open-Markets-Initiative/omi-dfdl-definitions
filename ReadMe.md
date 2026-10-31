@@ -22,7 +22,7 @@ Updates are greatly appreciated; however, this entire repository is source gener
 
 | Protocol Count | Generated Lines |
 | --- | --- |
-| 1400 | 8,792,251 |
+| 1,400 | 8,794,641 |
 
 ## Testing
 
@@ -855,7 +855,7 @@ Enjoy.
 [LinkAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/linkats "OTC Link ATS"
 [LinkNqb.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/otcmarkets/linknqb "OTC Link NQB"
 [LmeSelect.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/lme/lmeselect "LMEselect"
-[LynxAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/tradelogiq "Lynx ATS"
+[LynxAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/tradelogiq/lynxats "Lynx ATS"
 [MatchNow.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/cboe/matchnow "Cboe Canada MATCHNow"
 [Meff.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/bme/meff "MEFF"
 [MemxEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/memx/memxequities "Memx Equities"
@@ -887,7 +887,7 @@ Enjoy.
 [NyseOptions.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/nyse/nyseoptions "New York Stock Exchange Options"
 [OdxEquities.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/odx/odxequities "Odx Equities"
 [OdxSecurityToken.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/odx/odxsecuritytoken "Odx Security Token"
-[OmegaAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/tradelogiq "Omega ATS"
+[OmegaAts.Ats]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/tradelogiq/omegaats "Omega ATS"
 [OnyxFutures.Exchange]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/miax/onyxfutures "MIAX Futures Onyx"
 [Opra.Consolidator]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/siac/opra "Options Price Reporting Authority"
 [Optiq.Platform]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/tree/main/euronext/optiq "Euronext Optiq"
