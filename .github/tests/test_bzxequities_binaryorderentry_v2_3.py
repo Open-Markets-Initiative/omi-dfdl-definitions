@@ -141,8 +141,8 @@ class BzxequitiesBinaryorderentryV23Tests(unittest.TestCase):
                 result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_newordermessagetcp(self):
-        for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.BinaryOrderEntry.Boe.v2.3/NewOrderMessage.Tcp.pcap"):
+    def test_newordermessage2014(self):
+        for payload in payloads.of("omi-data-packets/Cboe/BzxEquities.BinaryOrderEntry.Boe.v2.3/NewOrderMessage.2014.pcap"):
             if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 2, 2, "little", 2):
