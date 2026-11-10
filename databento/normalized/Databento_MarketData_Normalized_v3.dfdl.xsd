@@ -33,8 +33,6 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
-      <dfdl:defineVariable name="metadataLength" type="xs:int" />
-      <dfdl:defineVariable name="recordLength" type="xs:int" />
     </xs:appinfo>
   </xs:annotation>
   <xs:element name="file" type="tns:file_t" />
@@ -42,13 +40,7 @@
   <xs:element name="clientStream" type="tns:clientStream_t" />
   <xs:complexType name="file_t">
     <xs:sequence>
-      <xs:element name="metadata" type="tns:metadata_t">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:setVariable ref="tns:recordLength" value="{ ../record/recordHeader/recordLength * 4 }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
+      <xs:element name="metadata" type="tns:metadata_t" />
       <xs:element name="record" type="tns:record_t" maxOccurs="unbounded">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -656,7 +648,7 @@
       <xs:element name="recordBody">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element lengthKind="explicit" length="{ $tns:recordLength - 24 }" />
+            <dfdl:element lengthKind="explicit" length="{ ../recordHeader/recordLength * 4 - 24 }" />
           </xs:appinfo>
         </xs:annotation>
         <xs:complexType>
@@ -4862,20 +4854,8 @@
     <xs:sequence>
       <xs:element name="greeting" type="tns:greeting_t" />
       <xs:element name="challengeRequest" type="tns:challengeRequest_t" />
-      <xs:element name="authenticationResponse" type="tns:authenticationResponse_t">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:setVariable ref="tns:metadataLength" value="{ ../metadata/metadataLength + 8 }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="metadata" type="tns:metadata_t">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:setVariable ref="tns:recordLength" value="{ ../record/recordHeader/recordLength * 4 }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
+      <xs:element name="authenticationResponse" type="tns:authenticationResponse_t" />
+      <xs:element name="metadata" type="tns:metadata_t" />
       <xs:element name="record" type="tns:record_t" maxOccurs="unbounded">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
