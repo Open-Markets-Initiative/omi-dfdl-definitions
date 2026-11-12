@@ -11,6 +11,7 @@
 | [OdxEquities][OdxEquities.Exchange] | [Pts][Odx.OdxEquities.Pts] | [Itch][Omi.Encoding.Itch] | [2.2][Odx.OdxEquities.Pts.Itch.v2.2.Definition] | 4/6/2026 | 1,097 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Odx.OdxEquities.Pts.Itch.v2.2.Pdf] |
 | [OdxEquities][OdxEquities.Exchange] | [Pts][Odx.OdxEquities.Pts] | [Ouch][Omi.Encoding.Ouch] | [1.0][Odx.OdxEquities.Pts.Ouch.v1.0.Definition] | 5/2/2022 | 2,073 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Odx.OdxEquities.Pts.Ouch.v1.0.Pdf] |
 | [OdxEquities][OdxEquities.Exchange] | [Pts][Odx.OdxEquities.Pts] | [Ouch][Omi.Encoding.Ouch] | [2.0][Odx.OdxEquities.Pts.Ouch.v2.0.Definition] | 3/31/2023 | 2,073 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Odx.OdxEquities.Pts.Ouch.v2.0.Pdf] |
+| [OdxEquities][OdxEquities.Exchange] | [TcpPts][Odx.OdxEquities.TcpPts] | [Itch][Omi.Encoding.Itch] | [2.2][Odx.OdxEquities.TcpPts.Itch.v2.2.Definition] | 4/6/2026 | 1,392 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Odx.OdxEquities.TcpPts.Itch.v2.2.Pdf] |
 | [OdxSecurityToken][OdxSecurityToken.Exchange] | [Pts][Odx.OdxSecurityToken.Pts] | [Itch][Omi.Encoding.Itch] | [1.0][Odx.OdxSecurityToken.Pts.Itch.v1.0.Definition] | 11/15/2023 | 1,581 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Odx.OdxSecurityToken.Pts.Itch.v1.0.Pdf] |
 | [OdxSecurityToken][OdxSecurityToken.Exchange] | [Pts][Odx.OdxSecurityToken.Pts] | [Itch][Omi.Encoding.Itch] | [1.2][Odx.OdxSecurityToken.Pts.Itch.v1.2.Definition] | 4/6/2026 | 1,581 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [pdf][Odx.OdxSecurityToken.Pts.Itch.v1.2.Pdf] |
 
@@ -40,6 +41,7 @@
 [OdxEquities.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Odx/Protocols/OdxEquities "Odx OdxEquities"
 [OdxSecurityToken.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Odx/Protocols/OdxSecurityToken "Odx OdxSecurityToken"
 [Odx.OdxEquities.Pts]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Protocols/OdxEquities/Pts.md "Proprietary Trading System"
+[Odx.OdxEquities.TcpPts]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Protocols/OdxEquities/TcpPts.md "Tcp Proprietary Trading System"
 [Odx.OdxSecurityToken.Pts]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Protocols/OdxSecurityToken/Pts.md "Proprietary Trading System"
 
 [Odx.OdxEquities.Pts.Glimpse.v1.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/odx/odxequities/pts/OdxEquities_Pts_Glimpse_v1_0.dfdl.xsd "Odx OdxEquities Pts Glimpse v1.0 Dfdl Definition"
@@ -54,6 +56,8 @@
 [Odx.OdxEquities.Pts.Ouch.v1.0.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Specifications/OdxEquities/Ouch/Odx.OdxEquities.Pts.Ouch.v1.0.pdf "Osaka Digital Exchange 1.0 Pdf"
 [Odx.OdxEquities.Pts.Ouch.v2.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/odx/odxequities/pts/OdxEquities_Pts_Ouch_v2_0.dfdl.xsd "Odx OdxEquities Pts Ouch v2.0 Dfdl Definition"
 [Odx.OdxEquities.Pts.Ouch.v2.0.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Specifications/OdxEquities/Ouch/Odx.OdxEquities.Pts.Ouch.v2.0.pdf "Osaka Digital Exchange 2.0 Pdf"
+[Odx.OdxEquities.TcpPts.Itch.v2.2.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/odx/odxequities/tcppts/OdxEquities_TcpPts_v2_2.dfdl.xsd "Odx OdxEquities TcpPts Itch v2.2 Dfdl Definition"
+[Odx.OdxEquities.TcpPts.Itch.v2.2.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Specifications/OdxEquities/Itch/Odx.OdxEquities.Pts.Itch.v2.2.pdf "Osaka Digital Exchange 2.2 Pdf"
 [Odx.OdxSecurityToken.Pts.Itch.v1.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/odx/odxsecuritytoken/pts/OdxSecurityToken_Pts_v1_0.dfdl.xsd "Odx OdxSecurityToken Pts Itch v1.0 Dfdl Definition"
 [Odx.OdxSecurityToken.Pts.Itch.v1.0.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Odx/Specifications/SecurityToken/Itch/Odx.OdxSecurityToken.Pts.Itch.v1.0.pdf "Osaka Digital Exchange 1.0 Pdf"
 [Odx.OdxSecurityToken.Pts.Itch.v1.2.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/odx/odxsecuritytoken/pts/OdxSecurityToken_Pts_v1_2.dfdl.xsd "Odx OdxSecurityToken Pts Itch v1.2 Dfdl Definition"
