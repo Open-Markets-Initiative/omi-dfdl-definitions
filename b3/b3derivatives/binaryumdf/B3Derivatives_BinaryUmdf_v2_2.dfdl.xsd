@@ -55,14 +55,14 @@
       <xs:element name="channelId" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="packetReserved" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -793,7 +793,7 @@
       <xs:element name="tradingSessionId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -814,7 +814,7 @@
       <xs:element name="securityTradingStatus">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -860,7 +860,7 @@
       <xs:element name="securityTradingEvent" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -887,6 +887,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -950,6 +957,48 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -989,7 +1038,7 @@
       <xs:element name="tradingSessionId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1010,7 +1059,7 @@
       <xs:element name="tradingSessionSubId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1056,7 +1105,7 @@
       <xs:element name="securityTradingEvent" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1083,6 +1132,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1146,6 +1202,48 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1238,7 +1336,7 @@
       <xs:element name="securityType">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1464,10 +1562,24 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="issueDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../issueDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="maturityDate" nillable="true" type="xs:int">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="maturityDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../maturityDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1485,10 +1597,24 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="startDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../startDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="endDate" nillable="true" type="xs:int">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="endDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../endDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1506,10 +1632,24 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="settlDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../settlDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="datedDate" nillable="true" type="xs:int">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="datedDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../datedDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1567,7 +1707,7 @@
       <xs:element name="lotType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1593,14 +1733,14 @@
       <xs:element name="tickSizeDenominator" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="product">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1651,7 +1791,7 @@
       <xs:element name="exerciseStyle" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1672,7 +1812,7 @@
       <xs:element name="putOrCall" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1693,7 +1833,7 @@
       <xs:element name="priceTypeOptional" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1719,14 +1859,14 @@
       <xs:element name="marketSegmentId" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="governanceIndicator" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1772,7 +1912,7 @@
       <xs:element name="securityMatchType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1788,7 +1928,7 @@
       <xs:element name="lastFragment" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1809,7 +1949,7 @@
       <xs:element name="multiLegModel" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1830,7 +1970,7 @@
       <xs:element name="multiLegPriceMethod" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1878,7 +2018,7 @@
       <xs:element name="impliedMarketIndicator" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1899,7 +2039,7 @@
       <xs:element name="optPayoutType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -1937,31 +2077,31 @@
   </xs:complexType>
   <xs:complexType name="maturityMonthYear_t">
     <xs:sequence>
-      <xs:element name="year" type="xs:unsignedShort">
+      <xs:element name="year" nillable="true" type="xs:unsignedShort">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="month" type="xs:unsignedByte">
+      <xs:element name="month" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="day" type="xs:unsignedByte">
+      <xs:element name="day" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="week" type="xs:unsignedByte">
+      <xs:element name="week" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1969,31 +2109,31 @@
   </xs:complexType>
   <xs:complexType name="contractSettlMonth_t">
     <xs:sequence>
-      <xs:element name="year" type="xs:unsignedShort">
+      <xs:element name="year" nillable="true" type="xs:unsignedShort">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="month" type="xs:unsignedByte">
+      <xs:element name="month" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="day" type="xs:unsignedByte">
+      <xs:element name="day" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="week" type="xs:unsignedByte">
+      <xs:element name="week" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2023,7 +2163,7 @@
       <xs:element name="numInGroup" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2092,7 +2232,7 @@
       <xs:element name="legSecurityType">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2188,7 +2328,7 @@
       <xs:element name="legSide">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2239,7 +2379,7 @@
       <xs:element name="instrAttribType">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2260,7 +2400,7 @@
       <xs:element name="instrAttribValue">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2307,7 +2447,7 @@
       <xs:element name="securityDescLength" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2333,7 +2473,7 @@
       <xs:element name="newsSource">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2579,7 +2719,7 @@
       <xs:element name="mdUpdateAction">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2620,7 +2760,7 @@
       <xs:element name="openCloseSettlFlag">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2692,6 +2832,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2780,7 +2927,7 @@
       <xs:element name="mdUpdateAction">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2822,6 +2969,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2924,7 +3078,7 @@
       <xs:element name="openCloseSettlFlag">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -2985,10 +3139,24 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="lastTradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../lastTradeDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="tradeDate" type="xs:unsignedShort">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -3070,7 +3238,7 @@
       <xs:element name="mdUpdateAction">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -3371,7 +3539,7 @@
       <xs:element name="priceBandType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -3402,7 +3570,7 @@
       <xs:element name="priceLimitType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -3428,7 +3596,7 @@
       <xs:element name="priceBandMidpointPriceType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -3571,7 +3739,7 @@
       <xs:element name="mdUpdateAction">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -3613,6 +3781,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -3708,7 +3883,7 @@
       <xs:element name="mdUpdateAction">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -3750,6 +3925,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -3845,7 +4027,7 @@
       <xs:element name="tradingSessionId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -3910,6 +4092,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -3993,7 +4182,7 @@
       <xs:element name="trdSubType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -4202,6 +4391,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mdFuturePrice" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -4268,7 +4464,7 @@
       <xs:element name="openCloseSettlFlag">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -4304,7 +4500,7 @@
       <xs:element name="priceType">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -4330,7 +4526,7 @@
       <xs:element name="settlPriceType">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -4397,6 +4593,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -4559,7 +4762,7 @@
       <xs:element name="mdUpdateAction">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -4825,6 +5028,48 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="mdEntryPrevSize" nillable="true" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -5002,6 +5247,48 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="rptSeq" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -5045,7 +5332,7 @@
       <xs:element name="mdUpdateAction">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5213,6 +5500,48 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="rptSeq" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -5242,7 +5571,7 @@
       <xs:element name="tradingSessionId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5310,10 +5639,17 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="trdSubType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5380,6 +5716,48 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="rptSeq" nillable="true" type="xs:unsignedInt">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -5409,7 +5787,7 @@
       <xs:element name="tradingSessionId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5477,10 +5855,59 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="transactTime" nillable="true" type="xs:unsignedLong">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -5515,7 +5942,7 @@
       <xs:element name="trdSubType" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5603,7 +6030,7 @@
       <xs:element name="aggressorSide">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5731,6 +6158,48 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="blockExtension" type="xs:hexBinary">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -5753,7 +6222,7 @@
       <xs:element name="tradingSessionId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5775,6 +6244,13 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -5898,7 +6374,7 @@
       <xs:element name="tradingSessionId">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
           </xs:appinfo>
         </xs:annotation>
         <xs:simpleType>
@@ -5958,6 +6434,13 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
+      <xs:element name="tradeDateUnixSeconds" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../tradeDate * 86400 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="offset34Padding2" type="xs:hexBinary">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -5969,6 +6452,48 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="transactTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>

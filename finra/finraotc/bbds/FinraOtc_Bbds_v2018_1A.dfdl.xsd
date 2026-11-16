@@ -1,0 +1,2926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Dfdl schema definition for: Finra FinraOtc Bbds v2018.1A
+
+  Protocol:
+    Organization: Financial Industry Regulatory Authority
+    Protocol: Bulletin Board Dissemination Service
+    Encoding: Data Feed Interface
+    Version: 2018.1A
+    Date: 5/14/2018
+    Specification: FINRA BBDS Data Feed Interface Specification (2018-1A).pdf
+
+  Script:
+    Generator: 1.0.0.0
+    License: MIT No Attribution
+    Authors: Omi Developers
+
+  Copyright (c) 2026 Scaled Sources LLC.  https://www.scaledsources.com
+
+  This dfdl schema is contributed to The Open Markets Initiative under
+  the license noted above.
+
+  The protocol compiler technologies used to produce this file
+  are the subject of patents owned by Scaled Sources LLC.  Those patent
+  rights are retained and are not transferred by this contribution:
+    https://patents.google.com/patent/US20240129382A1/en
+    https://patents.google.com/patent/US20240419416A1/en
+
+  Open Markets Initiative website:
+    https://openmarketsinitiative.com
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:finraotc:bbds:v2018:1a" targetNamespace="urn:omi:finraotc:bbds:v2018:1a">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format byteOrder="bigEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="packet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="blockSoh" type="xs:unsignedByte">
+          <xs:annotation>
+            <xs:appinfo source="http://www.ogf.org/dfdl/">
+              <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="message" type="tns:message_t" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:appinfo source="http://www.ogf.org/dfdl/">
+              <dfdl:element occursCountKind="implicit" />
+            </xs:appinfo>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="message_t">
+    <xs:sequence>
+      <xs:element name="messageCategory">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>Quotation</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Administrative</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Control</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="payload">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ fn:substring-before(fn:concat(xs:string(../messageCategory), ' '), ' ') }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="quotationMessage" type="tns:quotationMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="Q" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="administrativeMessage" type="tns:administrativeMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="A" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="controlMessage" type="tns:controlMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="C" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="messageSeparator">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="31">
+              <xs:annotation>
+                <xs:documentation>Unit Separator</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>End Of Text</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="quotationMessage_t">
+    <xs:sequence>
+      <xs:element name="quotationMessageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Market Participant Quote Update Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="quotationMessagePayload" type="tns:marketParticipantQuoteUpdateMessage_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="marketParticipantQuoteUpdateMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="otcbbSymbol" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="11" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="otcbbType" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="marketParticipantIdentifier" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="marketParticipantLocationId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="marketParticipantStatus">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Active</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="D">
+              <xs:annotation>
+                <xs:documentation>Deleted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="E">
+              <xs:annotation>
+                <xs:documentation>Excused</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="W">
+              <xs:annotation>
+                <xs:documentation>Withdrawn</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+              <xs:annotation>
+                <xs:documentation>Suspended</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="marketParticipantQuoteCondition">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Periodic Indicative Other Securities</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="K">
+              <xs:annotation>
+                <xs:documentation>Real Time Quotes</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="L">
+              <xs:annotation>
+                <xs:documentation>Periodic Indicative Quotes</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="reserved1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="wantedIndicator">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Bid</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Offer</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="W">
+              <xs:annotation>
+                <xs:documentation>Bid And Offer</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="unsolicitedIndicator">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>Unsolicited Ask</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>Unsolicited Bid</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Unsolicited Bid And Ask</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Not Applicable</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="bidPriceDenominator" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bidPrice" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bidSize" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="7" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="askPriceDenominator" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="askPrice" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="askSize" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="7" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="currency" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="insideAppendageIndicator">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>No Change To Inside Quote</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>No Inside Exists</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Inside Quote Appendage Is Attached</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="insideAppendage" type="tns:insideAppendage_t" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ if (../insideAppendageIndicator eq '3') then 1 else 0 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageHeader_t">
+    <xs:sequence>
+      <xs:element name="sessionIdentifier">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>All Market Sessions Or Session Independent</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Us Market Session</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="retransmissionRequester" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="messageSequenceNumber" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="marketCenterOriginatorId">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="E">
+              <xs:annotation>
+                <xs:documentation>Market Center Independent</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+              <xs:annotation>
+                <xs:documentation>Otc Bulletin Board</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>Nasdaq Omx Market System</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="datetime" type="tns:datetime_t" />
+      <xs:element name="reserved1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="datetime_t">
+    <xs:sequence>
+      <xs:element name="year" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="month">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Month 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Month 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Month 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Month 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Month 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Month 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Month 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Month 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Month 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Month 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Month 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Month 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="day">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Day 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Day 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Day 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Day 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Day 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Day 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Day 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Day 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Day 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Day 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Day 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Day 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Day 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Day 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Day 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Day 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Day 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Day 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Day 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Day 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Day 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Day 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Day 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72">
+              <xs:annotation>
+                <xs:documentation>Day 24</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="73">
+              <xs:annotation>
+                <xs:documentation>Day 25</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="74">
+              <xs:annotation>
+                <xs:documentation>Day 26</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="75">
+              <xs:annotation>
+                <xs:documentation>Day 27</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="76">
+              <xs:annotation>
+                <xs:documentation>Day 28</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="77">
+              <xs:annotation>
+                <xs:documentation>Day 29</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="78">
+              <xs:annotation>
+                <xs:documentation>Day 30</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+              <xs:annotation>
+                <xs:documentation>Day 31</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="hour">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="48">
+              <xs:annotation>
+                <xs:documentation>Hour 0</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Hour 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Hour 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Hour 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Hour 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Hour 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Hour 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Hour 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Hour 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Hour 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Hour 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Hour 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Hour 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Hour 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Hour 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Hour 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Hour 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Hour 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Hour 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Hour 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Hour 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Hour 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Hour 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Hour 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="minute">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="48">
+              <xs:annotation>
+                <xs:documentation>Minute 0</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Minute 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Minute 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Minute 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Minute 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Minute 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Minute 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Minute 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Minute 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Minute 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Minute 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Minute 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Minute 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Minute 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Minute 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Minute 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Minute 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Minute 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Minute 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Minute 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Minute 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Minute 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Minute 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Minute 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72">
+              <xs:annotation>
+                <xs:documentation>Minute 24</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="73">
+              <xs:annotation>
+                <xs:documentation>Minute 25</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="74">
+              <xs:annotation>
+                <xs:documentation>Minute 26</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="75">
+              <xs:annotation>
+                <xs:documentation>Minute 27</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="76">
+              <xs:annotation>
+                <xs:documentation>Minute 28</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="77">
+              <xs:annotation>
+                <xs:documentation>Minute 29</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="78">
+              <xs:annotation>
+                <xs:documentation>Minute 30</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+              <xs:annotation>
+                <xs:documentation>Minute 31</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="80">
+              <xs:annotation>
+                <xs:documentation>Minute 32</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="81">
+              <xs:annotation>
+                <xs:documentation>Minute 33</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="82">
+              <xs:annotation>
+                <xs:documentation>Minute 34</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+              <xs:annotation>
+                <xs:documentation>Minute 35</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Minute 36</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="85">
+              <xs:annotation>
+                <xs:documentation>Minute 37</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Minute 38</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="87">
+              <xs:annotation>
+                <xs:documentation>Minute 39</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="88">
+              <xs:annotation>
+                <xs:documentation>Minute 40</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+              <xs:annotation>
+                <xs:documentation>Minute 41</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+              <xs:annotation>
+                <xs:documentation>Minute 42</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="91">
+              <xs:annotation>
+                <xs:documentation>Minute 43</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="92">
+              <xs:annotation>
+                <xs:documentation>Minute 44</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Minute 45</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="94">
+              <xs:annotation>
+                <xs:documentation>Minute 46</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="95">
+              <xs:annotation>
+                <xs:documentation>Minute 47</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+              <xs:annotation>
+                <xs:documentation>Minute 48</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="97">
+              <xs:annotation>
+                <xs:documentation>Minute 49</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="98">
+              <xs:annotation>
+                <xs:documentation>Minute 50</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Minute 51</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+              <xs:annotation>
+                <xs:documentation>Minute 52</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="101">
+              <xs:annotation>
+                <xs:documentation>Minute 53</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+              <xs:annotation>
+                <xs:documentation>Minute 54</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="103">
+              <xs:annotation>
+                <xs:documentation>Minute 55</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="104">
+              <xs:annotation>
+                <xs:documentation>Minute 56</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="105">
+              <xs:annotation>
+                <xs:documentation>Minute 57</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="106">
+              <xs:annotation>
+                <xs:documentation>Minute 58</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="107">
+              <xs:annotation>
+                <xs:documentation>Minute 59</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="second">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="48">
+              <xs:annotation>
+                <xs:documentation>Second 0</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Second 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Second 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Second 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Second 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Second 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Second 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Second 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Second 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Second 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Second 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Second 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Second 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Second 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Second 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Second 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Second 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Second 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Second 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Second 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Second 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Second 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Second 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Second 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72">
+              <xs:annotation>
+                <xs:documentation>Second 24</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="73">
+              <xs:annotation>
+                <xs:documentation>Second 25</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="74">
+              <xs:annotation>
+                <xs:documentation>Second 26</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="75">
+              <xs:annotation>
+                <xs:documentation>Second 27</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="76">
+              <xs:annotation>
+                <xs:documentation>Second 28</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="77">
+              <xs:annotation>
+                <xs:documentation>Second 29</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="78">
+              <xs:annotation>
+                <xs:documentation>Second 30</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+              <xs:annotation>
+                <xs:documentation>Second 31</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="80">
+              <xs:annotation>
+                <xs:documentation>Second 32</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="81">
+              <xs:annotation>
+                <xs:documentation>Second 33</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="82">
+              <xs:annotation>
+                <xs:documentation>Second 34</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+              <xs:annotation>
+                <xs:documentation>Second 35</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Second 36</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="85">
+              <xs:annotation>
+                <xs:documentation>Second 37</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Second 38</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="87">
+              <xs:annotation>
+                <xs:documentation>Second 39</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="88">
+              <xs:annotation>
+                <xs:documentation>Second 40</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+              <xs:annotation>
+                <xs:documentation>Second 41</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+              <xs:annotation>
+                <xs:documentation>Second 42</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="91">
+              <xs:annotation>
+                <xs:documentation>Second 43</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="92">
+              <xs:annotation>
+                <xs:documentation>Second 44</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Second 45</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="94">
+              <xs:annotation>
+                <xs:documentation>Second 46</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="95">
+              <xs:annotation>
+                <xs:documentation>Second 47</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+              <xs:annotation>
+                <xs:documentation>Second 48</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="97">
+              <xs:annotation>
+                <xs:documentation>Second 49</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="98">
+              <xs:annotation>
+                <xs:documentation>Second 50</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Second 51</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+              <xs:annotation>
+                <xs:documentation>Second 52</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="101">
+              <xs:annotation>
+                <xs:documentation>Second 53</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+              <xs:annotation>
+                <xs:documentation>Second 54</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="103">
+              <xs:annotation>
+                <xs:documentation>Second 55</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="104">
+              <xs:annotation>
+                <xs:documentation>Second 56</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="105">
+              <xs:annotation>
+                <xs:documentation>Second 57</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="106">
+              <xs:annotation>
+                <xs:documentation>Second 58</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="107">
+              <xs:annotation>
+                <xs:documentation>Second 59</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="insideAppendage_t">
+    <xs:sequence>
+      <xs:element name="insideQuoteCondition">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="insideBidPriceDenominator" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="insideBidPrice" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="insideBidSize" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="insideAskPriceDenominator" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="insideAskPrice" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="insideAskSize" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="administrativeMessage_t">
+    <xs:sequence>
+      <xs:element name="administrativeMessageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+              <xs:annotation>
+                <xs:documentation>General Administrative Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Trading Action Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="administrativeMessagePayload">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ fn:substring-before(fn:concat(xs:string(../administrativeMessageType), ' '), ' ') }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="generalAdministrativeMessage" type="tns:generalAdministrativeMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="A" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradingActionMessage" type="tns:tradingActionMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="H" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="generalAdministrativeMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="text" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradingActionMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+      <xs:element name="stockSymbol" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="11" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="action">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Trading Halt</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+              <xs:annotation>
+                <xs:documentation>Quotation Resumption</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Trading Resumption</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="actionDatetime" type="tns:actionDatetime_t" />
+      <xs:element name="reasonCode">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="T1">
+              <xs:annotation>
+                <xs:documentation>Halt News Pending</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T2">
+              <xs:annotation>
+                <xs:documentation>Halt News Dissemination</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T12">
+              <xs:annotation>
+                <xs:documentation>Halt Additional Information Requested By Finra</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H10">
+              <xs:annotation>
+                <xs:documentation>Halt Sec Trading Suspension</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H11">
+              <xs:annotation>
+                <xs:documentation>Halt Regulatory Concern</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H12">
+              <xs:annotation>
+                <xs:documentation>Halt Sec Revocation</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U1">
+              <xs:annotation>
+                <xs:documentation>Halt Foreign Market Regulatory Otcbb Only</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U2">
+              <xs:annotation>
+                <xs:documentation>Halt Component Derivative Of Exchange Listed Security Otcbb Only</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U3">
+              <xs:annotation>
+                <xs:documentation>Halt Extraordinary Events Otcbb Only</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="D">
+              <xs:annotation>
+                <xs:documentation>Security Deletion From Otcbb</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T3">
+              <xs:annotation>
+                <xs:documentation>News And Resumption Times</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="R4">
+              <xs:annotation>
+                <xs:documentation>Qualifications Issues Reviewed Resolved Quotations Trading To Resume</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="R9">
+              <xs:annotation>
+                <xs:documentation>Qualifications Halt Concluded Filings Met Quotations Trading To Resume</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C11">
+              <xs:annotation>
+                <xs:documentation>Trade Halt Concluded By Other Regulatory Auth Quotes Trades To Resume</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value=" ">
+              <xs:annotation>
+                <xs:documentation>Reason Code Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="actionDatetime_t">
+    <xs:sequence>
+      <xs:element name="year" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="month">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Month 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Month 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Month 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Month 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Month 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Month 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Month 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Month 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Month 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Month 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Month 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Month 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="day">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Day 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Day 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Day 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Day 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Day 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Day 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Day 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Day 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Day 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Day 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Day 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Day 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Day 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Day 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Day 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Day 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Day 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Day 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Day 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Day 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Day 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Day 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Day 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72">
+              <xs:annotation>
+                <xs:documentation>Day 24</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="73">
+              <xs:annotation>
+                <xs:documentation>Day 25</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="74">
+              <xs:annotation>
+                <xs:documentation>Day 26</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="75">
+              <xs:annotation>
+                <xs:documentation>Day 27</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="76">
+              <xs:annotation>
+                <xs:documentation>Day 28</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="77">
+              <xs:annotation>
+                <xs:documentation>Day 29</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="78">
+              <xs:annotation>
+                <xs:documentation>Day 30</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+              <xs:annotation>
+                <xs:documentation>Day 31</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="hour">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="48">
+              <xs:annotation>
+                <xs:documentation>Hour 0</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Hour 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Hour 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Hour 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Hour 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Hour 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Hour 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Hour 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Hour 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Hour 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Hour 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Hour 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Hour 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Hour 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Hour 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Hour 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Hour 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Hour 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Hour 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Hour 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Hour 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Hour 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Hour 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Hour 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="minute">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="48">
+              <xs:annotation>
+                <xs:documentation>Minute 0</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Minute 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Minute 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Minute 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Minute 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Minute 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Minute 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Minute 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Minute 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Minute 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Minute 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Minute 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Minute 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Minute 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Minute 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Minute 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Minute 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Minute 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Minute 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Minute 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Minute 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Minute 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Minute 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Minute 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72">
+              <xs:annotation>
+                <xs:documentation>Minute 24</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="73">
+              <xs:annotation>
+                <xs:documentation>Minute 25</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="74">
+              <xs:annotation>
+                <xs:documentation>Minute 26</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="75">
+              <xs:annotation>
+                <xs:documentation>Minute 27</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="76">
+              <xs:annotation>
+                <xs:documentation>Minute 28</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="77">
+              <xs:annotation>
+                <xs:documentation>Minute 29</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="78">
+              <xs:annotation>
+                <xs:documentation>Minute 30</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+              <xs:annotation>
+                <xs:documentation>Minute 31</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="80">
+              <xs:annotation>
+                <xs:documentation>Minute 32</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="81">
+              <xs:annotation>
+                <xs:documentation>Minute 33</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="82">
+              <xs:annotation>
+                <xs:documentation>Minute 34</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+              <xs:annotation>
+                <xs:documentation>Minute 35</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Minute 36</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="85">
+              <xs:annotation>
+                <xs:documentation>Minute 37</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Minute 38</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="87">
+              <xs:annotation>
+                <xs:documentation>Minute 39</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="88">
+              <xs:annotation>
+                <xs:documentation>Minute 40</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+              <xs:annotation>
+                <xs:documentation>Minute 41</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+              <xs:annotation>
+                <xs:documentation>Minute 42</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="91">
+              <xs:annotation>
+                <xs:documentation>Minute 43</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="92">
+              <xs:annotation>
+                <xs:documentation>Minute 44</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Minute 45</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="94">
+              <xs:annotation>
+                <xs:documentation>Minute 46</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="95">
+              <xs:annotation>
+                <xs:documentation>Minute 47</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+              <xs:annotation>
+                <xs:documentation>Minute 48</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="97">
+              <xs:annotation>
+                <xs:documentation>Minute 49</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="98">
+              <xs:annotation>
+                <xs:documentation>Minute 50</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Minute 51</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+              <xs:annotation>
+                <xs:documentation>Minute 52</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="101">
+              <xs:annotation>
+                <xs:documentation>Minute 53</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+              <xs:annotation>
+                <xs:documentation>Minute 54</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="103">
+              <xs:annotation>
+                <xs:documentation>Minute 55</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="104">
+              <xs:annotation>
+                <xs:documentation>Minute 56</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="105">
+              <xs:annotation>
+                <xs:documentation>Minute 57</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="106">
+              <xs:annotation>
+                <xs:documentation>Minute 58</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="107">
+              <xs:annotation>
+                <xs:documentation>Minute 59</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="second">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="bigEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="48">
+              <xs:annotation>
+                <xs:documentation>Second 0</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="49">
+              <xs:annotation>
+                <xs:documentation>Second 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="50">
+              <xs:annotation>
+                <xs:documentation>Second 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Second 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="52">
+              <xs:annotation>
+                <xs:documentation>Second 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="53">
+              <xs:annotation>
+                <xs:documentation>Second 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="54">
+              <xs:annotation>
+                <xs:documentation>Second 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="55">
+              <xs:annotation>
+                <xs:documentation>Second 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="56">
+              <xs:annotation>
+                <xs:documentation>Second 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="57">
+              <xs:annotation>
+                <xs:documentation>Second 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="58">
+              <xs:annotation>
+                <xs:documentation>Second 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="59">
+              <xs:annotation>
+                <xs:documentation>Second 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Second 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="61">
+              <xs:annotation>
+                <xs:documentation>Second 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="62">
+              <xs:annotation>
+                <xs:documentation>Second 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="63">
+              <xs:annotation>
+                <xs:documentation>Second 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="64">
+              <xs:annotation>
+                <xs:documentation>Second 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="65">
+              <xs:annotation>
+                <xs:documentation>Second 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="66">
+              <xs:annotation>
+                <xs:documentation>Second 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="67">
+              <xs:annotation>
+                <xs:documentation>Second 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="68">
+              <xs:annotation>
+                <xs:documentation>Second 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="69">
+              <xs:annotation>
+                <xs:documentation>Second 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Second 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="71">
+              <xs:annotation>
+                <xs:documentation>Second 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="72">
+              <xs:annotation>
+                <xs:documentation>Second 24</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="73">
+              <xs:annotation>
+                <xs:documentation>Second 25</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="74">
+              <xs:annotation>
+                <xs:documentation>Second 26</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="75">
+              <xs:annotation>
+                <xs:documentation>Second 27</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="76">
+              <xs:annotation>
+                <xs:documentation>Second 28</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="77">
+              <xs:annotation>
+                <xs:documentation>Second 29</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="78">
+              <xs:annotation>
+                <xs:documentation>Second 30</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="79">
+              <xs:annotation>
+                <xs:documentation>Second 31</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="80">
+              <xs:annotation>
+                <xs:documentation>Second 32</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="81">
+              <xs:annotation>
+                <xs:documentation>Second 33</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="82">
+              <xs:annotation>
+                <xs:documentation>Second 34</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+              <xs:annotation>
+                <xs:documentation>Second 35</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Second 36</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="85">
+              <xs:annotation>
+                <xs:documentation>Second 37</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Second 38</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="87">
+              <xs:annotation>
+                <xs:documentation>Second 39</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="88">
+              <xs:annotation>
+                <xs:documentation>Second 40</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="89">
+              <xs:annotation>
+                <xs:documentation>Second 41</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="90">
+              <xs:annotation>
+                <xs:documentation>Second 42</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="91">
+              <xs:annotation>
+                <xs:documentation>Second 43</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="92">
+              <xs:annotation>
+                <xs:documentation>Second 44</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Second 45</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="94">
+              <xs:annotation>
+                <xs:documentation>Second 46</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="95">
+              <xs:annotation>
+                <xs:documentation>Second 47</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+              <xs:annotation>
+                <xs:documentation>Second 48</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="97">
+              <xs:annotation>
+                <xs:documentation>Second 49</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="98">
+              <xs:annotation>
+                <xs:documentation>Second 50</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Second 51</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+              <xs:annotation>
+                <xs:documentation>Second 52</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="101">
+              <xs:annotation>
+                <xs:documentation>Second 53</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+              <xs:annotation>
+                <xs:documentation>Second 54</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="103">
+              <xs:annotation>
+                <xs:documentation>Second 55</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="104">
+              <xs:annotation>
+                <xs:documentation>Second 56</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="105">
+              <xs:annotation>
+                <xs:documentation>Second 57</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="106">
+              <xs:annotation>
+                <xs:documentation>Second 58</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="107">
+              <xs:annotation>
+                <xs:documentation>Second 59</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="controlMessage_t">
+    <xs:sequence>
+      <xs:element name="controlMessageType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="I">
+              <xs:annotation>
+                <xs:documentation>Start Of Day Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="J">
+              <xs:annotation>
+                <xs:documentation>End Of Day Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+              <xs:annotation>
+                <xs:documentation>Market Session Open Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Market Session Close Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="K">
+              <xs:annotation>
+                <xs:documentation>End Of Retransmission Requests Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Z">
+              <xs:annotation>
+                <xs:documentation>End Of Transmissions Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T">
+              <xs:annotation>
+                <xs:documentation>Line Integrity Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="L">
+              <xs:annotation>
+                <xs:documentation>Sequence Number Reset Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X">
+              <xs:annotation>
+                <xs:documentation>End Of Trade Reporting Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="controlMessagePayload">
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ fn:substring-before(fn:concat(xs:string(../controlMessageType), ' '), ' ') }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="startOfDayMessage" type="tns:startOfDayMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="I" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="endOfDayMessage" type="tns:endOfDayMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="J" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="marketSessionOpenMessage" type="tns:marketSessionOpenMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="O" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="marketSessionCloseMessage" type="tns:marketSessionCloseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="C" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="endOfRetransmissionRequestsMessage" type="tns:endOfRetransmissionRequestsMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="K" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="endOfTransmissionsMessage" type="tns:endOfTransmissionsMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="Z" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="lineIntegrityMessage" type="tns:lineIntegrityMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="T" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sequenceNumberResetMessage" type="tns:sequenceNumberResetMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="L" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="endOfTradeReportingMessage" type="tns:endOfTradeReportingMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="X" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="startOfDayMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endOfDayMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="marketSessionOpenMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="marketSessionCloseMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endOfRetransmissionRequestsMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endOfTransmissionsMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lineIntegrityMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sequenceNumberResetMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="endOfTradeReportingMessage_t">
+    <xs:sequence>
+      <xs:element name="messageHeader" type="tns:messageHeader_t" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

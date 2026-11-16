@@ -1,0 +1,3743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Dfdl schema definition for: Hkex HkexDerivatives Lite v1.47
+
+  Protocol:
+    Organization: Hong Kong Exchanges and Clearing
+    Protocol: Orion Market Data Derivatives Lite
+    Encoding: Orion Market Data
+    Version: 1.47
+    Date: 10/14/2025
+    Specification: HKEX_OMD_Derivatives_Binary_Interface_Specifications_v1-47.pdf
+
+  Script:
+    Generator: 1.0.0.0
+    License: MIT No Attribution
+    Authors: Omi Developers
+
+  Copyright (c) 2026 Scaled Sources LLC.  https://www.scaledsources.com
+
+  This dfdl schema is contributed to The Open Markets Initiative under
+  the license noted above.
+
+  The protocol compiler technologies used to produce this file
+  are the subject of patents owned by Scaled Sources LLC.  Those patent
+  rights are retained and are not transferred by this contribution:
+    https://patents.google.com/patent/US20240129382A1/en
+    https://patents.google.com/patent/US20240419416A1/en
+
+  Open Markets Initiative website:
+    https://openmarketsinitiative.com
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:tns="urn:omi:hkexderivatives:lite:v1:47" targetNamespace="urn:omi:hkexderivatives:lite:v1:47">
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format byteOrder="littleEndian" bitOrder="mostSignificantBitFirst" representation="binary" binaryNumberRep="binary" lengthKind="implicit" lengthUnits="bytes" encoding="ASCII" encodingErrorPolicy="replace" initiator="" terminator="" separator="" separatorPosition="infix" separatorSuppressionPolicy="anyEmpty" sequenceKind="ordered" initiatedContent="no" leadingSkip="0" trailingSkip="0" alignment="1" alignmentUnits="bytes" fillByte="%#r00;" ignoreCase="no" occursCountKind="implicit" truncateSpecifiedLengthString="no" textBidi="no" floating="no" textPadKind="none" textTrimKind="none" escapeSchemeRef="" />
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="packet">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="packetHeader" type="tns:packetHeader_t" />
+        <xs:element name="messageBuffer" type="tns:messageBuffer_t" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="packetHeader_t">
+    <xs:sequence>
+      <xs:element name="pktSize" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="msgCount" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="compressionMode">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>No Compression Applied</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Compression Applied</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="seqNum" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sendTime" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sendTimeHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sendTime - (../sendTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sendTimeMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sendTime - (../sendTime mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sendTimeSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sendTime - (../sendTime mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sendTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sendTime - (../sendTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sendTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../sendTime - (../sendTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="sendTimeNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../sendTime mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="messageBuffer_t">
+    <xs:sequence>
+      <xs:element name="message" type="tns:message_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../../packetHeader/msgCount }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="message_t">
+    <xs:sequence>
+      <xs:element name="msgHeader" type="tns:msgHeader_t" />
+      <xs:element name="payload">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../msgHeader/msgSize - 4 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:choice>
+            <xs:annotation>
+              <xs:appinfo source="http://www.ogf.org/dfdl/">
+                <dfdl:choice choiceLengthKind="implicit" choiceDispatchKey="{ xs:string(../msgHeader/msgType) }" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="aggregateOrderBookUpdateMessage" type="tns:aggregateOrderBookUpdateMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="353" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="calculatedOpeningPriceMessage" type="tns:calculatedOpeningPriceMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="364" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="sequenceReset" type="tns:sequenceReset_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="100" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="disasterRecoverySignalMessage" type="tns:disasterRecoverySignalMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="105" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="marketAlertMessage" type="tns:marketAlertMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="323" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="openInterestMessage" type="tns:openInterestMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="366" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="quoteRequest" type="tns:quoteRequest_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="336" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="commodityDefinitionMessage" type="tns:commodityDefinitionMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="301" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="classDefinitionMessage" type="tns:classDefinitionMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="302" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="seriesDefinitionBaseMessage" type="tns:seriesDefinitionBaseMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="303" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="seriesDefinitionExtendedMessage" type="tns:seriesDefinitionExtendedMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="304" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="combinationDefinitionMessage" type="tns:combinationDefinitionMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="305" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="refreshComplete" type="tns:refreshComplete_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="203" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="marketStatusMessage" type="tns:marketStatusMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="320" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="seriesStatusMessage" type="tns:seriesStatusMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="321" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="commodityStatusMessage" type="tns:commodityStatusMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="322" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="tradeStatisticsMessage" type="tns:tradeStatisticsMessage_t">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element choiceBranchKey="360" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="msgHeader_t">
+    <xs:sequence>
+      <xs:element name="msgSize" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="msgType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedShort">
+            <xs:enumeration value="353">
+              <xs:annotation>
+                <xs:documentation>Aggregate Order Book Update Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="364">
+              <xs:annotation>
+                <xs:documentation>Calculated Opening Price Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+              <xs:annotation>
+                <xs:documentation>Sequence Reset</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="105">
+              <xs:annotation>
+                <xs:documentation>Disaster Recovery Signal Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="323">
+              <xs:annotation>
+                <xs:documentation>Market Alert Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="366">
+              <xs:annotation>
+                <xs:documentation>Open Interest Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="336">
+              <xs:annotation>
+                <xs:documentation>Quote Request</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="301">
+              <xs:annotation>
+                <xs:documentation>Commodity Definition Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="302">
+              <xs:annotation>
+                <xs:documentation>Class Definition Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="303">
+              <xs:annotation>
+                <xs:documentation>Series Definition Base Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="304">
+              <xs:annotation>
+                <xs:documentation>Series Definition Extended Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="305">
+              <xs:annotation>
+                <xs:documentation>Combination Definition Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="203">
+              <xs:annotation>
+                <xs:documentation>Refresh Complete</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="320">
+              <xs:annotation>
+                <xs:documentation>Market Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="321">
+              <xs:annotation>
+                <xs:documentation>Series Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="322">
+              <xs:annotation>
+                <xs:documentation>Commodity Status Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="360">
+              <xs:annotation>
+                <xs:documentation>Trade Statistics Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="aggregateOrderBookUpdateMessage_t">
+    <xs:sequence>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler3" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="noEntries" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bookEntry" type="tns:bookEntry_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../noEntries }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bookEntry_t">
+    <xs:sequence>
+      <xs:element name="aggregateQuantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="price" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numberOfOrders" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="side">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Bid</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Offer</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="priceLevel" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="updateAction">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>New</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Change</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Delete</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="74">
+              <xs:annotation>
+                <xs:documentation>Clear</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler4" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="calculatedOpeningPriceMessage_t">
+    <xs:sequence>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="calculatedOpeningPrice" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler4" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="quantity" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sequenceReset_t">
+    <xs:sequence>
+      <xs:element name="newSeqNo" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="disasterRecoverySignalMessage_t">
+    <xs:sequence>
+      <xs:element name="drStatus">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>In Progress</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Completed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="marketAlertMessage_t">
+    <xs:sequence>
+      <xs:element name="alertId" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="source">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+              <xs:annotation>
+                <xs:documentation>Trading System</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M">
+              <xs:annotation>
+                <xs:documentation>Other Market Alerts</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="header" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="320" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lastFragment">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Y">
+              <xs:annotation>
+                <xs:documentation>Complete</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N">
+              <xs:annotation>
+                <xs:documentation>Not Complete</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="infoType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Not Specified</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Company Announcement</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Market Message</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Static Line</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Notice Received</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="priority">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Not Specified</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Low</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Medium</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>High</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Critical</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="noLines" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="content" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="320" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="openInterestMessage_t">
+    <xs:sequence>
+      <xs:element name="dayIndicator">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedShort">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Current Business Day</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Previous Business Day</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler6" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="settlement" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dealCount" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="grossOi" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="netOi" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="turnover" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="quoteRequest_t">
+    <xs:sequence>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numberOfLots" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="bidAskFlag">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Bid</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Ask</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Both</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler3" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="commodityDefinitionMessage_t">
+    <xs:sequence>
+      <xs:element name="commodityCode" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="decimalInUnderlyingPrice" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isinCode" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="baseCurrency" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="underlyingPriceUnit">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Yield</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Points</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Yield Diff</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Imm Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Basis Points</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Inverted Yield</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Percentage Of Nominal</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Dirty Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="commodityName" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="nominalValue" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="underlyingCode" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="20" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="underlyingType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Stock</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Currency</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Interest Rate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Energy</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Soft And Agrics</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Metal</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Stock Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Currency Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Interest Rate Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Energy Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Softs And Agrics Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Metal Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="effectiveTomorrow">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>False</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>True</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="commodityId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="classDefinitionMessage_t">
+    <xs:sequence>
+      <xs:element name="country" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="market">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Cesc Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Stock Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Three Year Exchange Fund Note Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Mini Hang Seng Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+              <xs:annotation>
+                <xs:documentation>Weekly Stock Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+              <xs:annotation>
+                <xs:documentation>Stock Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+              <xs:annotation>
+                <xs:documentation>Hibor</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="27">
+              <xs:annotation>
+                <xs:documentation>Dividend Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="32">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="34">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="35">
+              <xs:annotation>
+                <xs:documentation>Flexible Hang Seng Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="37">
+              <xs:annotation>
+                <xs:documentation>Flexible Hang Seng China Enterprises Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="38">
+              <xs:annotation>
+                <xs:documentation>Hang Seng China Enterprises Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="39">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="40">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng China Enterprises Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Hsi Volatility Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Sector Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Renminbi Currency Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="80">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Biotech Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng Tech Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng Tech Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Tech Index Futures Options Hang Seng Index Hang Seng China Enterprises Index Gross Net Total Return Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="87">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng China Enterprises Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Ibovespa Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+              <xs:annotation>
+                <xs:documentation>Sp Bse Sensex Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Ftsejse Top 40 Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+              <xs:annotation>
+                <xs:documentation>Micex Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="108">
+              <xs:annotation>
+                <xs:documentation>Msci Ax J Futures Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Usd Silver Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="112">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Cnh Silver Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="115">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Cnh Gold Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="116">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Usd Gold Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="117">
+              <xs:annotation>
+                <xs:documentation>China 5 Year Government Bond Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="118">
+              <xs:annotation>
+                <xs:documentation>Usd Base And Ferrous Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="120">
+              <xs:annotation>
+                <xs:documentation>Cnh London Metal Mini Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="122">
+              <xs:annotation>
+                <xs:documentation>Cash Settled Rmb Currency Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="125">
+              <xs:annotation>
+                <xs:documentation>Cash Settled Cnhusd Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="153">
+              <xs:annotation>
+                <xs:documentation>Msci China A 50 Connect Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="160">
+              <xs:annotation>
+                <xs:documentation>Msci Jpy Index Futures Price Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="161">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="163">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 163</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="164">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 164</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="166">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 166</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="168">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 168</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="170">
+              <xs:annotation>
+                <xs:documentation>Msci Sgd Index Futures Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="instrumentGroup">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>American Style Call</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>American Style Put</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="22">
+              <xs:annotation>
+                <xs:documentation>European Style Call</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="23">
+              <xs:annotation>
+                <xs:documentation>European Style Put</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="170">
+              <xs:annotation>
+                <xs:documentation>Options Straddle</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="171">
+              <xs:annotation>
+                <xs:documentation>Options Strangle</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="172">
+              <xs:annotation>
+                <xs:documentation>Synthetic Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="201">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="202">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="203">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="204">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="205">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="206">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="207">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="208">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="209">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="210">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="211">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="212">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="213">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="214">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="215">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="216">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="217">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="218">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="219">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="220">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="221">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="222">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="223">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="250">
+              <xs:annotation>
+                <xs:documentation>Tailor Made Combination</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="254">
+              <xs:annotation>
+                <xs:documentation>Exchange Rate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="255">
+              <xs:annotation>
+                <xs:documentation>Payment Currency</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="modifier" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="commodityCode" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="priceQuotationFactor" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="contractSize" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="decimalInStrikePrice" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="decimalInContractSize" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="decimalInPremium" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="rankingType">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedShort">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Price Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Inverted Price Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Price Then Traders Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Inverted Price Then Traders Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Price Then Market Makers Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Inverted Price Then Market Makers Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Price Then Baits Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Inverted Price Then Baits Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Price Then Own Orders Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Inverted Price Then Own Orders Then Time</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="tradable">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Yes</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>No</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="premiumUnit4Price">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Yield</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Points</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Yield Diff</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Imm Index</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Basis Points</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Inverted Yield</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Percentage Of Nominal</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Dirty Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="baseCurrency" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="instrumentClassId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="14" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="instrumentClassName" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isFractions">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Yes</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>No</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="settlementCurrencyId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="effectiveTomorrow">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>False</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>True</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="tickStepSize" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="seriesDefinitionBaseMessage_t">
+    <xs:sequence>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbol" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="financialProduct">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Option</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Forward</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Future</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Fra</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Cash</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Payment</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Exchange Rate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Interest Rate Swap</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Repo</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Synthetic Box Leg Reference</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Standard Combination</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Guarantee</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Otc General</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Equity Warrant</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Security Lending</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numberOfDecimalsPrice" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="numberOfLegs" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="strikePrice" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="expirationDate" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="expirationDateDate" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ if (fn:substring(xs:string(../expirationDate), 1, 1) ge '0') then 1 else 0 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="value" type="xs:date">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element inputValueCalc="{ xs:date(fn:concat(fn:substring(xs:string(../../expirationDate), 1, 4), '-', fn:substring(xs:string(../../expirationDate), 5, 2), '-', fn:substring(xs:string(../../expirationDate), 7, 2))) }" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="decimalInStrikePrice" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="putOrCall">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Undefined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Call</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Put</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="seriesDefinitionExtendedMessage_t">
+    <xs:sequence>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="symbol" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="32" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="country" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="market">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Cesc Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Stock Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Three Year Exchange Fund Note Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Mini Hang Seng Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+              <xs:annotation>
+                <xs:documentation>Weekly Stock Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+              <xs:annotation>
+                <xs:documentation>Stock Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+              <xs:annotation>
+                <xs:documentation>Hibor</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="27">
+              <xs:annotation>
+                <xs:documentation>Dividend Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="32">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="34">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="35">
+              <xs:annotation>
+                <xs:documentation>Flexible Hang Seng Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="37">
+              <xs:annotation>
+                <xs:documentation>Flexible Hang Seng China Enterprises Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="38">
+              <xs:annotation>
+                <xs:documentation>Hang Seng China Enterprises Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="39">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="40">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng China Enterprises Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Hsi Volatility Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Sector Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Renminbi Currency Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="80">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Biotech Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng Tech Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng Tech Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Tech Index Futures Options Hang Seng Index Hang Seng China Enterprises Index Gross Net Total Return Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="87">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng China Enterprises Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Ibovespa Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+              <xs:annotation>
+                <xs:documentation>Sp Bse Sensex Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Ftsejse Top 40 Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+              <xs:annotation>
+                <xs:documentation>Micex Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="108">
+              <xs:annotation>
+                <xs:documentation>Msci Ax J Futures Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Usd Silver Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="112">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Cnh Silver Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="115">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Cnh Gold Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="116">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Usd Gold Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="117">
+              <xs:annotation>
+                <xs:documentation>China 5 Year Government Bond Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="118">
+              <xs:annotation>
+                <xs:documentation>Usd Base And Ferrous Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="120">
+              <xs:annotation>
+                <xs:documentation>Cnh London Metal Mini Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="122">
+              <xs:annotation>
+                <xs:documentation>Cash Settled Rmb Currency Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="125">
+              <xs:annotation>
+                <xs:documentation>Cash Settled Cnhusd Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="153">
+              <xs:annotation>
+                <xs:documentation>Msci China A 50 Connect Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="160">
+              <xs:annotation>
+                <xs:documentation>Msci Jpy Index Futures Price Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="161">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="163">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 163</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="164">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 164</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="166">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 166</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="168">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 168</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="170">
+              <xs:annotation>
+                <xs:documentation>Msci Sgd Index Futures Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="instrumentGroup">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>American Style Call</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>American Style Put</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="22">
+              <xs:annotation>
+                <xs:documentation>European Style Call</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="23">
+              <xs:annotation>
+                <xs:documentation>European Style Put</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="170">
+              <xs:annotation>
+                <xs:documentation>Options Straddle</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="171">
+              <xs:annotation>
+                <xs:documentation>Options Strangle</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="172">
+              <xs:annotation>
+                <xs:documentation>Synthetic Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="201">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 1</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="202">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 2</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="203">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 3</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="204">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 4</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="205">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 5</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="206">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 6</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="207">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 7</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="208">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 8</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="209">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 9</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="210">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="211">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="212">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="213">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="214">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="215">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="216">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="217">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="218">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="219">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="220">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="221">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="222">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="223">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="250">
+              <xs:annotation>
+                <xs:documentation>Tailor Made Combination</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="254">
+              <xs:annotation>
+                <xs:documentation>Exchange Rate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="255">
+              <xs:annotation>
+                <xs:documentation>Payment Currency</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="modifier" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="commodityCode" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="expiryDate" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="strikePrice" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="contractSizeExtended" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="isinCode" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="12" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="seriesStatus">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Active</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Suspended</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Issued</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Delisted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Locked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="effectiveTomorrow">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>False</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>True</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="priceQuotationFactor" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="priceMethod">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Net Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Net Value</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler1" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="effectiveExpDate" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="effectiveExpDateDate" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ if (fn:substring(xs:string(../effectiveExpDate), 1, 1) ge '0') then 1 else 0 }" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="value" type="xs:date">
+              <xs:annotation>
+                <xs:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:element inputValueCalc="{ xs:date(fn:concat(fn:substring(xs:string(../../effectiveExpDate), 1, 4), '-', fn:substring(xs:string(../../effectiveExpDate), 5, 2), '-', fn:substring(xs:string(../../effectiveExpDate), 7, 2))) }" />
+                </xs:appinfo>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="dateTimeLastTrading" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeLastTradingHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../dateTimeLastTrading - (../dateTimeLastTrading mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeLastTradingMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../dateTimeLastTrading - (../dateTimeLastTrading mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeLastTradingSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../dateTimeLastTrading - (../dateTimeLastTrading mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeLastTradingMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../dateTimeLastTrading - (../dateTimeLastTrading mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeLastTradingMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../dateTimeLastTrading - (../dateTimeLastTrading mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeLastTradingNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ ../dateTimeLastTrading mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeFirstTrading" nillable="true" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeFirstTradingHour" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../dateTimeFirstTrading) eq '0') then 0 else (xs:long((../dateTimeFirstTrading - (../dateTimeFirstTrading mod 3600000000000)) div 3600000000000)) mod 24 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeFirstTradingMinute" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../dateTimeFirstTrading) eq '0') then 0 else (xs:long((../dateTimeFirstTrading - (../dateTimeFirstTrading mod 60000000000)) div 60000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeFirstTradingSecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../dateTimeFirstTrading) eq '0') then 0 else (xs:long((../dateTimeFirstTrading - (../dateTimeFirstTrading mod 1000000000)) div 1000000000)) mod 60 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeFirstTradingMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../dateTimeFirstTrading) eq '0') then 0 else (xs:long((../dateTimeFirstTrading - (../dateTimeFirstTrading mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeFirstTradingMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../dateTimeFirstTrading) eq '0') then 0 else (xs:long((../dateTimeFirstTrading - (../dateTimeFirstTrading mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dateTimeFirstTradingNanosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ if (xs:string(../dateTimeFirstTrading) eq '0') then 0 else ../dateTimeFirstTrading mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="combinationDefinitionMessage_t">
+    <xs:sequence>
+      <xs:element name="comboOrderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="legOrderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler3" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="legSide">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="B">
+              <xs:annotation>
+                <xs:documentation>As Defined</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C">
+              <xs:annotation>
+                <xs:documentation>Opposite</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="legRatio" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="refreshComplete_t">
+    <xs:sequence>
+      <xs:element name="lastSeqNum" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="marketStatusMessage_t">
+    <xs:sequence>
+      <xs:element name="stateLevel">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedShort">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Market</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Instrument Type</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Instrument Class</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Instrument Series</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Underlying</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>End Of Business Day</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="market">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>If Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Cesc Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Stock Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Three Year Exchange Fund Note Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Mini Hang Seng Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+              <xs:annotation>
+                <xs:documentation>Weekly Stock Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+              <xs:annotation>
+                <xs:documentation>Stock Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+              <xs:annotation>
+                <xs:documentation>Hibor</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="27">
+              <xs:annotation>
+                <xs:documentation>Dividend Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="32">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="34">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="35">
+              <xs:annotation>
+                <xs:documentation>Flexible Hang Seng Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="37">
+              <xs:annotation>
+                <xs:documentation>Flexible Hang Seng China Enterprises Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="38">
+              <xs:annotation>
+                <xs:documentation>Hang Seng China Enterprises Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="39">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="40">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng China Enterprises Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="51">
+              <xs:annotation>
+                <xs:documentation>Hsi Volatility Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="60">
+              <xs:annotation>
+                <xs:documentation>Sector Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="70">
+              <xs:annotation>
+                <xs:documentation>Renminbi Currency Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="80">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Biotech Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="83">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Options On Futures Contracts On Hang Seng Tech Index Futures Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="84">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng Tech Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="86">
+              <xs:annotation>
+                <xs:documentation>Hang Seng Tech Index Futures Options Hang Seng Index Hang Seng China Enterprises Index Gross Net Total Return Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="87">
+              <xs:annotation>
+                <xs:documentation>Weekly Hang Seng China Enterprises Index Options</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="93">
+              <xs:annotation>
+                <xs:documentation>Ibovespa Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+              <xs:annotation>
+                <xs:documentation>Sp Bse Sensex Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="99">
+              <xs:annotation>
+                <xs:documentation>Ftsejse Top 40 Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="102">
+              <xs:annotation>
+                <xs:documentation>Micex Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="108">
+              <xs:annotation>
+                <xs:documentation>Msci Ax J Futures Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Usd Silver Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="112">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Cnh Silver Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="115">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Cnh Gold Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="116">
+              <xs:annotation>
+                <xs:documentation>Physically Settled Usd Gold Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="117">
+              <xs:annotation>
+                <xs:documentation>China 5 Year Government Bond Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="118">
+              <xs:annotation>
+                <xs:documentation>Usd Base And Ferrous Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="120">
+              <xs:annotation>
+                <xs:documentation>Cnh London Metal Mini Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="122">
+              <xs:annotation>
+                <xs:documentation>Cash Settled Rmb Currency Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="125">
+              <xs:annotation>
+                <xs:documentation>Cash Settled Cnhusd Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="153">
+              <xs:annotation>
+                <xs:documentation>Msci China A 50 Connect Index Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="160">
+              <xs:annotation>
+                <xs:documentation>Msci Jpy Index Futures Price Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="161">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Ntr</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="163">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 163</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="164">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 164</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="166">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 166</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="168">
+              <xs:annotation>
+                <xs:documentation>Msci Usd Index Futures Options Price Market 168</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="170">
+              <xs:annotation>
+                <xs:documentation>Msci Sgd Index Futures Price</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="instrument">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>If Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Call American Style</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Put American Style</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="22">
+              <xs:annotation>
+                <xs:documentation>Call European Style</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="23">
+              <xs:annotation>
+                <xs:documentation>Put European Style</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="170">
+              <xs:annotation>
+                <xs:documentation>Options Straddle</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="171">
+              <xs:annotation>
+                <xs:documentation>Options Strangle</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="172">
+              <xs:annotation>
+                <xs:documentation>Standard Combo Series For Stock Options Market Som Synthetic Futures</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="201">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 01</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="202">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 02</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="203">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 03</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="204">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 04</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="205">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 05</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="206">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 06</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="207">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 07</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="208">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 08</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="209">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 09</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="210">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 10</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="211">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 11</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="212">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 12</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="213">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 13</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="214">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 14</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="215">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 15</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="216">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 16</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="217">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 17</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="218">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 18</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="219">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 19</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="220">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 20</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="221">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 21</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="222">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 22</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="223">
+              <xs:annotation>
+                <xs:documentation>Time Spread Level 23</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="250">
+              <xs:annotation>
+                <xs:documentation>Tailor Made Combination</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="254">
+              <xs:annotation>
+                <xs:documentation>Exchange Rate</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="255">
+              <xs:annotation>
+                <xs:documentation>Payment Currency</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="commodityCode" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="actualStartDate" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="actualStartTime" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="plannedStartDate" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="plannedStartTime" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="6" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="secondsToStateChange" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="state">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedShort">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>End Of The Current State If Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Open Allocation</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Market Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Market Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Preopen Session</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Preopen Allocation Session</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Market Pause</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+              <xs:annotation>
+                <xs:documentation>Premarket Activities</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+              <xs:annotation>
+                <xs:documentation>Clearing Session Started</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+              <xs:annotation>
+                <xs:documentation>Clearing Session Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+              <xs:annotation>
+                <xs:documentation>Ahft Market Closed</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+              <xs:annotation>
+                <xs:documentation>Ahft Reset Price Information</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+              <xs:annotation>
+                <xs:documentation>Ahft Inactive Non Order</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+              <xs:annotation>
+                <xs:documentation>Ahft Reset Price Information For Next Business Day</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+              <xs:annotation>
+                <xs:documentation>Ahft Market Open</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+              <xs:annotation>
+                <xs:documentation>Ahft Market Open Price Limit</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+              <xs:annotation>
+                <xs:documentation>Ahft Premarket Activities</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+              <xs:annotation>
+                <xs:documentation>Market Open With Price Controls</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+              <xs:annotation>
+                <xs:documentation>Market Closed Today</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="19">
+              <xs:annotation>
+                <xs:documentation>Market Open With Dynamic Price Banding Mechanism</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+              <xs:annotation>
+                <xs:documentation>Site Failover</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="21">
+              <xs:annotation>
+                <xs:documentation>Market Closed Today E</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="22">
+              <xs:annotation>
+                <xs:documentation>Ahft Market Closed E</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="23">
+              <xs:annotation>
+                <xs:documentation>Market Open With Dpbm And Vcm</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24">
+              <xs:annotation>
+                <xs:documentation>Market Open With Vcm</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="25">
+              <xs:annotation>
+                <xs:documentation>Vcm Cool Off Status With Dynamic Price Banding Mechansim</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="26">
+              <xs:annotation>
+                <xs:documentation>Vcm Cool Off Status</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="27">
+              <xs:annotation>
+                <xs:documentation>Reset Counter For Vcm</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="28">
+              <xs:annotation>
+                <xs:documentation>Halt</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="29">
+              <xs:annotation>
+                <xs:documentation>Reset Price Information</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="30">
+              <xs:annotation>
+                <xs:documentation>Block Trade Only</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="priority">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Not Specified</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Low</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Medium</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>High</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Critical</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler3" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="3" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="seriesStatusMessage_t">
+    <xs:sequence>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="suspensionIndicator">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Suspended For Trading</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Not Suspended</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Locked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="seriesStatus">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>Not Available</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Active</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Suspended</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Issued</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+              <xs:annotation>
+                <xs:documentation>Delisted</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Locked</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="commodityStatusMessage_t">
+    <xs:sequence>
+      <xs:element name="commodityCode" type="xs:unsignedShort">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="suspended">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Y">
+              <xs:annotation>
+                <xs:documentation>Yes</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N">
+              <xs:annotation>
+                <xs:documentation>No</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="locked">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Yes</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>No</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tradeStatisticsMessage_t">
+    <xs:sequence>
+      <xs:element name="orderbookId" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="price" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dealSource" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="session">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>T Session</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>T Plus One Session</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="filler2" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="2" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="statisticsAggregateQuantity" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="open" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="high" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="low" nillable="true" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="filler4" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tradeReportVolume" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="dealCount" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="turnover" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

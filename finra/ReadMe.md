@@ -1,0 +1,72 @@
+[![Finra](https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/Organizations/Finra/Images/Logo.png)](https://www.finra.org)
+
+
+## Financial Industry Regulatory Authority
+
+| Division | [Protocol][Omi.Finra.Protocol.Definitions] | [Encoding][Omi.Encoding.Definitions] | Version | Date | Size | [Deployment][Omi.Glossary.Deployment] | [Testing][Omi.Glossary.Testing] | [Documentation][Omi.Finra.Specifications] |
+| --- | --- | --- | --- | ---: | ---: | --- | --- | --- |
+| [FinraOrf][FinraOrf.Exchange] | [Tdds][Finra.FinraOrf.Tdds] | [Dfi][Omi.Encoding.Dfi] | [2.0][Finra.FinraOrf.Tdds.Dfi.v2.0.Definition] | 9/24/2018 | 1,943 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Verified][Omi.Glossary.Testing.Verified] | [url][Finra.FinraOrf.Tdds.Dfi.v2.0.Url] - [pdf][Finra.FinraOrf.Tdds.Dfi.v2.0.Pdf] |
+| [FinraOrf][FinraOrf.Exchange] | [Tdds][Finra.FinraOrf.Tdds] | [Dfi][Omi.Encoding.Dfi] | [2.1][Finra.FinraOrf.Tdds.Dfi.v2.1.Definition] | 5/10/2022 | 1,896 | [Active][Omi.Glossary.Deployment.Active] | [Verified][Omi.Glossary.Testing.Verified] | [url][Finra.FinraOrf.Tdds.Dfi.v2.1.Url] - [pdf][Finra.FinraOrf.Tdds.Dfi.v2.1.Pdf] |
+| [FinraOtc][FinraOtc.Exchange] | [Bbds][Finra.FinraOtc.Bbds] | [Dfi][Omi.Encoding.Dfi] | [2018.1A][Finra.FinraOtc.Bbds.Dfi.v2018.1A.Definition] | 5/14/2018 | 2,925 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Finra.FinraOtc.Bbds.Dfi.v2018.1A.Url] - [pdf][Finra.FinraOtc.Bbds.Dfi.v2018.1A.Pdf] |
+| [Trace][Trace.Exchange] | [Atds][Finra.Trace.Atds] | [Dfi][Omi.Encoding.Dfi] | [2.1][Finra.Trace.Atds.Dfi.v2.1.Definition] | 3/21/2024 | 2,586 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Finra.Trace.Atds.Dfi.v2.1.Url] - [pdf][Finra.Trace.Atds.Dfi.v2.1.Pdf] |
+| [Trace][Trace.Exchange] | [Btds][Finra.Trace.Btds] | [Dfi][Omi.Encoding.Dfi] | [2.1][Finra.Trace.Btds.Dfi.v2.1.Definition] | 3/21/2024 | 2,632 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Finra.Trace.Btds.Dfi.v2.1.Url] - [pdf][Finra.Trace.Btds.Dfi.v2.1.Pdf] |
+| [Trace][Trace.Exchange] | [Btds144A][Finra.Trace.Btds144A] | [Dfi][Omi.Encoding.Dfi] | [2.1][Finra.Trace.Btds144A.Dfi.v2.1.Definition] | 3/21/2024 | 2,632 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Finra.Trace.Btds144A.Dfi.v2.1.Url] - [pdf][Finra.Trace.Btds144A.Dfi.v2.1.Pdf] |
+| [Trace][Trace.Exchange] | [Spds][Finra.Trace.Spds] | [Dfi][Omi.Encoding.Dfi] | [2.1][Finra.Trace.Spds.Dfi.v2.1.Definition] | 11/19/2024 | 3,048 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Finra.Trace.Spds.Dfi.v2.1.Url] - [pdf][Finra.Trace.Spds.Dfi.v2.1.Pdf] |
+| [Trace][Trace.Exchange] | [Spds144A][Finra.Trace.Spds144A] | [Dfi][Omi.Encoding.Dfi] | [2.1][Finra.Trace.Spds144A.Dfi.v2.1.Definition] | 11/19/2024 | 1,901 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Finra.Trace.Spds144A.Dfi.v2.1.Url] - [pdf][Finra.Trace.Spds144A.Dfi.v2.1.Pdf] |
+
+
+<p align="center"><a href="https://www.finra.org" title="Financial Industry Regulatory Authority Website"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Website.png" alt="Website" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://www.linkedin.com/company/finra" title="Financial Industry Regulatory Authority on LinkedIn"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/LinkedIn.png" alt="LinkedIn" width="32" height="32"></a>&nbsp;&nbsp;<a href="https://en.wikipedia.org/wiki/Financial_Industry_Regulatory_Authority" title="Financial Industry Regulatory Authority on Wikipedia"><img src="https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/raw/main/About/Icons/Wikipedia.png" alt="Wikipedia" width="32" height="32"></a></p>
+
+
+[Omi.Glossary.Deployment]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Deployment.md "Protocol Deployment"
+[Omi.Glossary.Deployment.Active]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Deployment.md "Deployment: Protocol is in active production"
+[Omi.Glossary.Deployment.Deprecated]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Deployment.md "Deployment: Protocol is no longer in active use"
+[Omi.Glossary.Deployment.Pending]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Deployment.md "Deployment: Protocol is not yet deployed to an active production environment"
+[Omi.Glossary.Deployment.Observability]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Deployment.md "Deployment: Protocol is carried for observability rather than trading"
+[Omi.Glossary.Deployment.Header]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Deployment.md "Deployment: Header only protocol provided for debugging"
+[Omi.Glossary.Deployment.Unknown]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Deployment.md "Deployment: Protocol deployment is unknown"
+[Omi.Glossary.Testing]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Testing.md "Protocol Testing Status"
+[Omi.Glossary.Testing.Verified]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Testing.md "Testing Status: Protocol has been tested on live data"
+[Omi.Glossary.Testing.Incomplete]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Testing.md "Testing Status: Protocol has been tested on live data but contains known issues"
+[Omi.Glossary.Testing.Beta]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Testing.md "Testing Status: Protocol has not been tested and structure is speculative"
+[Omi.Glossary.Testing.Untested]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Testing.md "Testing Status: Protocol has not been tested on live data"
+[Omi.Glossary.Testing.Unavailable]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Glossary/Testing.md "Testing Status: Protocol does not state a testing status"
+[Omi.Encoding.Definitions]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Protocols/ReadMe.md "Encoding Directory"
+[Omi.Finra.Protocol.Definitions]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Finra/Protocols "Finra Protocol Directory"
+[Omi.Finra.Specifications]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Finra/Specifications "Finra Specifications Directory"
+[Omi.Encoding.Dfi]: https://github.com/Open-Markets-Initiative/Directory/blob/main/Protocols/Dfi.md "Dfi Encoding"
+[FinraOrf.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Finra/Protocols/FinraOrf "Finra FinraOrf"
+[FinraOtc.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Finra/Protocols/FinraOtc "Finra FinraOtc"
+[Trace.Exchange]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/tree/main/Organizations/Finra/Protocols/Trace "Finra Trace"
+[Finra.FinraOrf.Tdds]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Protocols/FinraOrf/Tdds.md "Trade Data Dissemination Service"
+[Finra.FinraOtc.Bbds]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Protocols/FinraOtc/Bbds.md "Bulletin Board Dissemination Service"
+[Finra.Trace.Atds]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Protocols/Trace/Atds.md "Agency Debt Trade Dissemination Service"
+[Finra.Trace.Btds]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Protocols/Trace/Btds.md "Bond Trade Dissemination Service"
+[Finra.Trace.Btds144A]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Protocols/Trace/Btds144A.md "Bond Trade Dissemination Service for 144A Transactions"
+[Finra.Trace.Spds]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Protocols/Trace/Spds.md "Securitized Products Dissemination Service"
+[Finra.Trace.Spds144A]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Protocols/Trace/Spds144A.md "Securitized Products Dissemination Service for 144A Transactions"
+
+[Finra.FinraOrf.Tdds.Dfi.v2.0.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/finraorf/tdds/FinraOrf_Tdds_v2_0.dfdl.xsd "Finra FinraOrf Tdds Dfi v2.0 Dfdl Definition"
+[Finra.FinraOrf.Tdds.Dfi.v2.0.Url]: https://www.finra.org/filing-reporting/orf/orf-forms-and-documentation "Financial Industry Regulatory Authority 2.0 Url"
+[Finra.FinraOrf.Tdds.Dfi.v2.0.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Orf/Finra.FinraOrf.Tdds.Dfi.v2.0.pdf "Financial Industry Regulatory Authority 2.0 Pdf"
+[Finra.FinraOrf.Tdds.Dfi.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/finraorf/tdds/FinraOrf_Tdds_v2_1.dfdl.xsd "Finra FinraOrf Tdds Dfi v2.1 Dfdl Definition"
+[Finra.FinraOrf.Tdds.Dfi.v2.1.Url]: https://www.finra.org/filing-reporting/orf/orf-forms-and-documentation "Financial Industry Regulatory Authority 2.1 Url"
+[Finra.FinraOrf.Tdds.Dfi.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Orf/Finra.FinraOrf.Tdds.Dfi.v2.1.pdf "Financial Industry Regulatory Authority 2.1 Pdf"
+[Finra.FinraOtc.Bbds.Dfi.v2018.1A.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/finraotc/bbds/FinraOtc_Bbds_v2018_1A.dfdl.xsd "Finra FinraOtc Bbds Dfi v2018.1A Dfdl Definition"
+[Finra.FinraOtc.Bbds.Dfi.v2018.1A.Url]: https://www.finra.org/filing-reporting/otcbb/otcbb-forms-documentation "Financial Industry Regulatory Authority 2018.1A Url"
+[Finra.FinraOtc.Bbds.Dfi.v2018.1A.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Otc/Finra.FinraOtc.Bbds.Dfi.v2018.1A.pdf "Financial Industry Regulatory Authority 2018.1A Pdf"
+[Finra.Trace.Atds.Dfi.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/trace/atds/Trace_Atds_v2_1.dfdl.xsd "Finra Trace Atds Dfi v2.1 Dfdl Definition"
+[Finra.Trace.Atds.Dfi.v2.1.Url]: https://www.finra.org/filing-reporting/trace/documentation "Financial Industry Regulatory Authority 2.1 Url"
+[Finra.Trace.Atds.Dfi.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Trace/Finra.Trace.Atds.Dfi.v2.1.pdf "Financial Industry Regulatory Authority 2.1 Pdf"
+[Finra.Trace.Btds.Dfi.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/trace/btds/Trace_Btds_v2_1.dfdl.xsd "Finra Trace Btds Dfi v2.1 Dfdl Definition"
+[Finra.Trace.Btds.Dfi.v2.1.Url]: https://www.finra.org/filing-reporting/trace/documentation "Financial Industry Regulatory Authority 2.1 Url"
+[Finra.Trace.Btds.Dfi.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Trace/Finra.Trace.Btds.Dfi.v2.1.pdf "Financial Industry Regulatory Authority 2.1 Pdf"
+[Finra.Trace.Btds144A.Dfi.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/trace/btds144a/Trace_Btds144A_v2_1.dfdl.xsd "Finra Trace Btds144A Dfi v2.1 Dfdl Definition"
+[Finra.Trace.Btds144A.Dfi.v2.1.Url]: https://www.finra.org/filing-reporting/trace/documentation "Financial Industry Regulatory Authority 2.1 Url"
+[Finra.Trace.Btds144A.Dfi.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Trace/Finra.Trace.Btds144A.Dfi.v2.1.pdf "Financial Industry Regulatory Authority 2.1 Pdf"
+[Finra.Trace.Spds.Dfi.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/trace/spds/Trace_Spds_v2_1.dfdl.xsd "Finra Trace Spds Dfi v2.1 Dfdl Definition"
+[Finra.Trace.Spds.Dfi.v2.1.Url]: https://www.finra.org/filing-reporting/trace/documentation "Financial Industry Regulatory Authority 2.1 Url"
+[Finra.Trace.Spds.Dfi.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Trace/Finra.Trace.Spds.Dfi.v2.1.pdf "Financial Industry Regulatory Authority 2.1 Pdf"
+[Finra.Trace.Spds144A.Dfi.v2.1.Definition]: https://github.com/Open-Markets-Initiative/omi-dfdl-definitions/blob/main/finra/trace/spds144a/Trace_Spds144A_v2_1.dfdl.xsd "Finra Trace Spds144A Dfi v2.1 Dfdl Definition"
+[Finra.Trace.Spds144A.Dfi.v2.1.Url]: https://www.finra.org/filing-reporting/trace/documentation "Financial Industry Regulatory Authority 2.1 Url"
+[Finra.Trace.Spds144A.Dfi.v2.1.Pdf]: https://github.com/Open-Markets-Initiative/Open-Markets-Initiative/blob/main/Organizations/Finra/Specifications/Trace/Finra.Trace.Spds144A.Dfi.v2.1.pdf "Financial Industry Regulatory Authority 2.1 Pdf"
