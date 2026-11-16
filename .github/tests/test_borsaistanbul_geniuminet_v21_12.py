@@ -28,14 +28,6 @@ class BorsaistanbulGeniuminetV2112Tests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_messagesequence(self):
-        for payload in payloads.of("omi-data-packets/Bist/BorsaIstanbul.GeniumInet.Itch.v21.12/MessageSequence.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_orderbookdirectory(self):
         for payload in payloads.of("omi-data-packets/Bist/BorsaIstanbul.GeniumInet.Itch.v21.12/OrderBookDirectory.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")

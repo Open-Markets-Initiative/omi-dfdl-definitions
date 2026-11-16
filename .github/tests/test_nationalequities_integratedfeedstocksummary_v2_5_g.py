@@ -20,14 +20,6 @@ class NationalequitiesIntegratedfeedstocksummaryV25GTests(unittest.TestCase):
     def setUpClass(cls):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "packet", PARSER], check=True)
 
-    def test_messagesequence(self):
-        for payload in payloads.of("omi-data-packets/Nyse/NationalEquities.IntegratedFeedStockSummary.Pillar.v2.5.g/MessageSequence.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_stocksummarymessage(self):
         for payload in payloads.of("omi-data-packets/Nyse/NationalEquities.IntegratedFeedStockSummary.Pillar.v2.5.g/StockSummaryMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")

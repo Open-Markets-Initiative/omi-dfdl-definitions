@@ -28,14 +28,6 @@ class ArcaoptionsComplexfeedV10HTests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_messagesequence(self):
-        for payload in payloads.of("omi-data-packets/Nyse/ArcaOptions.ComplexFeed.Pillar.v1.0.h/MessageSequence.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_optionsquotemessage(self):
         for payload in payloads.of("omi-data-packets/Nyse/ArcaOptions.ComplexFeed.Pillar.v1.0.h/OptionsQuoteMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")

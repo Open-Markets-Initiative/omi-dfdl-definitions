@@ -52,14 +52,6 @@ class ArcaequitiesArcabookV19ATests(unittest.TestCase):
             result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
             self.assertEqual(result.returncode, 0, result.stderr.decode())
 
-    def test_messagesequence(self):
-        for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.ArcaBook.Xdp.v1.9.a/MessageSequence.pcap"):
-            data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
-            with open(data, "wb") as handle:
-                handle.write(payload)
-            result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
-            self.assertEqual(result.returncode, 0, result.stderr.decode())
-
     def test_modifyordermessage(self):
         for payload in payloads.of("omi-data-packets/Nyse/ArcaEquities.ArcaBook.Xdp.v1.9.a/ModifyOrderMessage.pcap"):
             data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
