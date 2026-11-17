@@ -209,52 +209,52 @@
   </xs:complexType>
   <xs:complexType name="incrementalPacketHeader_t">
     <xs:sequence>
-      <xs:element name="transactTime" type="xs:unsignedLong">
+      <xs:element name="transactTime" nillable="true" type="xs:unsignedLong">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="0" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="transactTimeHour" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="transactTimeMinute" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 60000000000)) div 60000000000)) mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="transactTimeSecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000000)) div 1000000000)) mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="transactTimeMillisecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000000)) div 1000000)) mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="transactTimeMicrosecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else (xs:long((../transactTime - (../transactTime mod 1000)) div 1000)) mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="transactTimeNanosecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ ../transactTime mod 1000 }" />
+            <dfdl:element inputValueCalc="{ if (xs:string(../transactTime) eq '0') then 0 else ../transactTime mod 1000 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -1488,12 +1488,36 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="sectionIdOptional" nillable="true" type="xs:int">
+      <xs:element name="sectionIdOptional" nillable="true">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="4" nilKind="literalValue" nilValue="-2147483648" />
           </xs:appinfo>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:enumeration value="0">
+              <xs:annotation>
+                <xs:documentation>All Sections</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+              <xs:annotation>
+                <xs:documentation>Stock Section</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+              <xs:annotation>
+                <xs:documentation>Commodity Section</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+              <xs:annotation>
+                <xs:documentation>Money Section</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
       <xs:element name="baseContractIdOptional" nillable="true" type="xs:int">
         <xs:annotation>
@@ -1575,49 +1599,42 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="statusChangeTimeYear" type="xs:long">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ xs:long((../statusChangeTime - (../statusChangeTime mod 10000000000000)) div 10000000000000) }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="statusChangeTimeMonth" type="xs:long">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 100000000000)) div 100000000000)) mod 100 }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="statusChangeTimeDay" type="xs:long">
-        <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 1000000000)) div 1000000000)) mod 100 }" />
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="statusChangeTimeHour" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 10000000)) div 10000000)) mod 100 }" />
+            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 3600000000000)) div 3600000000000)) mod 24 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="statusChangeTimeMinute" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 100000)) div 100000)) mod 100 }" />
+            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 60000000000)) div 60000000000)) mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="statusChangeTimeSecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 1000)) div 1000)) mod 100 }" />
+            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 1000000000)) div 1000000000)) mod 60 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
       <xs:element name="statusChangeTimeMillisecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 1000000)) div 1000000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="statusChangeTimeMicrosecond" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element inputValueCalc="{ (xs:long((../statusChangeTime - (../statusChangeTime mod 1000)) div 1000)) mod 1000 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="statusChangeTimeNanosecond" type="xs:long">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element inputValueCalc="{ ../statusChangeTime mod 1000 }" />
