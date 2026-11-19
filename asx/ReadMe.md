@@ -9,7 +9,7 @@
 | [AsxDerivatives][AsxDerivatives.Exchange] | [T24][Asx.AsxDerivatives.T24] | [Itch][Omi.Encoding.Itch] | [1.13][Asx.AsxDerivatives.T24.Itch.v1.13.Definition] | 7/15/2014 | 4,522 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Untested][Omi.Glossary.Testing.Untested] |  |
 | [AsxSecurities][AsxSecurities.Exchange] | [Trade][Asx.AsxSecurities.Trade] | [Itch][Omi.Encoding.Itch] | [2.0][Asx.AsxSecurities.Trade.Itch.v2.0.Definition] | 4/1/2015 | 1,901 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Untested][Omi.Glossary.Testing.Untested] |  |
 | [AsxSecurities][AsxSecurities.Exchange] | [Trade][Asx.AsxSecurities.Trade] | [Itch][Omi.Encoding.Itch] | [3.1][Asx.AsxSecurities.Trade.Itch.v3.1.Definition] | 3/1/2023 | 1,925 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Asx.AsxSecurities.Trade.Itch.v3.1.Url] |
-| [AsxSecurities][AsxSecurities.Exchange] | [Trade][Asx.AsxSecurities.Trade] | [Ouch][Omi.Encoding.Ouch] | [2.0][Asx.AsxSecurities.Trade.Ouch.v2.0.Definition] | 4/1/2015 | 2,132 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Untested][Omi.Glossary.Testing.Untested] |  |
+| [AsxSecurities][AsxSecurities.Exchange] | [Trade][Asx.AsxSecurities.Trade] | [Ouch][Omi.Encoding.Ouch] | [2.0][Asx.AsxSecurities.Trade.Ouch.v2.0.Definition] | 4/1/2015 | 2,201 | [Deprecated][Omi.Glossary.Deployment.Deprecated] | [Untested][Omi.Glossary.Testing.Untested] |  |
 | [AsxSecurities][AsxSecurities.Exchange] | [Trade][Asx.AsxSecurities.Trade] | [Ouch][Omi.Encoding.Ouch] | [3.6][Asx.AsxSecurities.Trade.Ouch.v3.6.Definition] | 2/1/2023 | 1,998 | [Active][Omi.Glossary.Deployment.Active] | [Untested][Omi.Glossary.Testing.Untested] | [url][Asx.AsxSecurities.Trade.Ouch.v3.6.Url] |
 
 

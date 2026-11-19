@@ -42,6 +42,28 @@ class CoinbasederivativesOrdersapiV13Tests(unittest.TestCase):
                 result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
+    def test_instrumentinfomessage(self):
+        for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.3/InstrumentInfoMessage.pcap"):
+            if payloads.partial(payload, 2, 2, "little", 0):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", 0):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
+
+    def test_instrumentinforequestmessage(self):
+        for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.3/InstrumentInfoRequestMessage.pcap"):
+            if payloads.partial(payload, 2, 2, "little", 0):
+                self.skipTest("capture ends mid message; tcp reassembly required")
+            for message in payloads.messages(payload, 2, 2, "little", 0):
+                data = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "payload.bin")
+                with open(data, "wb") as handle:
+                    handle.write(message)
+                result = subprocess.run([DAFFODIL, "parse", "-P", PARSER, data], capture_output=True)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
+
     def test_lastexecidmessage(self):
         for payload in payloads.of("omi-data-packets/Coinbase/CoinbaseDerivatives.OrdersApi.Sbe.v1.3/LastExecIdMessage.pcap"):
             if payloads.partial(payload, 2, 2, "little", 0):
