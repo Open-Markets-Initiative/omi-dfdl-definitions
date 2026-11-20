@@ -9,12 +9,12 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "cboe/c1options/complex/C1Options_Complex_v2_1_18.dfdl.xsd"
-PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "c1options_complex_v2_1_18.parser")
+SCHEMA = "cboe/c1options/complex/C1Options_Complex_Pitch_v2_1_18.dfdl.xsd"
+PARSER = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "c1options_complex_pitch_v2_1_18.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
-class C1optionsComplexV2118Tests(unittest.TestCase):
+class C1optionsComplexPitchV2118Tests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
