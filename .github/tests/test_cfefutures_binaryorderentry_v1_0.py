@@ -9,13 +9,13 @@ sys.path.insert(0, ".github/tests")
 
 import payloads
 
-SCHEMA = "cboe/cfefutures/binaryorderentry/CfeFutures_BinaryOrderEntry_v1_1_20.dfdl.xsd"
-PARSER_EXCHANGEPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cfefutures_binaryorderentry_v1_1_20_exchangepacket.parser")
-PARSER_FIRMPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cfefutures_binaryorderentry_v1_1_20_firmpacket.parser")
+SCHEMA = "cboe/cfefutures/binaryorderentry/CfeFutures_BinaryOrderEntry_v1_0.dfdl.xsd"
+PARSER_EXCHANGEPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cfefutures_binaryorderentry_v1_0_exchangepacket.parser")
+PARSER_FIRMPACKET = os.path.join(os.environ.get("RUNNER_TEMP", "/tmp"), "cfefutures_binaryorderentry_v1_0_firmpacket.parser")
 DAFFODIL = os.environ.get("DAFFODIL", "daffodil")
 
 
-class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
+class CfefuturesBinaryorderentryV10Tests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -23,7 +23,7 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
         subprocess.run([DAFFODIL, "save-parser", "-s", SCHEMA, "-r", "firmPacket", PARSER_FIRMPACKET], check=True)
 
     def test_clientheartbeat(self):
-        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ClientHeartbeat.pcap"):
+        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.0/ClientHeartbeat.pcap"):
             if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 2, 2, "little", 2):
@@ -34,7 +34,7 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_quoteupdate(self):
-        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/QuoteUpdate.pcap"):
+        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.0/QuoteUpdate.pcap"):
             if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 2, 2, "little", 2):
@@ -45,7 +45,7 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_quoteupdateacknowledgement(self):
-        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/QuoteUpdateAcknowledgement.pcap"):
+        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.0/QuoteUpdateAcknowledgement.pcap"):
             if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 2, 2, "little", 2):
@@ -56,7 +56,7 @@ class CfefuturesBinaryorderentryV1120Tests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr.decode())
 
     def test_serverheartbeat(self):
-        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.1.20/ServerHeartbeat.pcap"):
+        for payload in payloads.of("omi-data-packets/Cboe/CfeFutures.BinaryOrderEntry.Boe3.v1.0/ServerHeartbeat.pcap"):
             if payloads.partial(payload, 2, 2, "little", 2):
                 self.skipTest("capture ends mid message; tcp reassembly required")
             for message in payloads.messages(payload, 2, 2, "little", 2):
