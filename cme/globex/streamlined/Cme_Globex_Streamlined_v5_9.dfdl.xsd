@@ -41,7 +41,7 @@
   <xs:complexType name="udpPacket_t">
     <xs:sequence>
       <xs:element name="binaryPacketHeader" type="tns:binaryPacketHeader_t" />
-      <xs:element name="message" type="tns:message_t" maxOccurs="unbounded">
+      <xs:element name="mdp3Message" type="tns:mdp3Message_t" maxOccurs="unbounded">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element occursCountKind="implicit" />
@@ -110,7 +110,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="message_t">
+  <xs:complexType name="mdp3Message_t">
     <xs:sequence>
       <xs:element name="messageHeader" type="tns:messageHeader_t" />
       <xs:element name="payload">
@@ -594,10 +594,10 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="mdEntryPxDecimalOptional" type="tns:mdEntryPxDecimalOptional_t" />
-      <xs:element name="openCloseSettlFlag" nillable="true" type="xs:byte">
+      <xs:element name="openCloseSettlFlag" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="127" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -792,7 +792,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="erisSecurityAltIdGroups" type="tns:erisSecurityAltIdGroups_t" />
+      <xs:element name="erisReferenceDataSecurityAltIdGroups" type="tns:erisReferenceDataSecurityAltIdGroups_t" />
       <xs:element name="incrementalRefreshErisRelatedInstrumentsGroups" type="tns:incrementalRefreshErisRelatedInstrumentsGroups_t" />
       <xs:element name="eventsGroups" type="tns:eventsGroups_t" />
     </xs:sequence>
@@ -1257,10 +1257,10 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="erisSecurityAltIdGroups_t">
+  <xs:complexType name="erisReferenceDataSecurityAltIdGroups_t">
     <xs:sequence>
       <xs:element name="groupSize" type="tns:groupSize_t" />
-      <xs:element name="erisSecurityAltIdGroup" type="tns:erisSecurityAltIdGroup_t" maxOccurs="unbounded">
+      <xs:element name="erisReferenceDataSecurityAltIdGroup" type="tns:erisReferenceDataSecurityAltIdGroup_t" maxOccurs="unbounded">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element occursCountKind="expression" occursCount="{ ../groupSize/numInGroup8 }" />
@@ -1269,7 +1269,7 @@
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="erisSecurityAltIdGroup_t">
+  <xs:complexType name="erisReferenceDataSecurityAltIdGroup_t">
     <xs:sequence>
       <xs:element name="securityAltId" type="xs:string">
         <xs:annotation>
@@ -2460,7 +2460,7 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="instAttribGroups" type="tns:instAttribGroups_t" />
-      <xs:element name="eventsGroups" type="tns:eventsGroups_t" />
+      <xs:element name="indicesEventsGroups" type="tns:indicesEventsGroups_t" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="instAttribGroups_t">
@@ -2513,6 +2513,62 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLength - 101 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="indicesEventsGroups_t">
+    <xs:sequence>
+      <xs:element name="groupSizeEncoding" type="tns:groupSizeEncoding_t" />
+      <xs:element name="indicesEventsGroup" type="tns:indicesEventsGroup_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../groupSizeEncoding/numInGroup }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="indicesEventsGroup_t">
+    <xs:sequence>
+      <xs:element name="eventTypeIndices">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedByte">
+            <xs:enumeration value="5">
+              <xs:annotation>
+                <xs:documentation>Activation</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+              <xs:annotation>
+                <xs:documentation>Deletion</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="120">
+              <xs:annotation>
+                <xs:documentation>Modification</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="eventTime" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSizeEncoding/blockLength - 9 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -2691,7 +2747,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="openCloseSettlFlag" nillable="true" type="xs:byte">
+      <xs:element name="indicesOpenCloseSettlFlag" nillable="true" type="xs:byte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="127" />
@@ -3495,7 +3551,7 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="erisSecurityAltIdGroups" type="tns:erisSecurityAltIdGroups_t" />
-      <xs:element name="eventsGroups" type="tns:eventsGroups_t" />
+      <xs:element name="incrementalRefreshErisEventsGroups" type="tns:incrementalRefreshErisEventsGroups_t" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="calFutPx_t">
@@ -3511,6 +3567,80 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erisSecurityAltIdGroups_t">
+    <xs:sequence>
+      <xs:element name="groupSize" type="tns:groupSize_t" />
+      <xs:element name="erisSecurityAltIdGroup" type="tns:erisSecurityAltIdGroup_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../groupSize/numInGroup8 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erisSecurityAltIdGroup_t">
+    <xs:sequence>
+      <xs:element name="securityAltId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="26" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="securityAltIdSource" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSize/blockLength - 27 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="incrementalRefreshErisEventsGroups_t">
+    <xs:sequence>
+      <xs:element name="groupSize" type="tns:groupSize_t" />
+      <xs:element name="incrementalRefreshErisEventsGroup" type="tns:incrementalRefreshErisEventsGroup_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../groupSize/numInGroup8 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="incrementalRefreshErisEventsGroup_t">
+    <xs:sequence>
+      <xs:element name="eventType" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="eventTimeOptional" nillable="true" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="8" nilKind="literalValue" nilValue="18446744073709551615" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSize/blockLength - 9 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -3747,7 +3877,7 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="erisSecurityAltIdGroups" type="tns:erisSecurityAltIdGroups_t" />
-      <xs:element name="eventsGroups" type="tns:eventsGroups_t" />
+      <xs:element name="incrementalRefreshErisEventsGroups" type="tns:incrementalRefreshErisEventsGroups_t" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="mdIncrementalRefreshOtC356_t">
@@ -3998,10 +4128,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="openCloseSettlFlag" nillable="true" type="xs:byte">
+      <xs:element name="openCloseSettlFlag" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="127" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -4506,7 +4636,7 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="erisSecurityAltIdGroups" type="tns:erisSecurityAltIdGroups_t" />
+      <xs:element name="erisLegSecurityAltIdGroups" type="tns:erisLegSecurityAltIdGroups_t" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="previousFixingRate_t">
@@ -4540,6 +4670,43 @@
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
             <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erisLegSecurityAltIdGroups_t">
+    <xs:sequence>
+      <xs:element name="groupSize" type="tns:groupSize_t" />
+      <xs:element name="erisLegSecurityAltIdGroup" type="tns:erisLegSecurityAltIdGroup_t" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element occursCountKind="expression" occursCount="{ ../groupSize/numInGroup8 }" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erisLegSecurityAltIdGroup_t">
+    <xs:sequence>
+      <xs:element name="legSecurityAltId" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="text" encoding="ASCII" lengthKind="explicit" length="26" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="legSecurityAltIdSource" nillable="true" type="xs:unsignedByte">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="blockExtension" type="xs:hexBinary">
+        <xs:annotation>
+          <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <dfdl:element lengthKind="explicit" length="{ ../../groupSize/blockLength - 27 }" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
@@ -5344,10 +5511,10 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element name="openCloseSettlFlag" nillable="true" type="xs:byte">
+      <xs:element name="openCloseSettlFlag" nillable="true" type="xs:unsignedByte">
         <xs:annotation>
           <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="127" />
+            <dfdl:element representation="binary" binaryNumberRep="binary" byteOrder="littleEndian" lengthKind="explicit" length="1" nilKind="literalValue" nilValue="255" />
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
